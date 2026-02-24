@@ -5,14 +5,14 @@ Of course, the only way to choose a favourite is to try them all! That's why I f
 ## Contents
 This repo has/will contain the following:
 - [x] River 0.4.0-dev
-- [ ] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
+- [x] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
   - [x]  beansprout - a DWM-style tiling window manager with built-in wallpaper and a clock/bar, with configuration in Kdl
   - [x] Canoe - Stacking window manager with classic look and feel, written in Rust
   - [x]  kuskokwim - A tiling window manager with composable keybindings and first-class support for process management, written in Python
   - [x]  kwm - DWM-like dynamic tilling window manager with scrollable-tiling support, includes a simple status bar, written in Zig
   - [x]  machi - Minimalist window manager with cascading windows, horizontal panels and vertical workspaces
   - [x]  mousetrap - Minimal stumpwm/ratpoison-like window manager, using modern c++
-  - [ ]  pwm - Tiling window manager with SSD titlebars and Python API
+  - [x]  pwm - Tiling window manager with SSD titlebars and Python API
   - [x]  rhine - Tiling window manager with a bsp layout, some Hyprland IPC for bars and ambitions of modularity
   - [x]  rijan - Small dynamic tiling window manager in 600 lines of Janet
   - [x]  rill - A minimalist scrolling window manager with simple animation, written in Zig
