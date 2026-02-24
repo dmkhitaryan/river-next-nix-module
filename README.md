@@ -8,7 +8,7 @@ This repo has/will contain the following:
 - [ ] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
   - [x]  beansprout - a DWM-style tiling window manager with built-in wallpaper and a clock/bar, with configuration in Kdl
   - [x] Canoe - Stacking window manager with classic look and feel, written in Rust
-  - [ ]  kuskokwim - A tiling window manager with composable keybindings and first-class support for process management, written in Python
+  - [x]  kuskokwim - A tiling window manager with composable keybindings and first-class support for process management, written in Python
   - [x]  kwm - DWM-like dynamic tilling window manager with scrollable-tiling support, includes a simple status bar, written in Zig
   - [x]  machi - Minimalist window manager with cascading windows, horizontal panels and vertical workspaces
   - [x]  mousetrap - Minimal stumpwm/ratpoison-like window manager, using modern c++
