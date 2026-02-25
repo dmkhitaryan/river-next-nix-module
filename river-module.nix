@@ -108,13 +108,90 @@ in
         environment.systemPackages =
           lib.optional (cfg.package != null) cfg.package
           ++ cfg.extraPackages
-          ++ selectedWMs;  # Use the selectedWMs variable you defined earlier
+          ++ selectedWMs;
 
+          xdg.portal = {
+            enable = true;
+            xdgOpenUsePortal = true;
+            wlr = {
+              enable = true;
+              settings = {
+                screencast = {
+                  chooser_type = "simple";
+                  chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o";
+                };
+              };
+            };
+            extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+            config.river.default = lib.mkDefault [
+              "gtk"
+              "wlr"
+            ];
+          };
+
+        security = {
+          polkit.enable = true;
+          pam.services.swaylock = { };
+        };
+
+        programs = {
+          dconf.enable = lib.mkDefault true;
+          xwayland.enable = cfg.xwayland.enable;
+        };
+
+        services.graphical-desktop.enable = true;
+        services.xserver.desktopManager.runXdgAutostartIfNone = lib.mkDefault true;
+
+        systemd.user.targets.river-session = {
+          description = "River compositor session";
+          requires = [ "graphical-session-pre.target" ];
+          bindsTo = [ "graphical-session-pre.target" ];
+        };
+
+        systemd.user.services.river-portal-fixer = {
+          description = "Restart portals once River session environment is ready";
+          bindsTo = [ "river-session.target" ];
+          wantedBy = [ "river-session.target" ];
+          after = [ "river-session.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            # Env vars are already imported by the init script before river-session.target
+            # starts, so we just need to restart the portals/wireplumber against the
+            # now-populated environment.
+            ExecStart = pkgs.writeShellScript "river-portal-restart" ''
+              ${pkgs.systemd}/bin/systemctl --user stop wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
+              ${pkgs.systemd}/bin/systemctl --user start wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
+              ${pkgs.systemd}/bin/systemctl --user import-environment PATH
+              ${pkgs.systemd}/bin/systemctl --user restart xdg-desktop-portal.service
+            '';
+          };
+        };
         services.displayManager.sessionPackages =
           lib.optional (cfg.package != null) cfg.package
           ++ (map (windowManager:
             let
-              wmPackage = localPkgs.${windowManager};
+              initScript = pkgs.writeShellScript "river-${windowManager}-init" ''
+                export XDG_CURRENT_DESKTOP=river
+
+                ${pkgs.systemd}/bin/systemctl --user import-environment \
+                  WAYLAND_DISPLAY \
+                  XDG_CURRENT_DESKTOP \
+                  XDG_RUNTIME_DIR \
+                  DISPLAY
+                ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd \
+                  WAYLAND_DISPLAY \
+                  XDG_CURRENT_DESKTOP \
+                  XDG_RUNTIME_DIR \
+                  DISPLAY
+
+                ${pkgs.systemd}/bin/systemctl --user start river-session.target
+
+                exec /run/current-system/sw/bin/${windowManager}
+              '';
+              launcher = pkgs.writeShellScript "river-${windowManager}-launcher" ''
+                exec dbus-run-session -- /run/current-system/sw/bin/river -c ${initScript}
+            '';
             in
             pkgs.writeTextFile {
               name = "river-${windowManager}-session";
@@ -124,33 +201,11 @@ in
                 Name=River (${windowManager})
                 Type=Application
                 Comment=Launch River with ${windowManager} as window manager.
-                Exec=${cfg.package}/bin/river -c ${wmPackage}/bin/${windowManager}
+                Exec=${launcher}
               '';
               passthru.providedSessions = [ "river-${windowManager}" ];
             }) cfg.windowManagers);
-
-        xdg.portal = {
-          wlr.enable = true;
-          extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-          config.river.default = lib.mkDefault [
-            "wlr"
-            "gtk"
-          ];
-        };
-
-        security = {
-          polkit.enable = true;
-          pam.services.swaylock = { };
-        };
-
-        programs = {
-            dconf.enable = lib.mkDefault true;
-            xwayland.enable = cfg.xwayland.enable;
-          };
-
-        services.graphical-desktop.enable = true;
-
-        services.xserver.desktopManager.runXdgAutostartIfNone = lib.mkDefault true;
       }
-    ]);
+    ]
+  );
 }
