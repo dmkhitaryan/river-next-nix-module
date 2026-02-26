@@ -100,6 +100,34 @@ in
       '';
       description = "List of extra packages to include. Will be installed system-wide.";
     };
+
+    kanshi = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Enable the kanshi output configuration daemon. When enabled, kanshi is
+          started as a systemd user service after River's compositor is ready but
+          before a window manager is launched.
+        '';
+      };
+
+      config = mkOption {
+        type = types.nullOr types.lines;
+        default = null;
+        example = ''
+          profile "home" {
+            output "eDP-1" mode 1920x1080 position 0,0
+            output "HDMI-A-1" mode 2560x1440 position 1920,0
+          }
+        '';
+        description = ''
+          Contents of the kanshi config file. When set, kanshi will
+          started with `-c <path>` pointing to it. When null,
+          kanshi will use its default search paths (e.g. ~/.config/kanshi/config).
+        '';
+      };
+    };
   };
 
   config = mkIf cfg.enable (
@@ -107,6 +135,7 @@ in
       {
         environment.systemPackages =
           lib.optional (cfg.package != null) cfg.package
+          ++ lib.optional cfg.kanshi.enable pkgs.kanshi
           ++ cfg.extraPackages
           ++ selectedWMs;
 
@@ -148,6 +177,28 @@ in
           bindsTo = [ "graphical-session-pre.target" ];
         };
 
+        systemd.user.services.kanshi = lib.mkIf cfg.kanshi.enable {
+          description = "Dynamic output configuration daemon";
+          documentation = [ "man:kanshi(1)" ];
+          # Use type=notify so that the service only becomes active
+          # once kanshi sets up the outputs.
+          serviceConfig = {
+            Type = "notify";
+            ExecStart =
+              let
+                configFlag = lib.optionalString
+                  (cfg.kanshi.config != null)
+                  " -c ${pkgs.writeText "kanshi-config" cfg.kanshi.config}";
+              in
+                "${pkgs.kanshi}/bin/kanshi${configFlag}";
+            Restart = "on-failure";
+          };
+          partOf = [ "graphical-session.target" ];
+          wantedBy = [ "river-session.target" ];
+          after = [ "river-session.target" ];
+          bindsTo = [ "river-session.target" ];
+        };
+
         systemd.user.services.river-portal-fixer = {
           description = "Restart portals once River session environment is ready";
           bindsTo = [ "river-session.target" ];
@@ -186,6 +237,10 @@ in
                   DISPLAY
 
                 ${pkgs.systemd}/bin/systemctl --user start river-session.target
+
+                ${lib.optionalString cfg.kanshi.enable ''
+                  ${pkgs.systemd}/bin/systemctl --user start kanshi.service
+                ''}
 
                 exec /run/current-system/sw/bin/${windowManager}
               '';
