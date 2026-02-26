@@ -177,28 +177,6 @@ in
           bindsTo = [ "graphical-session-pre.target" ];
         };
 
-        systemd.user.services.kanshi = lib.mkIf cfg.kanshi.enable {
-          description = "Dynamic output configuration daemon";
-          documentation = [ "man:kanshi(1)" ];
-          # Use type=notify so that the service only becomes active
-          # once kanshi sets up the outputs.
-          serviceConfig = {
-            Type = "notify";
-            ExecStart =
-              let
-                configFlag = lib.optionalString
-                  (cfg.kanshi.config != null)
-                  " -c ${pkgs.writeText "kanshi-config" cfg.kanshi.config}";
-              in
-                "${pkgs.kanshi}/bin/kanshi${configFlag}";
-            Restart = "on-failure";
-          };
-          partOf = [ "graphical-session.target" ];
-          wantedBy = [ "river-session.target" ];
-          after = [ "river-session.target" ];
-          bindsTo = [ "river-session.target" ];
-        };
-
         systemd.user.services.river-portal-fixer = {
           description = "Restart portals once River session environment is ready";
           bindsTo = [ "river-session.target" ];
@@ -239,7 +217,12 @@ in
                 ${pkgs.systemd}/bin/systemctl --user start river-session.target
 
                 ${lib.optionalString cfg.kanshi.enable ''
-                  ${pkgs.systemd}/bin/systemctl --user start kanshi.service
+                  ${let
+                    configFlag = lib.optionalString
+                      (cfg.kanshi.config != null)
+                      " -c ${pkgs.writeText "kanshi-config" cfg.kanshi.config}";
+                  in
+                    "${pkgs.kanshi}/bin/kanshi${configFlag}"} &
                 ''}
 
                 exec /run/current-system/sw/bin/${windowManager}
