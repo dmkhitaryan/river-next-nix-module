@@ -1,10 +1,9 @@
 # NixOS module for River 0.4.0+ (AKA `river-next`)
-River development has undergone drastic changes, with new design principles, compared to 0.3.x and prior. It doesn't yet have an official release. However, it is in a state that runs well. Still, given the frequent changes, it's not something that would find a place in Nixpkgs yet. One can only find `river-classic` (0.3.x) in the repo.
 
-Rather than wait for the release, I wanted to build it locally now, to try out the changes. Plus, given how the compositor works, a dozen or so of window managers would need to be packaged to actually run something in `river-next`. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
+While the new iteration of `river` now exists in Nixpkgs, given how the compositor works, a dozen or so of window managers would still need to be packaged to actually run something in it. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
 
 I plan to update packages roughly once a week, ideally on Mondays. Package versions (aside from River) will reflect this if they receive changes. Later I plan to adjust this to update based on their actual commit histories.  
-**Last package update: 22-03-2026.**
+**Last package update: 30-03-2026.**
 
 ## Contents
 This repo has/will contain the following:
@@ -26,7 +25,7 @@ This repo has/will contain the following:
   - [x]  rrwm - Tiling window manager with a cosmic/bspwm layout, written in Rust
   - [x]  tarazed - Non-tiling window manager focusing on a powerful and distraction-free desktop experience
   - [x]  zrwm - Dynamic tiling window manager configured using a CLI tool
- - [x] River 0.5.0 module: `programs.river-next`
+ - [x] River module: `programs.river-next`
     - See available options [here](https://github.com/dmkhitaryan/river-next-nix-module/wiki/List-of-Module-Options)
       
 ## Importing
