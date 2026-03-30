@@ -15,13 +15,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "rhine";
-  version = "unstable-2026-03-22";
+  version = "unstable-2026-03-30";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "rhine";
-    rev = "090284707bd6d182a288b9d9cbbf18d0339c811b";
-    hash = "sha256-UIvSoKZ3eEbGuOHdbDp86L86EY+R3zvEvFtpp8KKzZs=";
+    rev = "a29872465bdeec76afa9b552b346eeb469baf78d";
+    hash = "sha256-/oepx1rEATCDfKk2hTE3cgyjVt3IuamBrGCOf9FBhnw=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
@@ -37,11 +37,6 @@ stdenv.mkDerivation (finalAttrs: {
     libxkbcommon
     wayland
   ];
-
-  postPatch = ''
-    substituteInPlace build.zig \
-      --replace-fail '"../river-protocols/stable/"' '"${river-next}/share/river-protocols/stable/"'
-  '';
 
   postInstall = ''
     install -Dm755 $src/config.rh -t $out/examples/

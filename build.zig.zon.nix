@@ -29,10 +29,11 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "wlroots-0.19.4-jmOlcqQMBABhKYH6NMSnoK1sohTbhc97_JP-hGg2UZaK";
-    path = fetchzip {
-      url = "https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.4.tar.gz";
-      hash = "sha256-g1LOSMMnjGJIS+U7zrx6FAoUyavqwaQ2UrDv6GxCQsY=";
+    name = "wlroots-0.20.0-dev-jmOlcuxBBAC74vcynqYuP8sjbyLrH6cnNlKzhXKg8zVO";
+    path = fetchgit {
+      url = "https://codeberg.org/ifreund/zig-wlroots";
+      rev = "eb7631742812665c10ff3a9b4b069c3d0cc2017b";
+      hash = "sha256-BDUpb54W8Rg7e9cADaAr2Wwy+fe6TkVudmbL66x64CI=";
     };
   }
   {

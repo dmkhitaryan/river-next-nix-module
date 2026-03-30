@@ -2,7 +2,6 @@
   lib,
   stdenv,
   fetchFromCodeberg,
-  fetchFromGitHub,
   wayland,
   cairo,
   pango,
@@ -17,23 +16,10 @@
   ninja,
   spdlog,
 }:
-
-let
-  meson_1_10 = meson.overrideAttrs (
-    final: prev: {
-      version = "unstable-2026-03-22";
-      format = "setuptools";
-      src = fetchFromGitHub {
-        owner = "mesonbuild";
-        repo = "meson";
-        rev = final.version;
-        hash = "sha256-UeSD3lIZ5hz3UsxZ1sCPzUhiekr3WIEiGxu+inyV8vo=";
-      };
-    }
-  );
-in
 stdenv.mkDerivation (finalAttrs: {
-  name = "mousetrap";
+  pname = "mousetrap";
+  version = "unstable-2026-03-30";
+
   src = fetchFromCodeberg {
     owner = "g4b";
     repo = "mousetrap";
@@ -43,7 +29,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     wayland-scanner
-    meson_1_10
+    meson
     git
     pkg-config
     cmake
