@@ -5,6 +5,9 @@ While the new iteration of `river` now exists in Nixpkgs, given how the composit
 I plan to update packages roughly once a week, ideally on Mondays. Package versions (aside from River) will reflect this if they receive changes. Later I plan to adjust this to update based on their actual commit histories.  
 **Last package update: 30-03-2026.**
 
+This is the **main** branch, thus all the packages here are pulling changes against their respective main branches. Combined with their varying development statuses, there is **always non-zero chance of a breaking change**!  
+If you are looking for something less unstable, I suggest looking at the [stable](https://github.com/dmkhitaryan/river-next-nix-module/tree/stable) branch.
+
 ## Contents
 This repo has/will contain the following:
 - [x] River 0.5.0 (from main branch)
@@ -35,9 +38,7 @@ To install the module, you can do the following (assumes npins installation, but
 + Import the module either by adding `"${river-next}/river-module.nix"` or `(import river-next).nixosModule` in your `imports`. 
 
 ## Notes
-Please note that all the packages here are pulling changes against their respective main branches. For window managers in particular, some are further along in development than others. Therefore, the risk of experiencing a breaking change may vary, **but it is always non-zero**!
-
-Furthermore, it is highly recommended for users with multi-monitor setups to to configure outputs via tools like `kanshi` (see the module config). This is because not all window managers support output management on their own, which will lead to incorrectly positioned windows or even crashes altogether.
+It is highly recommended for users with multi-monitor setups to to configure outputs via tools like `kanshi` (see the module config). This is because not all window managers support output management on their own, which will lead to incorrectly positioned windows or even crashes altogether.
 
 (17-03-2026): `reka`'s desktop session entry now works as intended. However, note that it **will not launch via GDM**. TTY or something similar like `ly` will launch it correctly, though.  
 Might just be a "GDM moment", but I do not plan to investigate further. That said, below are some tips:
