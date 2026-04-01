@@ -5,6 +5,9 @@ While the new iteration of `river` now exists in Nixpkgs, given how the composit
 I plan to update packages roughly once a week, ideally on Mondays.  
 **Last package update: 31-04-2026.**
 
+This is the **stable** release branch. Window managers that have no release versions are not present in this repo and are thus unchecked in the list below.  
+If any of those missing is what you seek, I suggest looking at the [main](https://github.com/dmkhitaryan/river-next-nix-module/tree/main) branch.
+
 ## Contents
 This repo has/will contain the following:
 - [x] River 0.4.2 (from stable branch)
@@ -30,11 +33,9 @@ This repo has/will contain the following:
       
 ## Importing
 To install the module, you can do the following (assumes npins installation, but others can work just fine too):
-+ Run `npins add --name "river-next" github dmkhitaryan river-next-nix-module -b main`
++ Run `npins add --name "river-next" github dmkhitaryan river-next-nix-module -b stable`
 + Add `river-next = sources.river-next;` in a `let` statement in your configuration (or don't!).
 + Import the module either by adding `"${river-next}/river-module.nix"` or `(import river-next).nixosModule` in your `imports`. 
 
 ## Notes
 It is highly recommended for users with multi-monitor setups to to configure outputs via tools like `kanshi` (see the module config). This is because not all window managers support output management on their own, which will lead to incorrectly positioned windows or even crashes altogether.
-
-"Unchecked" window managers have no stable release as of now, and thus are excluded from the *stable* branch. If any of those interest you, I suggest looking at the *main* branch.
