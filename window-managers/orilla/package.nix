@@ -12,18 +12,18 @@
 let
   defaultConfig = ./default.toml;
 in
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage( finalAttrs: {
   pname = "orilla";
-  version = "unstable-2026-03-22";
+  version = "orilla-run-v0.1.0";
 
   src = fetchFromSourcehut {
     owner = "~hokiegeek";
     repo = "orilla";
-    rev = "bd77afb99a192c10211385df4555e68e786094fb";
-    hash = "sha256-FwLKvIB4VXRhD0/1HpEdGwMp/EfGqTC2AfVs354uD3c=";
+    tag = finalAttrs.version;
+    hash = "sha256-fQPBTqboSbGtB6EoH0NU1tI1nL5Y7r64xztBJvUmJQw=";
   };
 
-  cargoHash = "sha256-fTKgRSDtV+5Dn4QAfBYsUbdaNj5GsVAwnYVwpw7VJms=";
+  cargoHash = "sha256-dgQWQF73AWJmt6J7wroOxTUq8liwPcDCH8iaLN/7Oms=";
   patches = [ ./xdg-config-path.patch ];
 
   nativeBuildInputs = [
@@ -55,5 +55,4 @@ rustPlatform.buildRustPackage {
     ];
     platforms = lib.platforms.linux;
   };
-
-}
+})

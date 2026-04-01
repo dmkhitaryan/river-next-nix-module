@@ -9,15 +9,15 @@
   cairo,
   pango,
 }:
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage(finalAttrs: {
   pname = "notion-river";
-  version = "unstable-2026-03-30";
+  version = "0.5.1";
 
   src = fetchFromGitHub {
     owner = "Marenz";
     repo = "notion-river";
-    rev = "3ce6e2e527801684a2c494a9cd3426f80e5b234a";
-    hash = "sha256-AmPAaLMdP3wPRMh3FQxk9ZNXvJR3j2zcG18ZHFKLCXs=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-ZZgzPOvgyopLfzWsV4ijL22xXiTBKujnVe+obDw9jI8=";
   };
 
   cargoHash = "sha256-XZMAUiPHnjZuNLCpEu9c5vWtv4Zy1wGb5aKKTl+3zZU=";
@@ -52,4 +52,4 @@ rustPlatform.buildRustPackage {
     ];
     platforms = lib.platforms.linux;
   };
-}
+})

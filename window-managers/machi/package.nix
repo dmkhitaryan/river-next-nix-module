@@ -15,12 +15,12 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "machi";
-  version = "unstable-2026-03-30";
+  version = "0.4.0";
 
   src = fetchFromCodeberg {
     owner = "machi";
     repo = "machi";
-    rev = "6b420ac60200d3143f13606288ebe5e78776bc61";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-PaDFWOduqynQHLxMRgmLxAE2v3jQvhY/B6LyJAs4pZI=";
   };
 

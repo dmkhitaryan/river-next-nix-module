@@ -15,12 +15,12 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "rill";
-  version = "unstable-2026-03-30";
+  version = "0.5.0";
 
   src = fetchFromCodeberg {
     owner = "lzj15";
     repo = "rill";
-    rev = "fd25ffdcc31b8af3e0c2c3dca7f5edeff1c12ab9";
+    tag = finalAttrs.version;
     hash = "sha256-Q7MG8sRCasUWNbI5DChH9yAaLDgJ3X63SN3bV0R633I=";
   };
 

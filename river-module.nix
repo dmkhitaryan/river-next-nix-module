@@ -17,20 +17,12 @@ let
     river-next = pkgs.callPackage ./river-next.nix { };
     beansprout = pkgs.callPackage ./window-managers/beansprout/package.nix { };
     canoe = pkgs.callPackage ./window-managers/canoe/package.nix { };
-    kuskokwim = pkgs.callPackage ./window-managers/kuskokwim/package.nix { };
     kwm = pkgs.callPackage ./window-managers/kwm/package.nix { };
     machi = pkgs.callPackage ./window-managers/machi/package.nix { };
-    mousetrap = pkgs.callPackage ./window-managers/mousetrap/package.nix { };
     notion-river = pkgs.callPackage ./window-managers/notion-river/package.nix { };
     orilla = pkgs.callPackage ./window-managers/orilla/package.nix { };
-    pwm = pkgs.callPackage ./window-managers/pwm/package.nix { };
-    rhine = pkgs.callPackage ./window-managers/rhine/package.nix { };
-    rijan = pkgs.callPackage ./window-managers/rijan/package.nix { };
     rill = pkgs.callPackage ./window-managers/rill/package.nix { };
     rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix { };
-    tarazed = pkgs.callPackage ./window-managers/tarazed/package.nix { };
-    zrwm = pkgs.callPackage ./window-managers/zrwm/package.nix { };
-    reka = pkgs.callPackage ./window-managers/reka/package.nix { };
   };
   selectedWMs = map (name: localPkgs.${name}) cfg.windowManagers;
 in
@@ -83,20 +75,12 @@ in
           types.enum [
             "beansprout"
             "canoe"
-            "kuskokwim"
             "kwm"
             "machi"
-            "mousetrap"
             "notion-river"
             "orilla"
-            "pwm"
-            "reka"
-            "rhine"
-            "rijan"
             "rill"
             "rrwm"
-            "tarazed"
-            "zrwm"
           ]
         )
       );

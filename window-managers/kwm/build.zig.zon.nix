@@ -15,10 +15,10 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "mvzr-0.3.7-ZSOky1dvAQDTEE_8S0pvpasmoEWQHVA29tMBdxL_hwra";
+    name = "mvzr-0.3.7-ZSOky5FtAQB2VrFQPNbXHQCFJxWTMAYEK7ljYEaMR6jt";
     path = fetchzip {
-      url = "https://github.com/mnemnion/mvzr/archive/refs/tags/v0.3.8.tar.gz";
-      hash = "sha256-weWDvirm7PndEoiDRK62NE4CJS6BiXca5/XVpppzWUA=";
+      url = "https://github.com/mnemnion/mvzr/archive/refs/tags/v0.3.7.tar.gz";
+      hash = "sha256-RsnjkmsAZAuwO75S9Zy2dW117E6APOgHRKC2ReMAkik=";
     };
   }
   {
@@ -29,10 +29,11 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "wayland-0.5.0-lQa1knz8AQCh08NA8BeQrwJB9U3CfqcVAdHZYGRKIGuu";
-    path = fetchzip {
-      url = "https://codeberg.org/ifreund/zig-wayland/archive/v0.5.0.tar.gz";
-      hash = "sha256-mhqOtC26iACIvQUq74AbLSXSPsnWMi3AvDV7G2uElpo=";
+    name = "wayland-0.5.0-dev-lQa1kvTUAQCsD8AobfOXJA_-TVG-WTYXju68OZ8L85RM";
+    path = fetchgit {
+      url = "https://codeberg.org/ifreund/zig-wayland";
+      rev = "f2480d25764a50ed2fe29f49e4209c074a557f46";
+      hash = "sha256-PosVlJ0FD80O46l0SYTWzfHFYfIE4Bdjqof/gttQ+KM";
     };
   }
   {

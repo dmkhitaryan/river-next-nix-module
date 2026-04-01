@@ -10,14 +10,14 @@
   fontconfig,
 }:
 
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage(finalAttrs: {
   pname = "canoe";
-  version = "unstable-2026-03-22";
+  version = "0.3.1";
 
   src = fetchFromGitHub {
     owner = "roblillack";
     repo = "canoe";
-    rev = "7791c580c91ef97c3fde3f3ac24c778653b7c05f";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-WFgFfElhEH2wfcQZr8sx/1zjRT/wMriQ/HA6PTyM7hw=";
   };
 
@@ -48,4 +48,4 @@ rustPlatform.buildRustPackage {
     ];
     platforms = lib.platforms.linux;
   };
-}
+})
