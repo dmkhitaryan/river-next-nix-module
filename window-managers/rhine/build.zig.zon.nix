@@ -8,11 +8,11 @@
 
 linkFarm "zig-packages" [
   {
-    name = "mr_tween-0.0.0-WbH78YcBAQAyLKpoJZkX_X4gs_gKE5Ac9YqmHupIGjJb";
+    name = "mr_tween-0.1.0-WbH78YcBAQD3RF4QfCYFF6EJCYzAzdIU4BHCj0pFI5yq";
     path = fetchgit {
       url = "https://codeberg.org/Games-by-Mason/mr_tween.git";
-      rev = "fc203039ef3cf130983246a526eb56fb6b110ef0";
-      hash = "sha256-HK8GemtYq/pp9Bw3WU6vomOQle8HCr0thtRBady1aw8=";
+      rev = "c20266b0629a828a2b166856b1b543cde7c9a898";
+      hash = "sha256-+f3klYdTikb7qoggebyOET+xHH9IuZt78MQTfpJOZjM=";
     };
   }
   {

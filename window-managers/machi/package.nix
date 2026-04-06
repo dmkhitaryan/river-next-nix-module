@@ -15,13 +15,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "machi";
-  version = "unstable-2026-03-30";
+  version = "unstable-2026-04-06";
 
   src = fetchFromCodeberg {
     owner = "machi";
     repo = "machi";
-    rev = "6b420ac60200d3143f13606288ebe5e78776bc61";
-    hash = "sha256-PaDFWOduqynQHLxMRgmLxAE2v3jQvhY/B6LyJAs4pZI=";
+    rev = "7b0fc895229c37fd5cbfbb0c7166785ceacd5927";
+    hash = "sha256-aHQt92IKnj4JDnhoTl5H94GIaSafknjLhwTPKpu4hPg=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

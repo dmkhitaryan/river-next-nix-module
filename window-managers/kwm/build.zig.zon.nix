@@ -8,6 +8,13 @@
 
 linkFarm "zig-packages" [
   {
+    name = "clap-0.11.0-oBajB-HnAQDPCKYzwF7rO3qDFwRcD39Q0DALlTSz5H7e";
+    path = fetchzip {
+      url = "https://github.com/Hejsil/zig-clap/archive/refs/tags/0.11.0.tar.gz";
+      hash = "sha256-XytqwtoE0xaR43YustgK68sAQPVfC0Dt+uCs8UTfkbU=";
+    };
+  }
+  {
     name = "fcft-2.0.0-zcx6C5EaAADIEaQzDg5D4UvFFMjSEwDE38vdE9xObeN9";
     path = fetchzip {
       url = "https://git.sr.ht/~novakane/zig-fcft/archive/v2.0.0.tar.gz";
@@ -15,10 +22,24 @@ linkFarm "zig-packages" [
     };
   }
   {
+    name = "kwim-0.1.2-Ewp5G61nAgB2s4gO44rGcfrpvgFjWxVhwz5L-FCCTor1";
+    path = fetchzip {
+      url = "https://github.com/kewuaa/kwim/archive/refs/tags/v0.1.2.tar.gz";
+      hash = "sha256-Kl0SFXVybnC4E/BFgHFCMDy7dNAlNBEIMQcwA0IzzDQ=";
+    };
+  }
+  {
     name = "mvzr-0.3.7-ZSOky1dvAQDTEE_8S0pvpasmoEWQHVA29tMBdxL_hwra";
     path = fetchzip {
       url = "https://github.com/mnemnion/mvzr/archive/refs/tags/v0.3.8.tar.gz";
       hash = "sha256-weWDvirm7PndEoiDRK62NE4CJS6BiXca5/XVpppzWUA=";
+    };
+  }
+  {
+    name = "mvzr-0.3.7-ZSOky5FtAQB2VrFQPNbXHQCFJxWTMAYEK7ljYEaMR6jt";
+    path = fetchzip {
+      url = "https://github.com/mnemnion/mvzr/archive/refs/tags/v0.3.7.tar.gz";
+      hash = "sha256-RsnjkmsAZAuwO75S9Zy2dW117E6APOgHRKC2ReMAkik=";
     };
   }
   {
@@ -40,6 +61,13 @@ linkFarm "zig-packages" [
     path = fetchzip {
       url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.3.0.tar.gz";
       hash = "sha256-e5bPEfxl4SQf0cqccLt/py1KOW1+Q1+kWZUEXBbh9oQ=";
+    };
+  }
+  {
+    name = "xkbcommon-0.4.0-VDqIe0i2AgDRsok2GpMFYJ8SVhQS10_PI2M_CnHXsJJZ";
+    path = fetchzip {
+      url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.4.0.tar.gz";
+      hash = "sha256-zQkmP/cuhAtjOLqYS5D15khKzpqyhbyZ0TD6/8jOkqE=";
     };
   }
 ]

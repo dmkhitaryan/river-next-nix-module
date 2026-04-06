@@ -11,16 +11,16 @@
 }:
 rustPlatform.buildRustPackage {
   pname = "notion-river";
-  version = "unstable-2026-03-30";
+  version = "unstable-2026-04-06";
 
   src = fetchFromGitHub {
     owner = "Marenz";
     repo = "notion-river";
-    rev = "3ce6e2e527801684a2c494a9cd3426f80e5b234a";
-    hash = "sha256-AmPAaLMdP3wPRMh3FQxk9ZNXvJR3j2zcG18ZHFKLCXs=";
+    rev = "ecd7b51a89b2fb127364cb69fc1789c56f7c48d7";
+    hash = "sha256-yrqD0V7wv3IEUWsIYhGYsovOnLFuwuaLq0xq4Qc/YCA=";
   };
 
-  cargoHash = "sha256-XZMAUiPHnjZuNLCpEu9c5vWtv4Zy1wGb5aKKTl+3zZU=";
+  cargoHash = "sha256-ZeWM6j58Gd8YV4lIgD//W3F1qc8/dlz2ss+/Sjam1Hk=";
 
   nativeBuildInputs = [
     pkg-config
