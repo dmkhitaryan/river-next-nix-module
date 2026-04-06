@@ -3,7 +3,7 @@
 While the new iteration of `river` now exists in Nixpkgs, given how the compositor works, a dozen or so of window managers would still need to be packaged to actually run something in it. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
 
 I plan to update packages roughly once a week, ideally on Mondays. Package versions (aside from River) will reflect this if they receive changes. Later I plan to adjust this to update based on their actual commit histories.  
-**Last package update: 30-03-2026.**
+**Last package update: 06-04-2026.**
 
 This is the **main** branch, thus all the packages here are pulling changes against their respective main branches. Combined with their varying development statuses, there is **always non-zero chance of a breaking change**!  
 If you are looking for something less unstable, I suggest looking at the [stable](https://github.com/dmkhitaryan/river-next-nix-module/tree/stable) branch.
@@ -13,6 +13,7 @@ This repo has/will contain the following:
 - [x] River 0.5.0 (from main branch)
 - [x] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
   - [x]  beansprout - a DWM-style tiling window manager with built-in wallpaper and a clock/bar, with configuration in Kdl
+  - [ ] bridge: A horizontal-tiling window manager with built-in icon bar
   - [x] Canoe - Stacking window manager with classic look and feel, written in Rust
   - [x]  kuskokwim - A tiling window manager with composable keybindings and first-class support for process management, written in Python
   - [x]  kwm - DWM-like dynamic tilling window manager with scrollable-tiling support, includes a simple status bar, written in Zig
@@ -44,3 +45,5 @@ It is highly recommended for users with multi-monitor setups to to configure out
 Might just be a "GDM moment", but I do not plan to investigate further. That said, below are some tips:
   1. If you are going to launch it through TTY, run `exec /nix/store/...river-reka-launcher` and enjoy.
   2. If running through `ly` or similar, look for the *River (Reka)* entry in the session list. Select it, log in, and enjoy.
+  
+(06-04-2026): I've added `channel` support in the repo, though I eventually restricted it to run specifically with the `rhine` session. Seeing as other window managers provide their own support, making it a separate option in the module felt too excessive.
