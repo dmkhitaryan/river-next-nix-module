@@ -1,0 +1,18 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p bash nix-prefetch-git gnused zon2nix jq nixfmt wget
+
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+
+latest_rev=$(git ls-remote https://codeberg.org/Sivecano/channel refs/heads/main | cut -f1)
+hash=$(nix-prefetch-git --url https://codeberg.org/Sivecano/channel --rev "$latest_rev" | jq -r '.hash')
+
+source "$SCRIPT_DIR/../window-managers/update-lib.sh"
+update_src "$SCRIPT_DIR/package.nix" "$latest_rev" "$hash"
+
+wget "https://codeberg.org/Sivecano/channel/raw/commit/${latest_rev}/build.zig.zon" -O "$SCRIPT_DIR/build.zig.zon"
+zon2nix "$SCRIPT_DIR/build.zig.zon" > "$SCRIPT_DIR/build.zig.zon.nix"
+
+sed -i 's|url = "\(https://[^"?]*\)?ref=[^"]*"|url = "\1"|g' "$SCRIPT_DIR/build.zig.zon.nix"
+nixfmt "$SCRIPT_DIR/build.zig.zon.nix"
+
+rm -f "$SCRIPT_DIR/build.zig.zon"

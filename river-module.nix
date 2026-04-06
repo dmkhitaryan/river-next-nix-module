@@ -31,6 +31,8 @@ let
     tarazed = pkgs.callPackage ./window-managers/tarazed/package.nix { };
     zrwm = pkgs.callPackage ./window-managers/zrwm/package.nix { };
     reka = pkgs.callPackage ./window-managers/reka/package.nix { };
+
+    channel = pkgs.callPackage ./channel/package.nix { };
   };
   selectedWMs = map (name: localPkgs.${name}) cfg.windowManagers;
 in
@@ -150,6 +152,7 @@ in
       environment.systemPackages =
         lib.optional (cfg.package != null) cfg.package
         ++ lib.optional cfg.kanshi.enable pkgs.kanshi
+        ++ lib.optional (builtins.elem "rhine" cfg.windowManagers) localPkgs.channel
         ++ cfg.extraPackages
         ++ selectedWMs;
 
@@ -244,6 +247,10 @@ in
                   in
                   "${pkgs.kanshi}/bin/kanshi${configFlag}"
                 } &
+              ''}
+
+              ${lib.optionalString (windowManager == "rhine") ''
+                ${localPkgs.channel}/bin/channel &
               ''}
 
               exec /run/current-system/sw/bin/${windowManager}

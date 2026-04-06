@@ -19,5 +19,7 @@
     tarazed = ./window-managers/tarazed/package.nix;
     zrwm = ./window-managers/zrwm/package.nix;
     reka = ./window-managers/reka/package.nix;
+
+    channel = ./channel/package.nix;
   };
 }
