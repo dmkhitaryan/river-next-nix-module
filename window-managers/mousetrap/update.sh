@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash nix-prefetch-git gnused zon2nix jq nixfmt wget
+#!nix-shell -i bash -p bash common-updater-scripts git nix-prefetch-git jq
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 
 latest_rev=$(git ls-remote https://codeberg.org/g4b/mousetrap refs/heads/master | cut -f1)

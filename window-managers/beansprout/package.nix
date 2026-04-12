@@ -17,13 +17,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "beansprout";
-  version = "unstable-2026-04-06";
+  version = "unstable-2026-04-12";
 
   src = fetchFromCodeberg {
     owner = "beansprout";
     repo = "beansprout";
-    rev = "4b5405f847d4398472973dd77d5268c82fc3e383";
-    hash = "sha256-DfjfCh3UCS1M44ZWXa5wVX0mpeksRYEf/Ga1zUp2onk=";
+    rev = "92f79b3b7292a831badce3acefac4402c022f80a";
+    hash = "sha256-QxIpZ8z4rAhNj3C2Fv/cxxJwcqrQMrk1M6o46I2NH4E=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
@@ -31,10 +31,10 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     zig_0_15
     wayland-scanner
-    wayland-protocols
     pkg-config
   ];
   buildInputs = [
+    wayland-protocols
     libxkbcommon
     wayland
     pixman

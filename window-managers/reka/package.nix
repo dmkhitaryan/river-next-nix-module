@@ -14,7 +14,7 @@
 let
   reka = rustPlatform.buildRustPackage {
     pname = "reka-lib";
-    version = "unstable-2026-03-30";
+    version = "unstable-2026-04-12";
 
     src = fetchFromCodeberg {
       owner = "tazjin";
@@ -47,7 +47,7 @@ emacsPackages.trivialBuild {
   version = "unstable-2026-03-16";
   src = fetchurl {
     url = "https://codeberg.org/tazjin/reka/raw/branch/canon/lisp/reka.el";
-    hash = "sha256-LLdH9NiKquFjrzly7uKnG/+QQKw+DA5khT6ggJx/SmM=";
+    hash = "sha256-WR6yNq2z2qIJMbpM7nEMTDxZm3TK5RfUaKoDk8FtOsI=";
   };
   packageRequires = [ reka ];
 

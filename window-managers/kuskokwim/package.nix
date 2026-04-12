@@ -10,15 +10,15 @@
 
 python3Packages.buildPythonPackage (finalAttrs: {
   pname = "kuskokwim";
-  version = "unstable-2026-03-22";
+  version = "unstable-2026-04-12";
 
   pyproject = true;
 
   src = fetchFromCodeberg {
     owner = "ricci";
     repo = "kuskokwim";
-    rev = "3ff9cab59235a55f4d88da1e1edea577e2d7ea45";
-    hash = "sha256-R1Yp3jcgXeCNtdIM67AyN7pm/MH8c66SbCz6yOm1I10=";
+    rev = "1c1486874098f382414eaaea498dee4a4788b95d";
+    hash = "sha256-p+9gVXzXk3r3WuS5GGnpo5B7knmtTQOaDJ6mHYUnrTc=";
   };
 
   build-system = [

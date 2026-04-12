@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash nix-prefetch-git gnused zon2nix jq nixfmt wget
+#!nix-shell -i bash -p bash common-updater-scripts git nix-prefetch-git jq
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 
@@ -8,4 +8,3 @@ hash=$(nix-prefetch-git --url https://git.sr.ht/~zuki/zrwm --rev "$latest_rev" |
 
 source "$SCRIPT_DIR/../update-lib.sh"
 update_src "$SCRIPT_DIR/package.nix" "$latest_rev" "$hash"
-

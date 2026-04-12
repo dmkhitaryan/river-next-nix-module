@@ -22,10 +22,10 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "kwim-0.1.2-Ewp5G61nAgB2s4gO44rGcfrpvgFjWxVhwz5L-FCCTor1";
+    name = "kwim-0.1.3-Ewp5G5LSAgBj9DS0jw7eO3daP0tWOKk_4VOKXmkepYPW";
     path = fetchzip {
-      url = "https://github.com/kewuaa/kwim/archive/refs/tags/v0.1.2.tar.gz";
-      hash = "sha256-Kl0SFXVybnC4E/BFgHFCMDy7dNAlNBEIMQcwA0IzzDQ=";
+      url = "https://github.com/kewuaa/kwim/archive/refs/tags/v0.1.3.tar.gz";
+      hash = "sha256-KPxe7t2vDlsJIAWB3D13iQ7mZZi7WbmgJwc4XdoyaQ0=";
     };
   }
   {
