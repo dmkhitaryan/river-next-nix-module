@@ -3,7 +3,7 @@
 While the new iteration of `river` now exists in Nixpkgs, given how the compositor works, a dozen or so of window managers would still need to be packaged to actually run something in it. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
 
 I plan to update packages roughly once a week, ideally on Mondays.  
-**Last package update: 31-04-2026.**
+**Last package update: 12-04-2026.**
 
 This is the **stable** release branch. Window managers that have no release versions are not present in this repo and are thus unchecked in the list below.  
 If any of those missing is what you seek, I suggest looking at the [main](https://github.com/dmkhitaryan/river-next-nix-module/tree/main) branch.
@@ -12,8 +12,9 @@ If any of those missing is what you seek, I suggest looking at the [main](https:
 This repo has/will contain the following:
 - [x] River 0.4.2 (from stable branch)
 - [x] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
+  - [x] ashrwm - Minimal dynamic tiling window manager with tiling, and grid layouts, hot reloading and more
   - [x]  beansprout - a DWM-style tiling window manager with built-in wallpaper and a clock/bar, with configuration in Kdl
-  - [ ] bridge - a horizontal-tiling window manager with built-in icon bar
+  - [x] bridge - a horizontal-tiling window manager with built-in icon bar
   - [x]  canoe - Stacking window manager with classic look and feel, written in Rust
   - [ ]  kuskokwim - A tiling window manager with composable keybindings and first-class support for process management, written in Python
   - [x]  kwm - DWM-like dynamic tilling window manager with scrollable-tiling support, includes a simple status bar, written in Zig

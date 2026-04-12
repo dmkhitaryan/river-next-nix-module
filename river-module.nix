@@ -15,7 +15,9 @@ let
 
   localPkgs = {
     river-next = pkgs.callPackage ./river-next.nix { };
+    ashrwm = pkgs.callPackage ./window-managers/ashrwm/package.nix { };
     beansprout = pkgs.callPackage ./window-managers/beansprout/package.nix { };
+    bridge = pkgs.callPackage ./window-managers/bridge/package.nix { };
     canoe = pkgs.callPackage ./window-managers/canoe/package.nix { };
     kwm = pkgs.callPackage ./window-managers/kwm/package.nix { };
     machi = pkgs.callPackage ./window-managers/machi/package.nix { };
@@ -73,7 +75,9 @@ in
       type = types.unique { message = "Duplicate window manager entries are not allowed."; } (
         types.listOf (
           types.enum [
+            "ashrwm"
             "beansprout"
+            "bridge"
             "canoe"
             "kwm"
             "machi"
