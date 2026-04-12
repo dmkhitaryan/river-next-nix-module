@@ -86,8 +86,11 @@ in
       type = types.unique { message = "Duplicate window manager entries are not allowed."; } (
         types.listOf (
           types.enum [
+            "ashrwm"
             "beansprout"
+            "bridge"
             "canoe"
+            "cow"
             "kuskokwim"
             "kwm"
             "machi"
