@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchFromGitHub,
+  fetchFromCodeberg,
   zig_0_15,
   libxkbcommon,
   wayland,
@@ -18,7 +18,7 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "bridge";
   version = "unstable-2026-04-12";
 
-  src = fetchFromGitHub {
+  src = fetchFromCodeberg {
     owner = "sunn4room";
     repo = "bridge";
     rev = "94b9a36c78e0f74eb24986548bb58a04acc76660";
