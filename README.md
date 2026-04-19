@@ -12,6 +12,7 @@ If you are looking for something less unstable, I suggest looking at the [stable
 This repo has/will contain the following:
 - [x] River 0.5.0 (from main branch)
 - [x] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
+  - [x] anvl - Minimal river based tiling window manager inspired and influenced by dwm and tinyrwm.
   - [x] ashrwm - Minimal dynamic tiling window manager with tiling, and grid layouts, hot reloading and more
   - [x]  beansprout - DWM-style tiling window manager with built-in wallpaper and a clock/bar, with configuration in Kdl
   - [x] bridge - Horizontal-tiling window manager with built-in icon bar
