@@ -31,6 +31,7 @@ let
     rhine = pkgs.callPackage ./window-managers/rhine/package.nix { };
     rijan = pkgs.callPackage ./window-managers/rijan/package.nix { };
     rill = pkgs.callPackage ./window-managers/rill/package.nix { };
+    ropotamo = pkgs.callPackage ./window-managers/ropotamo/package.nix { };
     rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix { };
     tarazed = pkgs.callPackage ./window-managers/tarazed/package.nix { };
     zrwm = pkgs.callPackage ./window-managers/zrwm/package.nix { };
@@ -104,6 +105,7 @@ in
             "rhine"
             "rijan"
             "rill"
+            "ropotamo"
             "rrwm"
             "tarazed"
             "zrwm"

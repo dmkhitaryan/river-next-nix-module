@@ -1,0 +1,84 @@
+--- a/src/actions.janet
++++ b/src/actions.janet
+@@ -23,11 +23,18 @@
+ 
+ (defn action/set-mode [new-mode]
+   (fn [seat binding]
+-    (seat/new-mode seat new-mode)))
++    (seat/new-mode seat new-mode)
++    (when (and (not= new-mode :default)
++               (seat :xkb-bindings-seat))
++      (:ensure-next-key-eaten (seat :xkb-bindings-seat)))))
++
++# Keybound launches must return immediately so River can finish the manage
++# sequence instead of blocking on long-lived GUI processes like terminals.
++(defn spawn-background [command]
++  (ev/spawn (os/spawn command :p)))
+ 
+ (defaction "spawn" [command]
+-  (ev/spawn
+-   (os/proc-wait (os/spawn command :p))))
++  (spawn-background command))
+ 
+ (defaction "send-chord" [mod key]
+   (let [xkb-bindings (seat :xkb-bindings)]
+@@ -37,8 +44,7 @@
+   (let [mod (string mod)
+         key (string key)
+         command ["wtype" "-M" mod "-P" key "-m" mod "-p" key]]
+-    (ev/spawn
+-     (os/proc-wait (os/spawn command :p)))))
++    (spawn-background command)))
+ 
+ (defaction "only" []
+   (when-let [output (seat :focused-output)]
+--- a/src/ropotamo.janet
++++ b/src/ropotamo.janet
+@@ -34,7 +34,7 @@
+                       "protocol/river-xkb-config-v1.xml"]))
+ 
+ (def required-globals @{"river_window_manager_v1" 4
+-                        "river_xkb_bindings_v1" 1
++                        "river_xkb_bindings_v1" 2
+                         "river_layer_shell_v1" 1
+                         "river_input_manager_v1" 1
+                         "river_libinput_config_v1" 1
+--- a/src/seat.janet
++++ b/src/seat.janet
+@@ -65,8 +65,10 @@
+       (unless (seat-bindings mode)
+         (put seat-bindings mode @[]))
+       (each binding (xkb-bindings mode)
+-        (xkb-binding/create seat mode
+-                            (= mode :default) ;binding)))))
++        (let [[keysym mods action] binding]
++          (xkb-binding/create seat mode
++                              (= mode :default)
++                              keysym mods action))))))
+ 
+   (when (seat :new-xkb-mode)
+     (put seat :new-xkb-mode nil)
+@@ -90,6 +92,7 @@
+ (defn seat/create [obj]
+   (def seat @{:obj obj
+               :layer-shell (:get-seat (globals "river_layer_shell_v1") obj)
++              :xkb-bindings-seat (:get-seat (globals "river_xkb_bindings_v1") obj)
+               :layer-focus :none
+               :new true
+               :new-xkb-mode true
+@@ -103,8 +106,15 @@
+       [:focus-exclusive] (put seat :layer-focus :exclusive)
+       [:focus-non-exclusive] (put seat :layer-focus :non-exclusive)
+       [:focus-none] (put seat :layer-focus :none)))
++  (defn seat/handle-xkb-bindings-event [event]
++    (match event
++      [:ate-unbound-key]
++      (do
++        (put seat :new-xkb-mode true)
++        (put seat :xkb-mode :default))))
+   (:set-handler obj seat/handle-event)
+   (:set-handler (seat :layer-shell) seat/handle-layer-shell-event)
++  (:set-handler (seat :xkb-bindings-seat) seat/handle-xkb-bindings-event)
+   (:set-user-data obj seat)
+   (:set-xcursor-theme obj "Adwaita" 24)
+   seat)

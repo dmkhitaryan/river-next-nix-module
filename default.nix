@@ -20,6 +20,7 @@
     rhine = ./window-managers/rhine/package.nix;
     rijan = ./window-managers/rijan/package.nix;
     rill = ./window-managers/rill/package.nix;
+    ropotamo = ./window-managers/ropotamo/package-test.nix;
     rrwm = ./window-managers/rrwm/package.nix;
     tarazed = ./window-managers/tarazed/package.nix;
     zrwm = ./window-managers/zrwm/package.nix;
