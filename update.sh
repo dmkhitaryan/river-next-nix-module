@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts nix-prefetch-git gnused zon2nix jq nixfmt wget
+#!nix-shell -i bash -p bash common-updater-scripts nix zon2nix nix-prefetch-git gnused jq nixfmt wget
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 source "$SCRIPT_DIR/window-managers/update-lib.sh"

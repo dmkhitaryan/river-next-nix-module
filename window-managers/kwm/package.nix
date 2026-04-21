@@ -18,13 +18,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "kewuaa";
-  version = "0.2.1";
+  version = "0.2.2";
 
   src = fetchFromGitHub {
     owner = "kewuaa";
     repo = "kwm";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-N/K+AcDC1TnlhZqjyFf/HlYt0s9lP7JaA00losVnops=";
+    hash = "sha256-Vfdi9AXf3497JAVrdMcheQcDFnqgSrXQy92+pU02c/Q=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

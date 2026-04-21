@@ -3,15 +3,16 @@
 While the new iteration of `river` now exists in Nixpkgs, given how the compositor works, a dozen or so of window managers would still need to be packaged to actually run something in it. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
 
 I plan to update packages roughly once a week, ideally on Mondays.  
-**Last package update: 12-04-2026.**
+**Last package update: 21-04-2026.**
 
 This is the **stable** release branch. Window managers that have no release versions are not present in this repo and are thus unchecked in the list below.  
 If any of those missing is what you seek, I suggest looking at the [main](https://github.com/dmkhitaryan/river-next-nix-module/tree/main) branch.
 
 ## Contents
 This repo has/will contain the following:
-- [x] River 0.4.2 (from stable branch)
+- [x] River 0.4.4 (from stable branch)
 - [x] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
+  - [ ] anvl - Minimal river based tiling window manager inspired and influenced by dwm and tinyrwm.
   - [x] ashrwm - Minimal dynamic tiling window manager with tiling, and grid layouts, hot reloading and more
   - [x]  beansprout - a DWM-style tiling window manager with built-in wallpaper and a clock/bar, with configuration in Kdl
   - [x] bridge - a horizontal-tiling window manager with built-in icon bar
@@ -28,6 +29,7 @@ This repo has/will contain the following:
   - [ ]  rhine - Tiling window manager with a bsp layout, some Hyprland IPC for bars and ambitions of modularity
   - [ ]  rijan - Small dynamic tiling window manager in 600 lines of Janet
   - [x]  rill - A minimalist scrolling window manager with simple animation, written in Zig
+  - [ ]  ropotamo - StumpWM-like tiling window manager for River
   - [x]  rrwm - Tiling window manager with a cosmic/bspwm layout, written in Rust
   - [ ]  tarazed - Non-tiling window manager focusing on a powerful and distraction-free desktop experience
   - [ ]  zrwm - Dynamic tiling window manager configured using a CLI tool
