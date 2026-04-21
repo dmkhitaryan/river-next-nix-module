@@ -32,9 +32,8 @@ let
       url = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.25.0/downloads/wayland-1.25.0.tar.xz";
       hash = "sha256-wGXwQK/f8xd2gGAPJJcn5Boa/CL8zyciLxX1MG+qHwM=";
     };
-    nativeBuildInputs = map
-      (drv: if drv == wayland-scanner then wayland-scanner_1_25 else drv)
-      prev.nativeBuildInputs
+    nativeBuildInputs =
+      map (drv: if drv == wayland-scanner then wayland-scanner_1_25 else drv) prev.nativeBuildInputs
       ++ [ mdbook ];
   });
 
@@ -50,7 +49,12 @@ let
       installPhase ? null,
     }:
     stdenv.mkDerivation ({
-      inherit pname version src buildInputs;
+      inherit
+        pname
+        version
+        src
+        buildInputs
+        ;
 
       nativeBuildInputs = [
         janet
@@ -141,7 +145,10 @@ let
     pname = "janet-wayland";
     version = "unstable-2026-04-20";
     src = janetWaylandSrc;
-    janetDeps = [ lemongrass spork ];
+    janetDeps = [
+      lemongrass
+      spork
+    ];
     buildInputs = [ wayland_1_25 ];
     postPatch = ''
       substituteInPlace src/wayland.janet \

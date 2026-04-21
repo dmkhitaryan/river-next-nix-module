@@ -11,7 +11,7 @@
 }:
 rustPlatform.buildRustPackage {
   pname = "notion-river";
-  version = "unstable-2026-04-06";
+  version = "unstable-2026-04-20";
 
   src = fetchFromGitHub {
     owner = "Marenz";

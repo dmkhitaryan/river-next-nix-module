@@ -18,7 +18,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "kewuaa";
-  version = "unstable-2026-04-12";
+  version = "unstable-2026-04-20";
 
   src = fetchFromGitHub {
     owner = "kewuaa";

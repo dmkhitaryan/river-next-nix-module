@@ -16,7 +16,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "bridge";
-  version = "unstable-2026-04-12";
+  version = "unstable-2026-04-20";
 
   src = fetchFromCodeberg {
     owner = "sunn4room";

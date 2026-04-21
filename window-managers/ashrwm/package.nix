@@ -17,7 +17,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "ashrwm";
-  version = "unstable-2026-04-12";
+  version = "unstable-2026-04-20";
 
   src = fetchFromGitHub {
     owner = "shadowash8";
