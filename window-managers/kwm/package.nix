@@ -23,8 +23,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "kewuaa";
     repo = "kwm";
-    rev = "e9eaac18341f89fdbc9a3633934d85916b975412";
-    hash = "sha256-czUSHWFkNqhxPnoMHcNoXT3zCJ3WVMS6sZuMO40Yvfs=";
+    rev = "553a7ce63f347c868aed7d7e1c29ad87e5b7eaa8";
+    hash = "sha256-1bTH9a60sUKmZ40w1tXofmUn35u08oNIZShVK5t+AMg=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

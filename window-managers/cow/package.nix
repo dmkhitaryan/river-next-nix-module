@@ -22,8 +22,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromCodeberg {
     owner = "thomasadam";
     repo = "cow";
-    rev = "c0b8ecccacc972c6c63d2c7e8a73a8ab2cb8da27";
-    hash = "sha256-Hzydj5HlpNLUmnLfeR5XnPgskMQlCcMz00sI8+HdI3U=";
+    rev = "7ea52db12143d7ffbe7fbb14343aead6a9be4217";
+    hash = "sha256-4kjR+T1s1o8gzqyShbEFzT4R2m1om4jUUWrbs2G4eVc=";
   };
 
   nativeBuildInputs = [
@@ -33,6 +33,7 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     ninja
   ];
+
   buildInputs = [
     wayland
     cairo
@@ -42,6 +43,8 @@ stdenv.mkDerivation (finalAttrs: {
     libxkbcommon
     scdoc
   ];
+
+  env.NIX_CFLAGS_COMPILE = "-Wno-error=format-security";
 
   postInstall = ''
     install -Dm755 $src/config/cow.conf $out/examples/cow.conf

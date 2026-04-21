@@ -18,7 +18,7 @@
   wayland-scanner,
   wlroots_0_20,
   xwayland,
-  zig_0_15,
+  zig,
   withManpages ? true,
   xwaylandSupport ? true,
 }:
@@ -30,8 +30,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromCodeberg {
     owner = "river";
     repo = "river";
-    rev = "9f2a3472dd73b7e7622a8cceccecec00b7323bbf";
-    hash = "sha256-18JscpqfPm06AQUqaH4ADpchR7NxqsqqH5xmgguaHuc=";
+    rev = "6c65ba67051774491a0e588e8fe230831054f72d";
+    hash = "sha256-Vz6XwsjXdJwZSsC+Fwkj62BpqO9iwb5QexJP2A9zvoc=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
@@ -40,7 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     wayland-scanner
     xwayland
-    zig_0_15
+    zig
   ]
   ++ lib.optional withManpages scdoc;
 

@@ -52,4 +52,4 @@ Might just be a "GDM moment", but I do not plan to investigate further. That sai
   
 (06-04-2026): I've added `channel` support in the repo, though I eventually restricted it to run specifically with the `rhine` session. Seeing as other window managers provide their own support, making it a separate option in the module felt too excessive.
 
-(20-04-2026): `ropotamo` builds and runs, but it was certainly a pain to build given lack of support similar to the conventional languages. Furthermore, it requires `wayland` version (1.25) that is not yet present in Nixpkgs, further complicating the build. Unless the situation improves (at least wayland gets a version bump soon), I might stop updating it in a month or so.
+(20-04-2026): `ropotamo` builds and runs, but the file is a ginormous mess due to urgency and lack of Janet builder. I'll hopefully simplify it later down the line.

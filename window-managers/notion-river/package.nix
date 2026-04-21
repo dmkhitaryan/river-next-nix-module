@@ -16,8 +16,8 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "Marenz";
     repo = "notion-river";
-    rev = "ecd7b51a89b2fb127364cb69fc1789c56f7c48d7";
-    hash = "sha256-yrqD0V7wv3IEUWsIYhGYsovOnLFuwuaLq0xq4Qc/YCA=";
+    rev = "1a913958783b6b27f49696c6141c0d1ac4782062";
+    hash = "sha256-IEja8aX1p6NbRUKHwhPWn85vGQE+lnxqm7Wao9G5E8c=";
   };
 
   cargoHash = "sha256-ZeWM6j58Gd8YV4lIgD//W3F1qc8/dlz2ss+/Sjam1Hk=";

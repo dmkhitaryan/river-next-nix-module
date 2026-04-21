@@ -22,8 +22,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromCodeberg {
     owner = "beansprout";
     repo = "beansprout";
-    rev = "92f79b3b7292a831badce3acefac4402c022f80a";
-    hash = "sha256-QxIpZ8z4rAhNj3C2Fv/cxxJwcqrQMrk1M6o46I2NH4E=";
+    rev = "4cf089945733fab068d271e57a48f8bfadff1871";
+    hash = "sha256-jWjuHxhfxSsdl/z5ThFW4UDBNRcBbvPKHrhxjhhrgFU=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

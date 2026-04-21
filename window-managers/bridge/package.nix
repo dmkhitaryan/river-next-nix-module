@@ -21,8 +21,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromCodeberg {
     owner = "sunn4room";
     repo = "bridge";
-    rev = "94b9a36c78e0f74eb24986548bb58a04acc76660";
-    hash = "sha256-vsmhAygD/rYcKfs+2Xvv7yEfv1+CKzHap+3DlfX+iFE=";
+    rev = "62150b0b5c9e9a394581752666f07a4a1a334f52";
+    hash = "sha256-DfRkt93McX+pjryOfxptTcV82FMf1N4BKntoEgwe5rQ=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

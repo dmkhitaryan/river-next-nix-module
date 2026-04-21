@@ -36,20 +36,6 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "fcft-3.0.0-zcx6CxQfAAAOlHFehXv7HwRPcuo7StCjZAtapZbSB6fq";
-    path = fetchzip {
-      url = "https://git.sr.ht/~novakane/zig-fcft/archive/v3.0.0.tar.gz";
-      hash = "sha256-/sd+lUK/M48Vfqth1z9BJp/dJ/SMahoCfPqhMJD3lgQ=";
-    };
-  }
-  {
-    name = "wayland-0.4.0-lQa1khbMAQAsLS2eBR7M5lofyEGPIbu2iFDmoz8lPC27";
-    path = fetchzip {
-      url = "https://codeberg.org/ifreund/zig-wayland/archive/v0.4.0.tar.gz";
-      hash = "sha256-ulIII5iJpM/W/VJB0HcdktEO2eb9T9J0ln2A1Z94dU4=";
-    };
-  }
-  {
     name = "wlroots-0.19.4-jmOlcqQMBABhKYH6NMSnoK1sohTbhc97_JP-hGg2UZaK";
     path = fetchzip {
       url = "https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.4.tar.gz";
@@ -57,10 +43,10 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "xkbcommon-0.3.0-VDqIe3K9AQB2fG5ZeRcMC9i7kfrp5m2rWgLrmdNn9azr";
+    name = "fcft-3.0.0-zcx6CxQfAAAOlHFehXv7HwRPcuo7StCjZAtapZbSB6fq";
     path = fetchzip {
-      url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.3.0.tar.gz";
-      hash = "sha256-e5bPEfxl4SQf0cqccLt/py1KOW1+Q1+kWZUEXBbh9oQ=";
+      url = "https://git.sr.ht/~novakane/zig-fcft/archive/v3.0.0.tar.gz";
+      hash = "sha256-/sd+lUK/M48Vfqth1z9BJp/dJ/SMahoCfPqhMJD3lgQ=";
     };
   }
 ]

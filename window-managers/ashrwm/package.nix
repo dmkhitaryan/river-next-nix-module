@@ -22,8 +22,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "shadowash8";
     repo = "ashrwm";
-    rev = "42978823e12ac3598c2d218e3d32ac5a41b438b6";
-    hash = "sha256-KFYwuEV6AybKOyBm5cZITPhP/XLnjBYheRBwQDzXbG0=";
+    rev = "1b1fd5d10716927ac629a9bf867865bb9c233c3a";
+    hash = "sha256-PN656k/OVu0swYxBVghKJEtHj91fxWzuGAp5YD0ESEM=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
