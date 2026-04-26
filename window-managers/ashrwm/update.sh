@@ -1,16 +1,23 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts nix nix-prefetch-git jq nixfmt wget
+#!nix-shell -i bash -p bash common-updater-scripts nix nix-prefetch-git jq nixfmt
 
-SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+cd "$SCRIPT_DIR" || exit 1
+
+source ../update-lib.sh
 
 latest_tag=$(list-git-tags --url=https://github.com/shadowash8/ashrwm | sed 's/^v//' | sort --version-sort | tail --lines=1)
-hash=$(nix-prefetch-git --url https://github.com/shadowash8/ashrwm --rev "v$latest_tag" | jq -r '.hash')
+prefetch=$(nix-prefetch-git --url https://github.com/shadowash8/ashrwm --rev "v$latest_tag")
+hash=$(prefetch_field "$prefetch" hash)
+latest_path=$(prefetch_field "$prefetch" path)
+latest_zon="$latest_path/build.zig.zon"
+latest_zon_digest=$(zon_digest "$latest_zon")
 
-source "$SCRIPT_DIR/../update-lib.sh"
-update_src "$SCRIPT_DIR/package.nix" "$latest_tag" "$hash"
-
-
-wget "https://raw.githubusercontent.com/shadowash8/ashrwm/${latest_tag}/build.zig.zon" -O "$SCRIPT_DIR/build.zig.zon"
+if [ -s build.zig.zon.nix ] && [ "$(current_zon_digest build.zig.zon.nix)" = "$latest_zon_digest" ]; then
+  echo "ashrwm build.zig.zon unchanged; skipping dependency regeneration."
+  update_src package.nix "$latest_tag" "$hash"
+  exit 0
+fi
 
 fetch() {
   local url=$1 rev=$2
@@ -37,7 +44,7 @@ wayland_archive=$(fetch_zip https://codeberg.org/ifreund/zig-wayland/archive/v0.
 wlroots=$(fetch_zip https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.4.tar.gz)
 xkbcommon_archive=$(fetch_zip https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.4.0.tar.gz)
 
-cat > "$SCRIPT_DIR/build.zig.zon.nix" << EOF
+cat > build.zig.zon.nix << EOF
 { linkFarm, fetchgit, fetchzip }:
 linkFarm "zig-packages" [
   { name = "janet-1.40.1-3XUN8cVGAAA7Os-UamOhi0sYVRqN-slGltgD5Jwwwfdk";
@@ -75,6 +82,6 @@ linkFarm "zig-packages" [
 ]
 EOF
 
-nixfmt "$SCRIPT_DIR/build.zig.zon.nix"
-
-rm -f "$SCRIPT_DIR/build.zig.zon"
+write_zon_digest_comment build.zig.zon.nix "$latest_zon_digest"
+nixfmt build.zig.zon.nix
+update_src package.nix "$latest_tag" "$hash"

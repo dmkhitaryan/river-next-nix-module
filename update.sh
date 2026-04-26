@@ -1,8 +1,9 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts nix zon2nix nix-prefetch-git gnused jq nixfmt wget
+#!nix-shell -i bash -p bash common-updater-scripts nix zon2nix nix-prefetch-git gnused jq nixfmt
 
-SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
-source "$SCRIPT_DIR/window-managers/update-lib.sh"
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+cd "$SCRIPT_DIR" || exit 1
+source window-managers/update-lib.sh
 
 usage() {
   echo "Usage: $(basename "$0") [--update] [--build]"
@@ -31,7 +32,7 @@ if ! $do_update && ! $do_build; then
   do_build=true
 fi
 
-WM_DIR="$SCRIPT_DIR/window-managers"
+WM_DIR=window-managers
 update_failed=()
 build_failed=()
 
@@ -39,14 +40,16 @@ build_failed=()
 if $do_update; then
   echo "Updating river..."
   latest_tag=$(list-git-tags --url=https://codeberg.org/river/river | sed 's/^v//' | sort --version-sort | tail --lines=1)
-  hash=$(nix-prefetch-git --url https://codeberg.org/river/river --rev "v$latest_tag" | jq -r '.hash')
-  update_src "$SCRIPT_DIR/river-next.nix" "$latest_tag" "$hash"
-
-  wget "https://codeberg.org/river/river/raw/tag/v${latest_tag}/build.zig.zon" -O "$SCRIPT_DIR/build.zig.zon"
-  zon2nix "$SCRIPT_DIR/build.zig.zon" > "$SCRIPT_DIR/build.zig.zon.nix"
-  sed -i 's|url = "\(https://[^"?]*\)?ref=[^"]*"|url = "\1"|g' "$SCRIPT_DIR/build.zig.zon.nix"
-  nixfmt "$SCRIPT_DIR/build.zig.zon.nix"
-  rm -f "$SCRIPT_DIR/build.zig.zon"
+  if ! update_zig_package \
+      "https://codeberg.org/river/river" \
+      "v$latest_tag" \
+      "$latest_tag" \
+      river-next.nix \
+      build.zig.zon.nix \
+      river; then
+    echo "  FAILED — river build.zig.zon refresh"
+    update_failed+=("river")
+  fi
 
   for script in "$WM_DIR"/*/update.sh; do
     wm=$(basename "$(dirname "$script")")
@@ -66,7 +69,7 @@ if $do_build; then
   echo ""
   echo "Building river..."
   river_log="/tmp/river-build-river.log"
-  if nix-build -E "with import <nixpkgs> {}; callPackage $SCRIPT_DIR/river-next.nix {}" \
+  if nix-build -E "with import <nixpkgs> {}; callPackage ./river-next.nix {}" \
       --no-out-link >"$river_log" 2>&1; then
     rm -f "$river_log"
   else
