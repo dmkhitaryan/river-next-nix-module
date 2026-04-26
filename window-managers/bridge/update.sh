@@ -1,15 +1,29 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts git nix nix-prefetch-git jq nixfmt wget
+#!nix-shell -i bash -p bash common-updater-scripts git nix nix-prefetch-git jq nixfmt
 
-SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+cd "$SCRIPT_DIR" || exit 1
 
-latest_rev=$(git ls-remote https://codeberg.org/sunn4room/bridge refs/heads/main | cut -f1)
-hash=$(nix-prefetch-git --url https://codeberg.org/sunn4room/bridge --rev "$latest_rev" | jq -r '.hash')
+source ../update-lib.sh
 
-source "$SCRIPT_DIR/../update-lib.sh"
-update_src "$SCRIPT_DIR/package.nix" "$latest_rev" "$hash"
+prefetch=$(nix-prefetch-git --url https://codeberg.org/sunn4room/bridge --rev refs/heads/main)
+latest_rev=$(prefetch_field "$prefetch" rev)
+latest_hash=$(prefetch_field "$prefetch" hash)
+latest_path=$(prefetch_field "$prefetch" path)
+latest_zon="$latest_path/build.zig.zon"
+latest_zon_digest=$(zon_digest "$latest_zon")
+current_pkg_rev=$(current_rev package.nix)
 
-wget "https://codeberg.org/sunn4room/bridge/raw/commit/${latest_rev}/build.zig.zon" -O "$SCRIPT_DIR/build.zig.zon"
+if [ "$current_pkg_rev" = "$latest_rev" ] && [ -s build.zig.zon.nix ]; then
+  echo "bridge already at $latest_rev; skipping."
+  exit 0
+fi
+
+if [ -s build.zig.zon.nix ] && [ "$(current_zon_digest build.zig.zon.nix)" = "$latest_zon_digest" ]; then
+  echo "bridge build.zig.zon unchanged; skipping dependency regeneration."
+  update_src package.nix "$latest_rev" "$latest_hash"
+  exit 0
+fi
 
 fetch_zip() {
   nix hash convert --hash-algo sha256 --to sri "$(nix-prefetch-url --type sha256 --unpack "$1" 2>/dev/null)"
@@ -23,7 +37,7 @@ pixman=$(fetch_zip https://codeberg.org/ifreund/zig-pixman/archive/v0.3.0.tar.gz
 wlroots=$(fetch_zip https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.4.tar.gz)
 fcft=$(fetch_zip https://git.sr.ht/~novakane/zig-fcft/archive/v3.0.0.tar.gz)
 
-cat > "$SCRIPT_DIR/build.zig.zon.nix" << EOF
+cat > build.zig.zon.nix << EOF
 { linkFarm, fetchzip }:
 linkFarm "zig-packages" [
   { name = "wayland-0.5.0-lQa1knz8AQCh08NA8BeQrwJB9U3CfqcVAdHZYGRKIGuu";
@@ -43,6 +57,6 @@ linkFarm "zig-packages" [
 ]
 EOF
 
-nixfmt "$SCRIPT_DIR/build.zig.zon.nix"
-
-rm -f "$SCRIPT_DIR/build.zig.zon"
+write_zon_digest_comment build.zig.zon.nix "$latest_zon_digest"
+nixfmt build.zig.zon.nix
+update_src package.nix "$latest_rev" "$latest_hash"
