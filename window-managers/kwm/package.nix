@@ -17,14 +17,14 @@
 }:
 
 stdenv.mkDerivation (finalAttrs: {
-  pname = "kewuaa";
-  version = "unstable-2026-04-20";
+  pname = "kwm";
+  version = "unstable-2026-04-27";
 
   src = fetchFromGitHub {
     owner = "kewuaa";
     repo = "kwm";
-    rev = "553a7ce63f347c868aed7d7e1c29ad87e5b7eaa8";
-    hash = "sha256-1bTH9a60sUKmZ40w1tXofmUn35u08oNIZShVK5t+AMg=";
+    rev = "5019671f542ad5d02186d063fe31ed63e60cacb8";
+    hash = "sha256-+5iwQowxxbUSvVx29r7QOG63ssnBxmn4BeMLynlO0Gw=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

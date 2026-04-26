@@ -16,11 +16,11 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "wayland-0.5.0-lQa1knz8AQCh08NA8BeQrwJB9U3CfqcVAdHZYGRKIGuu";
+    name = "wayland-0.6.0-dev-lQa1krD8AQBlMqwuhAMJjPQKXvpRByZBxxqMVAZ7yzbG";
     path = fetchgit {
       url = "https://codeberg.org/ifreund/zig-wayland";
-      rev = "0b7fc007d6f402496e3ad2d6a7cc9118a2080aa9";
-      hash = "sha256-mhqOtC26iACIvQUq74AbLSXSPsnWMi3AvDV7G2uElpo=";
+      rev = "4a150a04f76f7329e80280661355c04328369d1f";
+      hash = "sha256-B5nA05xYm6iRDDRFC2KUbhBCtjwmApka+BcDCZRssfw=";
     };
   }
 ]

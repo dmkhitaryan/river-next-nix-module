@@ -16,13 +16,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "bridge";
-  version = "unstable-2026-04-20";
+  version = "unstable-2026-04-27";
 
   src = fetchFromCodeberg {
     owner = "sunn4room";
     repo = "bridge";
-    rev = "62150b0b5c9e9a394581752666f07a4a1a334f52";
-    hash = "sha256-DfRkt93McX+pjryOfxptTcV82FMf1N4BKntoEgwe5rQ=";
+    rev = "47253fc319257db15a07574c92be898416a32a82";
+    hash = "sha256-AhZBCjc+Ewa2egzX9YToS5LJR0xvXJ5Zt2vdil4c+LM=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

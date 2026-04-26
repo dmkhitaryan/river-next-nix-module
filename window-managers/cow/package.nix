@@ -17,13 +17,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "cow";
-  version = "unstable-2026-04-20";
+  version = "unstable-2026-04-27";
 
   src = fetchFromCodeberg {
     owner = "thomasadam";
     repo = "cow";
-    rev = "7ea52db12143d7ffbe7fbb14343aead6a9be4217";
-    hash = "sha256-4kjR+T1s1o8gzqyShbEFzT4R2m1om4jUUWrbs2G4eVc=";
+    rev = "5885e05d350b69fb35ee573fadcc971f1ec22611";
+    hash = "sha256-V6Ea/WsdxN06EXayzQaFzC87mdRxD3jAv1XyHSAVriw=";
   };
 
   nativeBuildInputs = [
@@ -47,7 +47,7 @@ stdenv.mkDerivation (finalAttrs: {
   env.NIX_CFLAGS_COMPILE = "-Wno-error=format-security";
 
   postInstall = ''
-    install -Dm755 $src/config/cow.conf $out/examples/cow.conf
+    install -Dm755 $src/config/cow/cow.conf $out/examples/cow.conf
   '';
 
   meta = {

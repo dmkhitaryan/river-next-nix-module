@@ -2,32 +2,53 @@
   lib,
   stdenv,
   fetchFromCodeberg,
-  zig_0_15,
+  zig,
   libxkbcommon,
   wayland,
   wayland-protocols,
   callPackage,
   pkg-config,
   wayland-scanner,
+  libnotify,
 }:
 let
   river-next = callPackage ../../river-next.nix { };
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "rhine";
-  version = "unstable-2026-04-20";
+  version = "unstable-2026-04-27";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "rhine";
-    rev = "128d5dd0d0aabcfdd44356b5f8c32000aafa854c";
-    hash = "sha256-jzxFQrlEV9mlAg2DLauc2xC6bcxU2xXG0ef2pItF0Mw=";
+    rev = "b2ade5357e812604ea818b14fcb478acd5cd1524";
+    hash = "sha256-dnUgq2B1zwQiq8/HyABzm2GCuX6BHYkIRmPv+r28SB8=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
+  postPatch = ''
+substituteInPlace build.zig \
+  --replace-fail \
+    '    const keysyms = b.addTranslateC(.{
+        .optimize = optimize,
+        .target = target,
+        .root_source_file = b.path("src/xkb.h"),
+    });
+
+    const exe = b.addExecutable(.{' \
+    '    const keysyms = b.addTranslateC(.{
+        .optimize = optimize,
+        .target = target,
+        .root_source_file = b.path("src/xkb.h"),
+    });
+    keysyms.linkSystemLibrary("xkbcommon", .{ .use_pkg_config = .force });
+
+    const exe = b.addExecutable(.{'
+  '';
+
   nativeBuildInputs = [
-    zig_0_15
+    zig
     wayland-scanner
     wayland-protocols
     pkg-config
@@ -36,6 +57,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     libxkbcommon
     wayland
+    libnotify
   ];
 
   postInstall = ''

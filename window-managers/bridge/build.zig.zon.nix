@@ -1,3 +1,4 @@
+# build.zig.zon-sha256: cbc87f727c4c8dcc3a07f97a2e6db65b96addbb203ffbc5931a8f3702b20797e
 { linkFarm, fetchzip }:
 linkFarm "zig-packages" [
   {
