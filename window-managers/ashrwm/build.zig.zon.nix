@@ -1,4 +1,8 @@
-{ linkFarm, fetchgit, fetchzip }:
+{
+  linkFarm,
+  fetchgit,
+  fetchzip,
+}:
 linkFarm "zig-packages" [
   {
     name = "janet-1.40.1-3XUN8cVGAAA7Os-UamOhi0sYVRqN-slGltgD5Jwwwfdk";
@@ -89,6 +93,14 @@ linkFarm "zig-packages" [
     };
   }
   {
+    name = "N-V-__8AAFdWDwA0ktbNUi9pFBHCRN4weXIgIfCrVjfGxqgA";
+    path = fetchgit {
+      url = "https://gitlab.freedesktop.org/wayland/wayland-protocols";
+      rev = "88223018d1b578d0d8869866da66d9608e05f928";
+      hash = "sha256-vD7Nj9iLeS52Et3gcX1m9Zmp05A+VV3J3hkPcM11YEQ=";
+    };
+  }
+  {
     name = "pixman-0.3.0-LClMnz2VAAAs7QSCGwLimV5VUYx0JFnX5xWU6HwtMuDX";
     path = fetchzip {
       url = "https://codeberg.org/ifreund/zig-pixman/archive/v0.3.0.tar.gz";
@@ -114,14 +126,6 @@ linkFarm "zig-packages" [
     path = fetchzip {
       url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.4.0.tar.gz";
       hash = "sha256-zQkmP/cuhAtjOLqYS5D15khKzpqyhbyZ0TD6/8jOkqE=";
-    };
-  }
-  {
-    name = "N-V-__8AAFdWDwA0ktbNUi9pFBHCRN4weXIgIfCrVjfGxqgA";
-    path = fetchgit {
-      url = "https://gitlab.freedesktop.org/wayland/wayland-protocols";
-      rev = "88223018d1b578d0d8869866da66d9608e05f928";
-      hash = "sha256-vD7Nj9iLeS52Et3gcX1m9Zmp05A+VV3J3hkPcM11YEQ=";
     };
   }
 ]
