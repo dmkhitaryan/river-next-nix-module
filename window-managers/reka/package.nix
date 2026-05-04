@@ -44,10 +44,10 @@ let
 in
 emacsPackages.trivialBuild {
   pname = "reka";
-  version = "unstable-2026-03-16";
+  version = "unstable-2026-05-04";
   src = fetchurl {
     url = "https://codeberg.org/tazjin/reka/raw/branch/canon/lisp/reka.el";
-    hash = "sha256-WR6yNq2z2qIJMbpM7nEMTDxZm3TK5RfUaKoDk8FtOsI=";
+    hash = "sha256-vBRiInxIFNtYjgqhjFszEcLXPejW+4H1IDEhDQukv6Y=";
   };
   packageRequires = [ reka ];
 

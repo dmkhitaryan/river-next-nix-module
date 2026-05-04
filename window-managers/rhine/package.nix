@@ -16,35 +16,26 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "rhine";
-  version = "unstable-2026-04-27";
+  version = "unstable-2026-05-04";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "rhine";
-    rev = "b2ade5357e812604ea818b14fcb478acd5cd1524";
-    hash = "sha256-dnUgq2B1zwQiq8/HyABzm2GCuX6BHYkIRmPv+r28SB8=";
+    rev = "2fc6b0991ddbe0c17bcbe65e4c6df6c24ed194bc";
+    hash = "sha256-RGhJgFw1fU8slFvbZU4X39Nea1t3zTVUQb8cAQqrugo=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
+  patches = [
+    ./rhine-xkbcommon-include.patch
+  ];
+
   postPatch = ''
-substituteInPlace build.zig \
-  --replace-fail \
-    '    const keysyms = b.addTranslateC(.{
-        .optimize = optimize,
-        .target = target,
-        .root_source_file = b.path("src/xkb.h"),
-    });
-
-    const exe = b.addExecutable(.{' \
-    '    const keysyms = b.addTranslateC(.{
-        .optimize = optimize,
-        .target = target,
-        .root_source_file = b.path("src/xkb.h"),
-    });
-    keysyms.linkSystemLibrary("xkbcommon", .{ .use_pkg_config = .force });
-
-    const exe = b.addExecutable(.{'
+    substituteInPlace build.zig \
+      --replace-fail \
+      '@xkbcommonInclude@' \
+      '${lib.getDev libxkbcommon}/include'
   '';
 
   nativeBuildInputs = [
