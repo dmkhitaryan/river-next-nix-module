@@ -1,3 +1,4 @@
+# build.zig.zon-sha256: cbc87f727c4c8dcc3a07f97a2e6db65b96addbb203ffbc5931a8f3702b20797e
 {
   linkFarm,
   fetchgit,
@@ -13,11 +14,11 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "N-V-__8AAPOoAACNhl0Pd9muOFuvch4kljaImdQiU6FPr9tY";
+    name = "N-V-__8AAFKzAADGCCHsA4J38ww-aT3CFoj2MbSxtkWX0D50";
     path = fetchgit {
       url = "https://codeberg.org/ifreund/janet-wayland";
-      rev = "c118af389f43ac853c5189db4fd5cc430c7a3370";
-      hash = "sha256-hoQy1uMFeM5Jmh3ZOfnMr88iSBBdJ9PObLg7baw7TNY=";
+      rev = "0aea1ae8c2b462d609fc739acceeb9ead315c07f";
+      hash = "sha256-maPZ0hAvsBhRuVZt/6hlUYHkxGSbV+zwVDldqjDRRNU=";
     };
   }
   {
@@ -85,19 +86,19 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "river-0.5.0-dev-_G6NjqqiCwBu8xdp2A55txZJQp70Krn21-PEWuMdDwQr";
+    name = "river-0.4.2-_G6Njq3eCwBPOoLbZB7ULNNEcIFDNJpz-vDYzr6JanWZ";
     path = fetchgit {
       url = "https://codeberg.org/river/river";
-      rev = "6b9f40ca72dc4be6ef5866fbb78a3464a1941071";
-      hash = "sha256-Lgl4UzHOSQeV5VJDmrglZYlKoqQa7JA8gXuFwlW3EmI=";
+      rev = "addd4a0c5386fe3efc6d37cdde458d0f3153bebe";
+      hash = "sha256-Nufonz39XphxPW1lERq2acVgE5mGmW+x1yimyS6O4tc=";
     };
   }
   {
-    name = "N-V-__8AAFdWDwA0ktbNUi9pFBHCRN4weXIgIfCrVjfGxqgA";
+    name = "N-V-__8AAMCWEADA0AS-1LfBEtixZLJAb_XQKQpgSmR2uxAO";
     path = fetchgit {
       url = "https://gitlab.freedesktop.org/wayland/wayland-protocols";
-      rev = "88223018d1b578d0d8869866da66d9608e05f928";
-      hash = "sha256-vD7Nj9iLeS52Et3gcX1m9Zmp05A+VV3J3hkPcM11YEQ=";
+      rev = "02e63e74a807afed95bc25a386173110afef24e3";
+      hash = "sha256-nleROoMciq1WassaZ+1ol6VxLWY5UwYlZC5+zNexFn8=";
     };
   }
   {
@@ -115,10 +116,10 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "wlroots-0.19.4-jmOlcqQMBABhKYH6NMSnoK1sohTbhc97_JP-hGg2UZaK";
+    name = "wlroots-0.20.0-jmOlcmtCBADS6eoJ6mkeiSNZkibrhD-c5Qwn-LiM86r1";
     path = fetchzip {
-      url = "https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.4.tar.gz";
-      hash = "sha256-g1LOSMMnjGJIS+U7zrx6FAoUyavqwaQ2UrDv6GxCQsY=";
+      url = "https://codeberg.org/ifreund/zig-wlroots/archive/v0.20.0.tar.gz";
+      hash = "sha256-QblQBVsDV2kSj31jqmVVi4hQUXuv8bsRgRMaCqlNxNM=";
     };
   }
   {
