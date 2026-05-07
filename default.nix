@@ -9,6 +9,7 @@
     bridge = ./window-managers/bridge/package.nix;
     canoe = ./window-managers/canoe/package.nix;
     cow = ./window-managers/cow/package.nix;
+    croffle = ./window-managers/croffle/package.nix;
     kuskokwim = ./window-managers/kuskokwim/package.nix;
     kwm = ./window-managers/kwm/package.nix;
     machi = ./window-managers/machi/package.nix;

@@ -21,6 +21,7 @@ let
     bridge = pkgs.callPackage ./window-managers/bridge/package.nix { };
     canoe = pkgs.callPackage ./window-managers/canoe/package.nix { };
     cow = pkgs.callPackage ./window-managers/cow/package.nix { };
+    croffle = pkgs.callPackage ./window-managers/croffle/package.nix { };
     kuskokwim = pkgs.callPackage ./window-managers/kuskokwim/package.nix { };
     kwm = pkgs.callPackage ./window-managers/kwm/package.nix { };
     machi = pkgs.callPackage ./window-managers/machi/package.nix { };
@@ -94,6 +95,7 @@ in
             "bridge"
             "canoe"
             "cow"
+            "croffle"
             "kuskokwim"
             "kwm"
             "machi"
