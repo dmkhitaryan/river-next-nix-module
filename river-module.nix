@@ -23,6 +23,7 @@ let
     machi = pkgs.callPackage ./window-managers/machi/package.nix { };
     notion-river = pkgs.callPackage ./window-managers/notion-river/package.nix { };
     orilla = pkgs.callPackage ./window-managers/orilla/package.nix { };
+    rhine = pkgs.callPackage ./window-managers/rhine/package.nix { };
     rill = pkgs.callPackage ./window-managers/rill/package.nix { };
     rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix { };
   };
@@ -83,6 +84,7 @@ in
             "machi"
             "notion-river"
             "orilla"
+            "rhine"
             "rill"
             "rrwm"
           ]

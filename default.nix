@@ -11,6 +11,7 @@
     machi = ./window-managers/machi/package.nix;
     notion-river = ./window-managers/notion-river/package.nix;
     orilla = ./window-managers/orilla/package.nix;
+    rhine = ./window-managers/rhine/package.nix;
     rill = ./window-managers/rill/package.nix;
     rrwm = ./window-managers/rrwm/package.nix;
   };
