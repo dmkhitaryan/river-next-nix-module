@@ -16,7 +16,7 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "anvl";
-  version = "unstable-2026-04-20";
+  version = "unstable-2026-04-18";
 
   src = fetchFromCodeberg {
     owner = "auoggi";

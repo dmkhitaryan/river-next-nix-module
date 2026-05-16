@@ -10,7 +10,7 @@
 
 python3Packages.buildPythonPackage (finalAttrs: {
   pname = "kuskokwim";
-  version = "unstable-2026-04-12";
+  version = "unstable-2026-04-05";
 
   pyproject = true;
 

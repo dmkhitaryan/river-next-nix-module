@@ -12,7 +12,7 @@ let
 in
 python3Packages.buildPythonPackage (finalAttrs: {
   pname = "pwm";
-  version = "unstable-2026-03-22";
+  version = "unstable-2025-12-22";
   src = fetchFromGitHub {
     owner = "pinpox";
     repo = "river-pwm";

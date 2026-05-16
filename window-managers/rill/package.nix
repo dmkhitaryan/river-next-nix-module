@@ -15,7 +15,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "rill";
-  version = "unstable-2026-05-10";
+  version = "unstable-2026-05-08";
 
   src = fetchFromCodeberg {
     owner = "lzj15";

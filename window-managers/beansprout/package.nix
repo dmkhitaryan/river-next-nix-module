@@ -17,13 +17,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "beansprout";
-  version = "unstable-2026-05-10";
+  version = "unstable-2026-05-14";
 
   src = fetchFromCodeberg {
     owner = "beansprout";
     repo = "beansprout";
-    rev = "23fd4e51c4dab9417cbe0658ea2f1ce6367c3bc6";
-    hash = "sha256-tHX79WYBp8OjPAq8uPsH+CbaPPYjjJSewVJa3742Oo4=";
+    rev = "aabb491b7135972b4573ad9da405b0349081855f";
+    hash = "sha256-/QUOweJHFd5YJQxRm2wBZCA1uxmizniGK/6OrwBrfgA=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

@@ -16,15 +16,14 @@
 }:
 
 stdenv.mkDerivation (finalAttrs: {
-  # Messy build altogether, be warned.
   pname = "rijan";
-  version = "unstable-2026-03-22";
+  version = "unstable-2026-04-26";
 
   src = fetchFromCodeberg {
     owner = "ifreund";
     repo = "rijan";
-    rev = "8cb3d4df0a4404774b0db28b1313b473d0456727";
-    hash = "sha256-OUD5VyJtvNZhpH4ENHQt2XXMnASGD1bd4q+i2Yzzjoo=";
+    rev = "e4d390e446d4da87de98a6c235ef59c7a0905058";
+    hash = "sha256-8ETIIgr3Ze27hSc6FF/oXO5M0eVlbP9kxrjx0t5qHBw=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

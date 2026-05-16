@@ -18,7 +18,7 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "mousetrap";
-  version = "unstable-2026-05-04";
+  version = "unstable-2026-04-30";
 
   src = fetchFromCodeberg {
     owner = "g4b";

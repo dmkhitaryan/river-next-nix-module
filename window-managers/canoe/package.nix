@@ -12,7 +12,7 @@
 
 rustPlatform.buildRustPackage {
   pname = "canoe";
-  version = "unstable-2026-03-22";
+  version = "unstable-2026-02-11";
 
   src = fetchFromGitHub {
     owner = "roblillack";

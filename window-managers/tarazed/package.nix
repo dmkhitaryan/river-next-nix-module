@@ -16,7 +16,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tarazed";
-  version = "unstable-2026-05-04";
+  version = "unstable-2026-05-03";
 
   src = fetchFromGitLab {
     domain = "gitlab.gwdg.de";

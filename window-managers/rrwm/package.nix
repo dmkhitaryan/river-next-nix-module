@@ -16,7 +16,7 @@ let
 in
 rustPlatform.buildRustPackage {
   pname = "rrwm";
-  version = "unstable-2026-04-06";
+  version = "unstable-2026-04-02";
 
   src = fetchFromGitHub {
     owner = "cap153";

@@ -14,7 +14,7 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "zrwm";
-  version = "unstable-2026-05-04";
+  version = "unstable-2026-04-30";
 
   src = fetchFromSourcehut {
     owner = "~zuki";

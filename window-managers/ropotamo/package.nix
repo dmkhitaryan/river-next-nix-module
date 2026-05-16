@@ -3,6 +3,7 @@
   stdenv,
   fetchgit,
   fetchurl,
+  fetchFromForgejo,
   janet,
   jpm,
   patchelf,
@@ -151,6 +152,10 @@ let
     ];
     buildInputs = [ wayland_1_25 ];
     postPatch = ''
+      substituteInPlace src/wayland-native.c \
+        --replace-fail 'wl_display_dispatch_pending_single' 'wl_display_dispatch_pending' \
+        --replace-fail '		assert(dispatched == 1);' ""
+
       substituteInPlace src/wayland.janet \
         --replace-fail '(string (sh/exec-slurp "pkg-config" "--variable=pkgdatadir" "wayland-scanner") "/wayland.xml")' \
           '"${wayland-scanner_1_25}/share/wayland/wayland.xml"' \
@@ -186,10 +191,13 @@ stdenv.mkDerivation {
   pname = "ropotamo";
   version = "unstable-2026-04-20";
 
-  src = fetchgit {
-    url = "https://code.goryachev.org/ropotamo/ropotamo";
-    rev = "00153d996d6400d845aff73d5e71a37d546e8587";
-    hash = "sha256-DD6VcQa+Qllkg1pTcIxi9R5hPpnyI5L4R42EuHBGNSY=";
+  src = fetchFromForgejo {
+    domain = "code.goryachev.org";
+    owner = "ropotamo";
+    repo = "ropotamo";
+    rev = "27a393648cfdf506226f14102ae32adef7cd89c0";
+    hash = "sha256-N3FY7DuRBG38zbgxBqAUzs4g6W4GQKYebsUxYSFwnJI=";
+    forceFetchGit = true;
   };
 
   nativeBuildInputs = [ pkg-config ];
