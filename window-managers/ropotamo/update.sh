@@ -5,9 +5,8 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 cd "$SCRIPT_DIR" || exit 1
 
 source ../update-lib.sh
-update_zig_package \
-  "https://codeberg.org/lzj15/rill" \
-  refs/heads/main \
+update_other_package \
+  "https://code.goryachev.org/ropotamo/ropotamo" \
+  refs/heads/master \
   package.nix \
-  build.zig.zon.nix \
-  rill
+  ropotamo

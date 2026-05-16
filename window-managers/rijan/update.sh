@@ -1,7 +1,30 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts git nix nix-prefetch-git jq nixfmt
+#!nix-shell -i bash -p bash common-updater-scripts git nix nix-prefetch-git jq nixfmt ed
 
-SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+cd "$SCRIPT_DIR" || exit 1
+
+source ../update-lib.sh
+
+prefetch=$(nix-prefetch-git --url https://codeberg.org/ifreund/rijan --rev refs/heads/main)
+latest_rev=$(prefetch_field "$prefetch" rev)
+latest_hash=$(prefetch_field "$prefetch" hash)
+latest_date=$(prefetch_field "$prefetch" date | sed 's/T.*//')
+latest_path=$(prefetch_field "$prefetch" path)
+latest_zon="$latest_path/build.zig.zon"
+latest_zon_digest=$(zon_digest "$latest_zon")
+current_pkg_rev=$(current_rev package.nix)
+
+if [ "$current_pkg_rev" = "$latest_rev" ] && [ -s build.zig.zon.nix ]; then
+  echo "rijan already at $latest_rev; skipping."
+  exit 0
+fi
+
+if [ -s build.zig.zon.nix ] && [ "$(current_zon_digest build.zig.zon.nix)" = "$latest_zon_digest" ]; then
+  echo "rijan build.zig.zon unchanged; skipping dependency regeneration."
+  update_src package.nix "$latest_rev" "$latest_hash" "$latest_date"
+  exit 0
+fi
 
 fetch() {
   local url=$1 rev=$2
@@ -9,7 +32,7 @@ fetch() {
 }
 
 fetch_zip() {
-  nix hash to-sri --type sha256 "$(nix-prefetch-url --type sha256 --unpack "$1" 2>/dev/null)"
+  nix hash convert --hash-algo sha256 --to sri "$(nix-prefetch-url --type sha256 --unpack "$1" 2>/dev/null)"
 }
 
 wayland_upstream=$(fetch https://gitlab.freedesktop.org/wayland/wayland.git 99638501a1314e68c79176fa2cafa3bbe6cf55ea)
@@ -23,14 +46,14 @@ libxkbcommon=$(fetch https://github.com/allyourcodebase/libxkbcommon 809157d5118
 janet_xkbcommon=$(fetch https://codeberg.org/ifreund/janet-xkbcommon bdd15cd20329078e47abb30bddddfb7b28f52f66)
 spork=$(fetch https://github.com/janet-lang/spork 4224d5678ec8bb8777a9075030cf38da52f2d70a)
 lemongrass=$(fetch https://github.com/pyrmont/lemongrass 906974b82ba06ed421e0c8cd9a56c6ddc4ca6820)
-river=$(fetch https://codeberg.org/river/river 0ad1a8fa0bdabc9c73013d0102f3136e346355c5)
+river=$(fetch https://codeberg.org/river/river 6b9f40ca72dc4be6ef5866fbb78a3464a1941071)
 wayland_protocols=$(fetch https://gitlab.freedesktop.org/wayland/wayland-protocols 88223018d1b578d0d8869866da66d9608e05f928)
 pixman=$(fetch_zip https://codeberg.org/ifreund/zig-pixman/archive/v0.3.0.tar.gz)
-wayland_legacy=$(fetch_zip https://codeberg.org/ifreund/zig-wayland/archive/v0.4.0.tar.gz)
-wlroots=$(fetch_zip https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.3.tar.gz)
-xkbcommon_legacy=$(fetch_zip https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.3.0.tar.gz)
+wayland_legacy=$(fetch_zip https://codeberg.org/ifreund/zig-wayland/archive/v0.5.0.tar.gz)
+wlroots=$(fetch_zip https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.4.tar.gz)
+xkbcommon_legacy=$(fetch_zip https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.4.0.tar.gz)
 
-cat > "$SCRIPT_DIR/build.zig.zon.nix" << EOF
+cat > build.zig.zon.nix << EOF
 { linkFarm, fetchgit, fetchzip }:
 linkFarm "zig-packages" [
   { name = "N-V-__8AAEZXGQD2FnVezv2mY8V4aYW9j-JDCLw6vDmFFqze";
@@ -53,21 +76,21 @@ linkFarm "zig-packages" [
     path = fetchgit { url = "https://github.com/janet-lang/spork"; rev = "4224d5678ec8bb8777a9075030cf38da52f2d70a"; hash = "$spork"; }; }
   { name = "N-V-__8AAPMqAQCbXJ9KGZ7pEepOFcJFiLb-PW0LlAOhlgtd";
     path = fetchgit { url = "https://github.com/pyrmont/lemongrass"; rev = "906974b82ba06ed421e0c8cd9a56c6ddc4ca6820"; hash = "$lemongrass"; }; }
-  { name = "river-0.4.0-dev-_G6NjnrjCQC0Zi7_CzoeOEkyp733JglzODl4vT5KuCLR";
-    path = fetchgit { url = "https://codeberg.org/river/river"; rev = "0ad1a8fa0bdabc9c73013d0102f3136e346355c5"; hash = "$river"; }; }
+  { name = "river-0.5.0-dev-_G6NjqqiCwBu8xdp2A55txZJQp70Krn21-PEWuMdDwQr";
+    path = fetchgit { url = "https://codeberg.org/river/river"; rev = "6b9f40ca72dc4be6ef5866fbb78a3464a1941071"; hash = "$river"; }; }
   { name = "N-V-__8AAFdWDwA0ktbNUi9pFBHCRN4weXIgIfCrVjfGxqgA";
     path = fetchgit { url = "https://gitlab.freedesktop.org/wayland/wayland-protocols"; rev = "88223018d1b578d0d8869866da66d9608e05f928"; hash = "$wayland_protocols"; }; }
   { name = "pixman-0.3.0-LClMnz2VAAAs7QSCGwLimV5VUYx0JFnX5xWU6HwtMuDX";
     path = fetchzip { url = "https://codeberg.org/ifreund/zig-pixman/archive/v0.3.0.tar.gz"; hash = "$pixman"; }; }
-  { name = "wayland-0.4.0-lQa1khbMAQAsLS2eBR7M5lofyEGPIbu2iFDmoz8lPC27";
-    path = fetchzip { url = "https://codeberg.org/ifreund/zig-wayland/archive/v0.4.0.tar.gz"; hash = "$wayland_legacy"; }; }
-  { name = "wlroots-0.19.3-jmOlcuL_AwBHhLCwpFsXbTizE3q9BugFmGX-XIxqcPMc";
-    path = fetchzip { url = "https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.3.tar.gz"; hash = "$wlroots"; }; }
-  { name = "xkbcommon-0.3.0-VDqIe3K9AQB2fG5ZeRcMC9i7kfrp5m2rWgLrmdNn9azr";
-    path = fetchzip { url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.3.0.tar.gz"; hash = "$xkbcommon_legacy"; }; }
+  { name = "wayland-0.5.0-lQa1knz8AQCh08NA8BeQrwJB9U3CfqcVAdHZYGRKIGuu";
+    path = fetchzip { url = "https://codeberg.org/ifreund/zig-wayland/archive/v0.5.0.tar.gz"; hash = "$wayland_legacy"; }; }
+  { name = "wlroots-0.19.4-jmOlcqQMBABhKYH6NMSnoK1sohTbhc97_JP-hGg2UZaK";
+    path = fetchzip { url = "https://codeberg.org/ifreund/zig-wlroots/archive/v0.19.4.tar.gz"; hash = "$wlroots"; }; }
+  { name = "xkbcommon-0.4.0-VDqIe0i2AgDRsok2GpMFYJ8SVhQS10_PI2M_CnHXsJJZ";
+    path = fetchzip { url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.4.0.tar.gz"; hash = "$xkbcommon_legacy"; }; }
 ]
 EOF
 
-nixfmt "$SCRIPT_DIR/build.zig.zon.nix"
-
-echo "Done"
+write_zon_digest_comment build.zig.zon.nix "$latest_zon_digest"
+nixfmt build.zig.zon.nix
+update_src package.nix "$latest_rev" "$latest_hash" "$latest_date"

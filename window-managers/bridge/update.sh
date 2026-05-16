@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts git nix nix-prefetch-git jq nixfmt
+#!nix-shell -i bash -p bash common-updater-scripts git nix nix-prefetch-git jq nixfmt ed
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 cd "$SCRIPT_DIR" || exit 1
@@ -9,6 +9,7 @@ source ../update-lib.sh
 prefetch=$(nix-prefetch-git --url https://codeberg.org/sunn4room/bridge --rev refs/heads/main)
 latest_rev=$(prefetch_field "$prefetch" rev)
 latest_hash=$(prefetch_field "$prefetch" hash)
+latest_date=$(prefetch_field "$prefetch" date | sed 's/T.*//')
 latest_path=$(prefetch_field "$prefetch" path)
 latest_zon="$latest_path/build.zig.zon"
 latest_zon_digest=$(zon_digest "$latest_zon")
@@ -21,7 +22,7 @@ fi
 
 if [ -s build.zig.zon.nix ] && [ "$(current_zon_digest build.zig.zon.nix)" = "$latest_zon_digest" ]; then
   echo "bridge build.zig.zon unchanged; skipping dependency regeneration."
-  update_src package.nix "$latest_rev" "$latest_hash"
+  update_src package.nix "$latest_rev" "$latest_hash" "$latest_date"
   exit 0
 fi
 
@@ -59,4 +60,4 @@ EOF
 
 write_zon_digest_comment build.zig.zon.nix "$latest_zon_digest"
 nixfmt build.zig.zon.nix
-update_src package.nix "$latest_rev" "$latest_hash"
+update_src package.nix "$latest_rev" "$latest_hash" "$latest_date"

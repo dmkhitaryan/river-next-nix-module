@@ -35,18 +35,21 @@ write_zon_digest_comment() {
   mv "$tmp_file" "$zon_nix_file"
 }
 #
-# update_src <nix-file> <new-rev> <new-hash>
+# update_src <nix-file> <new-rev> <new-hash> <date>
+#   Replaces the package's version with the new date.
 #   Replaces the `rev` string and the `hash` that immediately follows it in
-#   the same fetch block, without touching any other hash fields in the file
+#   the same fetchFrom block, without touching any other hash fields in the file
 #   (e.g. overrideAttrs blocks such as libxkbcommon or meson overrides).
 update_src() {
-  local file="$1" rev="$2" hash="$3"
-  sed -i "s|rev = \"[^\"]*\"|rev = \"$rev\"|" "$file"
-  awk -v h="$hash" '
-    /rev = "/ { found=1 }
-    found && /hash = "/ { sub(/hash = "[^"]*"/, "hash = \"" h "\""); found=0 }
-    1
-  ' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+  local file="$1" rev="$2" hash="$3" date="$4"
+  ed -s "$file" <<EOF
+    /version = "unstable-/s|unstable-[^"]*|unstable-$date|
+    /src = fetchFrom[^ ]* {/
+    /rev = /s|rev = "[^"]*"|rev = "$rev"|
+    /hash = /s|hash = "[^"]*"|hash = "$hash"|
+    w
+    q
+EOF
 }
 
 # update_zig_package <repo-url> <ref> <nix-file> <build.zig.zon.nix> <label>
@@ -55,12 +58,13 @@ update_src() {
 #   dependencies actually changed.
 update_zig_package() {
   local repo_url="$1" ref="$2" nix_file="$3" zon_nix_file="$4" label="$5"
-  local prefetch latest_rev latest_hash latest_path latest_zon latest_zon_digest current_pkg_rev
+  local prefetch latest_rev latest_hash latest_path latest_date latest_zon latest_zon_digest current_pkg_rev
 
   prefetch=$(nix-prefetch-git --url "$repo_url" --rev "$ref") || return 1
   latest_rev=$(prefetch_field "$prefetch" rev)
   latest_hash=$(prefetch_field "$prefetch" hash)
   latest_path=$(prefetch_field "$prefetch" path)
+  latest_date=$(prefetch_field "$prefetch" date | sed 's/T.*//')
   latest_zon="$latest_path/build.zig.zon"
   latest_zon_digest=$(zon_digest "$latest_zon")
   current_pkg_rev=$(current_rev "$nix_file")
@@ -77,7 +81,7 @@ update_zig_package() {
 
   if [ -s "$zon_nix_file" ] && [ "$(current_zon_digest "$zon_nix_file")" = "$latest_zon_digest" ]; then
     echo "$label build.zig.zon unchanged; skipping dependency regeneration."
-    update_src "$nix_file" "$latest_rev" "$latest_hash"
+    update_src "$nix_file" "$latest_rev" "$latest_hash" "$latest_date"
     return 0
   fi
 
@@ -85,5 +89,27 @@ update_zig_package() {
   write_zon_digest_comment "$zon_nix_file" "$latest_zon_digest" || return 1
   sed -i 's|url = "\(https://[^"?]*\)?ref=[^"]*"|url = "\1"|g' "$zon_nix_file"
   nixfmt "$zon_nix_file"
-  update_src "$nix_file" "$latest_rev" "$latest_hash"
+  update_src "$nix_file" "$latest_rev" "$latest_hash" "$latest_date"
+}
+
+# update_other_package <repo-url> <ref> <nix-file> <label>
+#   Reuses the prefetched source tree to read information such as rev, hash...
+#   Only runs when the package revision actually changes.
+update_other_package() {
+  local repo_url="$1" ref="$2" nix_file="$3" label="$4"
+  local prefetch latest_rev latest_hash latest_date current_pkg_rev
+
+  prefetch=$(nix-prefetch-git --url "$repo_url" --rev "$ref") || return 1
+  latest_rev=$(prefetch_field "$prefetch" rev)
+  latest_hash=$(prefetch_field "$prefetch" hash)
+  latest_date=$(prefetch_field "$prefetch" date | sed 's/T.*//')
+  current_pkg_rev=$(current_rev "$nix_file")
+
+  if [ "$current_pkg_rev" = "$latest_rev" ]; then
+      echo "$label already at $latest_rev; skipping."
+      return 0
+  fi
+
+  update_src "$nix_file" "$latest_rev" "$latest_hash" "$latest_date"
+
 }

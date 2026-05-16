@@ -1,9 +1,11 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts git nix-prefetch-git jq
-SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+#!nix-shell -i bash -p bash common-updater-scripts git nix-prefetch-git jq ed
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+cd "$SCRIPT_DIR" || exit 1
 
-latest_rev=$(git ls-remote https://codeberg.org/auoggi/anvl refs/heads/master | cut -f1)
-hash=$(nix-prefetch-git --url https://codeberg.org/auoggi/anvl --rev "$latest_rev" | jq -r '.hash')
-
-source "$SCRIPT_DIR/../update-lib.sh"
-update_src "$SCRIPT_DIR/package.nix" "$latest_rev" "$hash"
+source ../update-lib.sh
+update_other_package \
+  "https://codeberg.org/auoggi/anvl" \
+  refs/heads/master \
+  package.nix \
+  anvl
