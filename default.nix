@@ -27,5 +27,6 @@
     zrwm = ./window-managers/zrwm/package.nix;
 
     channel = ./channel/package.nix;
+    kwim = ./kwim/package.nix;
   };
 }

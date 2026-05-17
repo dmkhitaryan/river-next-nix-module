@@ -2,7 +2,7 @@
   lib,
   stdenv,
   fetchFromCodeberg,
-  zig_0_15,
+  zig,
   wayland-scanner,
   wayland,
   wayland-protocols,
@@ -15,19 +15,19 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "channel";
-  version = "unstable-2026-04-04";
+  version = "unstable-2026-04-26";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "channel";
-    rev = "d1ff3b8637693241886ab54ca8fcf98502b385f4";
-    hash = "sha256-6ERDExfCVljbGYAhphJeo9MagCmwf/O+zutG4rzzufU=";
+    rev = "76ac97fa3f7e121fe2b64c0e31d07d17d7d12039";
+    hash = "sha256-U6GvTRwavSmdZ5o0cH5DEkMTCt3CYIRBuT/LO5LXxr4=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
   nativeBuildInputs = [
-    zig_0_15
+    zig
     wayland-scanner
     pkg-config
     river-next
