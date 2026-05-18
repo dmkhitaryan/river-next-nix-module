@@ -14,5 +14,8 @@
     rhine = ./window-managers/rhine/package.nix;
     rill = ./window-managers/rill/package.nix;
     rrwm = ./window-managers/rrwm/package.nix;
+
+    channel = ./channel/package.nix;
+    kwim = ./kwim/package.nix;
   };
 }

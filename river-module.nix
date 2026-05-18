@@ -26,6 +26,10 @@ let
     rhine = pkgs.callPackage ./window-managers/rhine/package.nix { };
     rill = pkgs.callPackage ./window-managers/rill/package.nix { };
     rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix { };
+
+    # Input management.
+    channel = pkgs.callPackage ./channel/package.nix { };
+    kwim = pkgs.callPackage ./kwim/package.nix { };
   };
   selectedWMs = map (name: localPkgs.${name}) cfg.windowManagers;
 in
@@ -140,6 +144,8 @@ in
       environment.systemPackages =
         lib.optional (cfg.package != null) cfg.package
         ++ lib.optional cfg.kanshi.enable pkgs.kanshi
+        ++ lib.optional (builtins.elem "rhine" cfg.windowManagers) localPkgs.channel
+        ++ lib.optional (builtins.elem "kwm" cfg.windowManagers) localPkgs.kwim
         ++ cfg.extraPackages
         ++ selectedWMs;
 
@@ -234,6 +240,14 @@ in
                   in
                   "${pkgs.kanshi}/bin/kanshi${configFlag}"
                 } &
+              ''}
+
+              ${lib.optionalString (windowManager == "rhine") ''
+                ${localPkgs.channel}/bin/channel &
+              ''}
+
+              ${lib.optionalString (windowManager == "kwm") ''
+                ${localPkgs.kwim}/bin/kwim &
               ''}
 
               exec /run/current-system/sw/bin/${windowManager}
