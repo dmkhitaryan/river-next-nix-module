@@ -4,7 +4,7 @@
   fetchFromCodeberg,
   withManpages ? true,
   scdoc,
-  zig_0_15,
+  zig,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -15,19 +15,19 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "rill";
-  version = "0.5.0";
+  version = "0.6.0";
 
   src = fetchFromCodeberg {
     owner = "lzj15";
     repo = "rill";
     tag = finalAttrs.version;
-    hash = "sha256-Q7MG8sRCasUWNbI5DChH9yAaLDgJ3X63SN3bV0R633I=";
+    hash = "sha256-32DtBy/zgic2iKGrs8WRr7bzv640ACsI8KmzENtcLtA=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
   nativeBuildInputs = [
-    zig_0_15
+    zig
     wayland-scanner
     pkg-config
   ];

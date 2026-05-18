@@ -2,7 +2,7 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  zig_0_15,
+  zig,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -13,23 +13,25 @@
   libxml2,
   libffi,
   expat,
+  libevdev,
+  libinput,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "ashrwm";
-  version = "0.2.0";
+  version = "0.2.2";
 
   src = fetchFromGitHub {
     owner = "shadowash8";
     repo = "ashrwm";
     tag = finalAttrs.version;
-    hash = "sha256-3nNgoOgEZDu/Cr9ve83K9HX8sxG+xbGoIxoE9On5mSs=";
+    hash = "sha256-AuaU/0DvzdxvLnGRL7DWljSYfDNHSL513M6Ckg2HAfM=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
   nativeBuildInputs = [
-    zig_0_15
+    zig
     wayland-scanner
     wayland-protocols
     pkg-config
@@ -41,6 +43,8 @@ stdenv.mkDerivation (finalAttrs: {
     libxml2
     libffi
     expat
+    libevdev
+    libinput
   ];
 
   postInstall = ''

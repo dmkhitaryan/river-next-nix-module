@@ -85,3 +85,22 @@ update_zig_package() {
   nixfmt "$zon_nix_file"
   update_src "$nix_file" "$version" "$latest_hash"
 }
+
+# update_other_package <repo-url> <rev> <nix-file> <label>
+#   Reuses the prefetched source tree to read information such as tag, hash...
+#   Only runs when the package revision actually changes.
+update_other_package() {
+  local repo_url="$1" rev="$2" version="$3" nix_file="$4" zon_nix_file="$5" label="$6"
+  local prefetch latest_hash latest_path latest_zon latest_zon_digest
+  prefetch=$(nix-prefetch-git --url "$repo_url" --rev "$rev") || return 1
+  latest_hash=$(prefetch_field "$prefetch" hash)
+  latest_path=$(prefetch_field "$prefetch" path)
+
+  if [ "$(current_rev "$nix_file")" = "$latest_path" ]; then
+      echo "$label already at $latest_path; skipping."
+      return 0
+  fi
+
+  update_src "$nix_file" "$latest_rev" "$latest_hash"
+
+}

@@ -4,8 +4,7 @@
   fetchFromGitHub,
   withBar ? true,
   withCustomConfig ? false,
-  scdoc,
-  zig_0_15,
+  zig,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -18,19 +17,19 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "kewuaa";
-  version = "0.2.2";
+  version = "0.3.0";
 
   src = fetchFromGitHub {
     owner = "kewuaa";
     repo = "kwm";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-Vfdi9AXf3497JAVrdMcheQcDFnqgSrXQy92+pU02c/Q=";
+    hash = "sha256-hX76wTHPTgg5RAHILfd3CjRKPlgAwGSK3lG82IFoUUs=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
   nativeBuildInputs = [
-    zig_0_15
+    zig
     wayland-scanner
     pkg-config
   ];
