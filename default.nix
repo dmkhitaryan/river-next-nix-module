@@ -4,6 +4,7 @@
   packages = {
     river-next = ./river-next.nix;
     anvl = ./window-managers/anvl/package.nix;
+    argen = ./window-managers/argen/package.nix;
     ashrwm = ./window-managers/ashrwm/package.nix;
     beansprout = ./window-managers/beansprout/package.nix;
     bridge = ./window-managers/bridge/package.nix;

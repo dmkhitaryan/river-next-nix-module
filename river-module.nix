@@ -17,6 +17,7 @@ let
     river-next = pkgs.callPackage ./river-next.nix { };
     anvl = pkgs.callPackage ./window-managers/anvl/package.nix { };
     ashrwm = pkgs.callPackage ./window-managers/ashrwm/package.nix { };
+    argen = pkgs.callPackage ./window-managers/argen/package.nix { };
     beansprout = pkgs.callPackage ./window-managers/beansprout/package.nix { };
     bridge = pkgs.callPackage ./window-managers/bridge/package.nix { };
     canoe = pkgs.callPackage ./window-managers/canoe/package.nix { };
@@ -92,6 +93,7 @@ in
         types.listOf (
           types.enum [
             "anvl"
+            "argen"
             "ashrwm"
             "beansprout"
             "bridge"
