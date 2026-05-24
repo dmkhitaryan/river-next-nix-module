@@ -2,6 +2,7 @@
   lib,
   stdenv,
   callPackage,
+  fetchFromGitLab,
   fetchFromCodeberg,
   libGL,
   libx11,
@@ -22,6 +23,18 @@
   withManpages ? true,
   xwaylandSupport ? true,
 }:
+let
+wlroots_0_20_1 = wlroots_0_20.overrideAttrs (new: prev: {
+  version = "0.20.1";
+  src = fetchFromGitLab {
+    domain = "gitlab.freedesktop.org";
+    owner = "wlroots";
+    repo = "wlroots";
+    tag = new.version;
+    hash = "sha256-uuc1dn13FXvFSBvE3+QOi35rLJZmWIUst64oaXGdPFk=";
+  };
+});
+in
 stdenv.mkDerivation (finalAttrs: {
   pname = "river-next";
   version = "0.5.0-dev";
@@ -30,8 +43,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromCodeberg {
     owner = "river";
     repo = "river";
-    rev = "8a1afd94ca477045f39bf91ac9ec31da9e9f932a";
-    hash = "sha256-pu7bdCK7PKNEIHr7xzzCdcE1qCelxPT6YPRWWutlzAw=";
+    rev = "da8cf20fcb2c993c1c048ced4020c58d6208ef26";
+    hash = "sha256-tjJ/jLAR7rNN2LwEKLksXFKAwyJQUq26/NaHRGqt+vk=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
@@ -53,7 +66,7 @@ stdenv.mkDerivation (finalAttrs: {
     udev
     wayland
     wayland-protocols
-    wlroots_0_20
+    wlroots_0_20_1
   ]
   ++ lib.optional xwaylandSupport libx11;
 

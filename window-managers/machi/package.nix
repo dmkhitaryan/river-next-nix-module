@@ -4,7 +4,7 @@
   fetchFromCodeberg,
   withManpages ? true,
   scdoc,
-  zig_0_15,
+  zig,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -15,19 +15,19 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "machi";
-  version = "unstable-2026-04-12";
+  version = "unstable-2026-05-23";
 
   src = fetchFromCodeberg {
     owner = "machi";
     repo = "machi";
-    rev = "8d3e0f6debc178d1a528c6f6651d1922ee8e0abc";
-    hash = "sha256-WNeirfWNvyL6J//uKnjd6NOUiIpnZqwqDtty0+FxPus=";
+    rev = "d51761e4b0153d95598fd50621887c2b50102169";
+    hash = "sha256-0ZQ8vLAbS+UJtGzj6uo29wfX+O/BG5OxbjWCHlbJzxg=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
   nativeBuildInputs = [
-    zig_0_15
+    zig
     wayland-scanner
     pkg-config
   ];

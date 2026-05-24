@@ -1,4 +1,4 @@
-# build.zig.zon-sha256: 3a556e8cf159901481845c45175f211586391e0177fcef70768ab1b1514ed6d9
+# build.zig.zon-sha256: adbd8970d5a47374e891f004704fe70439d7e9d82fec3420d66e974b812fbaf5
 {
   linkFarm,
   fetchgit,
