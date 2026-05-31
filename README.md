@@ -34,7 +34,7 @@ This repo has/will contain the following:
   - [x] ropotamo - StumpWM-like tiling window manager for River
   - [x]  rrwm - Tiling window manager with a cosmic/bspwm layout, written in Rust
   - [x]  tarazed - Non-tiling window manager focusing on a powerful and distraction-free desktop experience
-  - [ ] Triad - Multi-paradigm window manager with embedded Janet scripting
+  - [x] Triad - Multi-paradigm window manager with embedded Janet scripting
   - [x]  zrwm - Dynamic tiling window manager configured using a CLI tool
  - [x] River module: `programs.river-next`
     - See available options [here](https://github.com/dmkhitaryan/river-next-nix-module/wiki/List-of-Module-Options)
@@ -52,3 +52,5 @@ It is highly recommended for users with multi-monitor setups to to configure out
 Might just be a "GDM moment", but I do not plan to investigate further. That said, below are some tips:
   1. If you are going to launch it through TTY, run `exec /nix/store/...river-reka-launcher` and enjoy.
   2. If running through `ly` or similar, look for the *River (Reka)* entry in the session list. Select it, log in, and enjoy.
+
+(31-05-2026): `Triad` is now available in this repository. It should support shells (Waybar, DMS...) just fine, provided those are enabled in NixOS by the user and then enabled in the WM's config. Troubleshooting/logging support is also included.

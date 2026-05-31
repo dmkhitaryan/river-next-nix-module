@@ -25,9 +25,11 @@
     ropotamo = ./window-managers/ropotamo/package-test.nix;
     rrwm = ./window-managers/rrwm/package.nix;
     tarazed = ./window-managers/tarazed/package.nix;
+    triad = ./window-managers/triad/package.nix;
     zrwm = ./window-managers/zrwm/package.nix;
 
     channel = ./channel/package.nix;
     kwim = ./kwim/package.nix;
+    triad-manager-loop = /window-managers/triad/triad-manager-loop/package.nix;
   };
 }

@@ -36,12 +36,14 @@ let
     ropotamo = pkgs.callPackage ./window-managers/ropotamo/package.nix { };
     rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix { };
     tarazed = pkgs.callPackage ./window-managers/tarazed/package.nix { };
+    triad = pkgs.callPackage ./window-managers/triad/package.nix { };
     zrwm = pkgs.callPackage ./window-managers/zrwm/package.nix { };
     reka = pkgs.callPackage ./window-managers/reka/package.nix { };
 
     # Helper programs (so far, input management).
     channel = pkgs.callPackage ./channel/package.nix { };
     kwim = pkgs.callPackage ./kwim/package.nix { };
+    triad-manager-loop = pkgs.callPackage ./window-managers/triad/triad-manager-loop/package.nix { };
   };
   selectedWMs = map (name: localPkgs.${name}) cfg.windowManagers;
 in
@@ -114,6 +116,7 @@ in
             "ropotamo"
             "rrwm"
             "tarazed"
+            "triad"
             "zrwm"
           ]
         )
@@ -170,6 +173,7 @@ in
         ++ lib.optional cfg.kanshi.enable pkgs.kanshi
         ++ lib.optional (builtins.elem "rhine" cfg.windowManagers) localPkgs.channel
         ++ lib.optional (builtins.elem "kwm" cfg.windowManagers) localPkgs.kwim
+        ++ lib.optional (builtins.elem "triad" cfg.windowManagers) localPkgs.triad-manager-loop
         ++ cfg.extraPackages
         ++ selectedWMs;
 
@@ -274,7 +278,16 @@ in
                 ${localPkgs.kwim}/bin/kwim &
               ''}
 
-              exec /run/current-system/sw/bin/${windowManager}
+              ${
+                if windowManager == "triad" then
+                  ''
+                    exec "$TRIAD_MANAGER_LOOP"
+                  ''
+                else
+                  ''
+                    exec /run/current-system/sw/bin/${windowManager}
+                  ''
+              }
             '';
             launcher = pkgs.writeShellScript "river-${windowManager}-launcher" ''
               ${
@@ -285,6 +298,32 @@ in
                         --directory ${localPkgs.reka.reka-lib}/share/emacs/site-lisp \
                         --directory ${localPkgs.reka}/share/emacs/site-lisp"
                   ''
+
+                  # Adapted from: https://github.com/greenm01/triad/blob/master/flake.nix
+                  # for usage in this session entry generator.
+                  else if windowManager == "triad" then
+                    ''
+                      state_dir="''${XDG_STATE_HOME:-$HOME/.local/state}/triad"
+                      mkdir -p "$state_dir"
+
+                      stamp="$(${pkgs.coreutils}/bin/date +%Y%m%d-%H%M%S)"
+                      session_log="$state_dir/triad-session-$stamp.log"
+                      latest_session_log="$state_dir/triad-session-latest.log"
+
+                      ln -sfn "$session_log" "$latest_session_log" 2>/dev/null || true
+                      exec >> "$session_log" 2>&1
+
+                      export XDG_CURRENT_DESKTOP=river
+                      export XDG_SESSION_DESKTOP=river-triad
+                      export XDG_SESSION_TYPE=wayland
+
+                      export TRIAD_BIN="${localPkgs.triad}/bin/triad"
+                      export TRIAD_MANAGER_LOOP="${localPkgs."triad-manager-loop"}/bin/triad-manager-loop"
+                      export TRIAD_RIVER_BIN="${localPkgs.river-next}/bin/river"
+
+                      exec ${pkgs.dbus}/bin/dbus-run-session -- "$TRIAD_RIVER_BIN" -c ${initScript}
+                    ''
+
                 else
                   ''
                     exec dbus-run-session -- /run/current-system/sw/bin/river -c ${initScript}
