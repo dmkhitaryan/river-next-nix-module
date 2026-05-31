@@ -98,17 +98,32 @@ update_zig_package() {
 #   Only runs when the package revision actually changes.
 update_other_package() {
   local repo_url="$1" ref="$2" nix_file="$3" label="$4"
-  local prefetch latest_rev latest_hash latest_date current_pkg_rev
+  local prefetch latest_rev latest_hash latest_path latest_date current_pkg_rev
 
   prefetch=$(nix-prefetch-git --url "$repo_url" --rev "$ref") || return 1
   latest_rev=$(prefetch_field "$prefetch" rev)
   latest_hash=$(prefetch_field "$prefetch" hash)
+  latest_path=$(prefetch_field "$prefetch" path)
   latest_date=$(prefetch_field "$prefetch" date | sed 's/T.*//')
   current_pkg_rev=$(current_rev "$nix_file")
 
   if [ "$current_pkg_rev" = "$latest_rev" ]; then
       echo "$label already at $latest_rev; skipping."
       return 0
+  fi
+
+  if [ "$repo_url" = "https://github.com/greenm01/triad" ]; then
+    if [ ! -f "$latest_path/nix/triad-nim-lock.json" ]; then
+      echo "$label: missing nix/triad-nim-lock.json in prefetched source tree" >&2
+      return 1
+    fi
+
+    if ! cmp -s "$latest_path/nix/triad-nim-lock.json" triad-nim-lock.json; then
+      cp "$latest_path/nix/triad-nim-lock.json" triad-nim-lock.json
+      echo "$label lockfile updated."
+    else
+      echo "$label lockfile unchanged; skipping."
+    fi
   fi
 
   update_src "$nix_file" "$latest_rev" "$latest_hash" "$latest_date"
