@@ -41,29 +41,28 @@ write_zon_digest_comment() {
   mv "$tmp_file" "$zon_nix_file"
 }
 #
-# update_src <nix-file> <new-rev> <new-hash>
-#   Replaces the `rev` string and the `hash` that immediately follows it in
-#   the same fetch block, without touching any other hash fields in the file
-#   (e.g. overrideAttrs blocks such as libxkbcommon or meson overrides).
+# update_src <nix-file> <new-tag> <new-hash>
+#   Replaces the `tag` string and the `hash` that immediately follows it in
+#   the same fetch block, without touching any other hash fields in the file.
 update_src() {
   local file="$1" tag="$2" hash="$3"
   sed -i "s|version = \"[^\"]*\"|version = \"$tag\"|" "$file"
   awk -v h="$hash" '
-    /tag = "/ { found=1 }
+    /(^|[[:space:]])(tag|rev)[[:space:]]*=/ { found=1 }
     found && /hash = "/ { sub(/hash = "[^"]*"/, "hash = \"" h "\""); found=0 }
     1
   ' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
 }
 
-# update_zig_package <repo-url> <rev> <version> <nix-file> <build.zig.zon.nix> <label>
+# update_zig_package <repo-url> <tag> <version> <nix-file> <build.zig.zon.nix> <label>
 #   Reuses the prefetched source tree to read build.zig.zon. The generated nix
 #   file stores the source manifest digest so zon2nix only runs when
 #   dependencies actually changed.
 update_zig_package() {
-  local repo_url="$1" rev="$2" version="$3" nix_file="$4" zon_nix_file="$5" label="$6"
+  local repo_url="$1" tag="$2" version="$3" nix_file="$4" zon_nix_file="$5" label="$6"
   local prefetch latest_hash latest_path latest_zon latest_zon_digest
 
-  prefetch=$(nix-prefetch-git --url "$repo_url" --rev "$rev") || return 1
+  prefetch=$(nix-prefetch-git --url "$repo_url" --rev "$tag") || return 1
   latest_hash=$(prefetch_field "$prefetch" hash)
   latest_path=$(prefetch_field "$prefetch" path)
   latest_zon="$latest_path/build.zig.zon"
@@ -86,13 +85,13 @@ update_zig_package() {
   update_src "$nix_file" "$version" "$latest_hash"
 }
 
-# update_other_package <repo-url> <rev> <nix-file> <label>
+# update_other_package <repo-url> <tag> <nix-file> <label>
 #   Reuses the prefetched source tree to read information such as tag, hash...
 #   Only runs when the package revision actually changes.
 update_other_package() {
-  local repo_url="$1" rev="$2" version="$3" nix_file="$4" zon_nix_file="$5" label="$6"
+  local repo_url="$1" tag="$2" version="$3" nix_file="$4" zon_nix_file="$5" label="$6"
   local prefetch latest_hash latest_path latest_zon latest_zon_digest
-  prefetch=$(nix-prefetch-git --url "$repo_url" --rev "$rev") || return 1
+  prefetch=$(nix-prefetch-git --url "$repo_url" --rev "$tag") || return 1
   latest_hash=$(prefetch_field "$prefetch" hash)
   latest_path=$(prefetch_field "$prefetch" path)
 
@@ -101,6 +100,6 @@ update_other_package() {
       return 0
   fi
 
-  update_src "$nix_file" "$latest_rev" "$latest_hash"
+  update_src "$nix_file" "$version" "$latest_hash"
 
 }

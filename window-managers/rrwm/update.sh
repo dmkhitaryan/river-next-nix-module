@@ -1,10 +1,14 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts nix-prefetch-git gnused zon2nix jq nixfmt wget
+#!nix-shell -i bash -p bash common-updater-scripts git nix-prefetch-git gnused zon2nix jq nixfmt
 
-SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
-source "$SCRIPT_DIR/../update-lib.sh"
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+cd "$SCRIPT_DIR" || exit 1
 
-latest_tag=$(list-git-tags --url=https://github.com/cap153/rrwm | sed 's/^v//' | sort --version-sort | tail --lines=1)
-hash=$(nix-prefetch-git --url https://github.com/cap153/rrwm --rev "$latest_tag" | jq -r '.hash')
-
-update_src "$SCRIPT_DIR/package.nix" "$latest_tag" "$hash"
+latest_tag=$(list-git-tags --url=https://github.com/cap153/rrwm  | sed 's/^v//' | sort --version-sort | tail --lines=1)
+source ../update-lib.sh
+update_other_package \
+  "https://github.com/cap153/rrwm" \
+  "v$latest_tag" \
+  "$latest_tag" \
+  package.nix \
+  rrwm

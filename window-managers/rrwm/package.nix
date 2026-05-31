@@ -14,18 +14,18 @@
 let
   exampleConfig = ./rrwm.toml;
 in
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage(finalAttrs: {
   pname = "rrwm";
   version = "0.1.2";
 
   src = fetchFromGitHub {
     owner = "cap153";
     repo = "rrwm";
-    rev = "548c96ee23a546529915c6e6a10d4348aae832ed";
-    hash = "sha256-qFH/jpzF0ol3fhav+5rrhGDD9C7Us4RMAQYTlz6hRxY=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-CKP1BM545URA+mMwklL/Qm6/7iTwyQlvlmjnXmAqPIE=";
   };
 
-  cargoHash = "sha256-Iu4dzo9i9kPkEQ/z9NOiCT2VOescb58hQ6NAAd7TlyI=";
+  cargoHash = "sha256-8OiF34Aa/jH82MAcQ5HnIW+4Bi9wLK904kfJvdHVrEc=";
 
   nativeBuildInputs = [
     pkg-config
@@ -54,4 +54,4 @@ rustPlatform.buildRustPackage {
     ];
     platforms = lib.platforms.linux;
   };
-}
+})

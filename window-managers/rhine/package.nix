@@ -2,7 +2,7 @@
   lib,
   stdenv,
   fetchFromCodeberg,
-  zig_0_15,
+  zig,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -16,19 +16,19 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "rhine";
-  version = "0.1.0";
+  version = "0.2.0";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "rhine";
     tag = finalAttrs.version;
-    hash = "sha256-4jhHUc9Up2DvGNmKhG10TX62NCnTUXtDSRPISJyOMgQ=";
+    hash = "sha256-8lyssccIwk2+niFwaDa/jJspsgdj9Kjlb2UixsDI5wg=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
   nativeBuildInputs = [
-    zig_0_15
+    zig
     wayland-scanner
     wayland-protocols
     pkg-config
