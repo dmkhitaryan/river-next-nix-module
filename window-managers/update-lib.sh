@@ -74,7 +74,8 @@ update_zig_package() {
     return 1
   fi
 
-  if [ "$current_pkg_rev" = "$latest_rev" ] && [ -s "$zon_nix_file" ]; then
+  if [ "$current_pkg_rev" = "$latest_rev" ] && [ -s "$zon_nix_file" ]; then # Include the fix to support currently present build.zig.zon.nix files.
+    sed -i 's|url = "https://codeload\.github\.com/\([^/][^/]*\)/\([^/][^/]*\)/tar\.gz/refs/tags/\([^"]*\)"|url = "https://github.com/\1/\2/archive/refs/tags/\3.tar.gz"|g' "$zon_nix_file"
     echo "$label already at $latest_rev; skipping."
     return 0
   fi
