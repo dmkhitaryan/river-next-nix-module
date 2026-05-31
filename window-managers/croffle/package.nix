@@ -10,7 +10,7 @@
 
 buildGoModule(finalAttrs: {
   pname = "croffle";
-  version = "unstable-2026-05-21";
+  version = "unstable-2026-05-25";
   subPackages = [
     "cmd/crofflewm"
     "cmd/croffleim"
@@ -19,11 +19,11 @@ buildGoModule(finalAttrs: {
   src = fetchFromCodeberg {
     owner = "vyivel";
     repo = "croffle";
-    rev = "225cb8567c87a758efeaa8cd6c3bb1f32a7455bc";
-    hash = "sha256-/w7QgYLHOE+8kpRa6gJiYMj7mcG87ykMJK/weXWo2kc=";
+    rev = "556fe5552e0e6f920627ef4981c3c7f3da56afe3";
+    hash = "sha256-a8ri5Ln+lv1ypIUr1JdJF0FKIeNkW8VM8HxROyBi2IU=";
   };
 
-  vendorHash = "sha256-Cmg4duoGUa+YpOPNAcqFUgV25E6IqINq18jbA8zRRNQ=";
+  vendorHash = "sha256-htk26isEZX3Lh+k+a1nrAZAxq83wjgccebVWgyQTu7w=";
 
   nativeBuildInputs = [
     pkg-config

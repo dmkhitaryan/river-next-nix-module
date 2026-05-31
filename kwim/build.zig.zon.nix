@@ -11,14 +11,14 @@ linkFarm "zig-packages" [
   {
     name = "clap-0.12.0-oBajB7foAQDqlSwaSG5g0yq7xGbQARUsBk5T64gAOqP5";
     path = fetchzip {
-      url = "https://codeload.github.com/Hejsil/zig-clap/tar.gz/refs/tags/0.12.0";
+      url = "https://github.com/Hejsil/zig-clap/tar.gz/refs/tags/0.12.0";
       hash = "sha256-HveL7aJBC+/8PNlGYxtNZBrk3ytkM8zuXENO9JpygC0=";
     };
   }
   {
     name = "mvzr-0.3.9-ZSOky8FzAQBQ9-GkQnaLjOZZHxrioD8NwY-QyZT6oAyR";
     path = fetchzip {
-      url = "https://codeload.github.com/mnemnion/mvzr/tar.gz/refs/tags/v0.3.10";
+      url = "https://github.com/mnemnion/mvzr/tar.gz/refs/tags/v0.3.10";
       hash = "sha256-Hi0lssg5RQ6kqPn8X8nWQRLogEohKcBI+ebZnCaKS3s=";
     };
   }

@@ -88,6 +88,7 @@ update_zig_package() {
   zon2nix "$latest_zon" > "$zon_nix_file" || return 1
   write_zon_digest_comment "$zon_nix_file" "$latest_zon_digest" || return 1
   sed -i 's|url = "\(https://[^"?]*\)?ref=[^"]*"|url = "\1"|g' "$zon_nix_file"
+  sed -i 's|url = "https://codeload\.github\.com/\([^/][^/]*\)/\([^/][^/]*\)/tar\.gz/refs/tags/\([^"]*\)"|url = "https://github.com/\1/\2/archive/refs/tags/\3.tar.gz"|g' "$zon_nix_file"
   nixfmt "$zon_nix_file"
   update_src "$nix_file" "$latest_rev" "$latest_hash" "$latest_date"
 }

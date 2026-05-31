@@ -3,7 +3,7 @@
 While the new iteration of `river` now exists in Nixpkgs, given how the compositor works, a dozen or so of window managers would still need to be packaged to actually run something in it. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
 
 I plan to update packages roughly once a week, ideally on Mondays. Package versions (aside from River) will reflect this if they receive changes. Later I plan to adjust this to update based on their actual commit histories.  
-**Last package update: 24-05-2026.**
+**Last package update: 31-05-2026.**
 
 This is the **main** branch, thus all the packages here are pulling changes against their respective main branches. Combined with their varying development statuses, there is **always non-zero chance of a breaking change**!  
 If you are looking for something less unstable, I suggest looking at the [stable](https://github.com/dmkhitaryan/river-next-nix-module/tree/stable) branch.
@@ -12,8 +12,8 @@ If you are looking for something less unstable, I suggest looking at the [stable
 This repo has/will contain the following:
 - [x] River 0.5.0 (from main branch)
 - [x] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
-  - [x] anvl - Minimal river based tiling window manager inspired and influenced by dwm and tinyrwm.
-  - [x] argen - Task-oriented tiling window manager designed for keyboard + IPC workflows.
+  - [x] anvl - Minimal river based tiling window manager inspired and influenced by dwm and tinyrwm
+  - [x] argen - Task-oriented tiling window manager designed for keyboard + IPC workflows
   - [x] ashrwm - Minimal dynamic tiling window manager with tiling, and grid layouts, hot reloading and more
   - [x]  beansprout - DWM-style tiling window manager with built-in wallpaper and a clock/bar, with configuration in Kdl
   - [x] bridge - Horizontal-tiling window manager with built-in icon bar
@@ -24,7 +24,7 @@ This repo has/will contain the following:
   - [x]  kwm - DWM-like dynamic tilling window manager with scrollable-tiling support, includes a simple status bar, written in Zig
   - [x]  machi - Minimalist window manager with cascading windows, horizontal panels and vertical workspaces
   - [x]  mousetrap - Minimal stumpwm/ratpoison-like window manager, using modern c++
-  - [x]  notion-river - Static tiling window manager inspired by Notionwm (formerly Ion3). 
+  - [x]  notion-river - Static tiling window manager inspired by Notionwm (formerly Ion3)
   - [x]  orilla - Dynamic tiling window manager inspired by XMonad, written in Rust
   - [x]  pwm - Tiling window manager with SSD titlebars and Python API
   - [x]  reka - Emacs-based WM for river (similar to EXWM)
@@ -34,6 +34,7 @@ This repo has/will contain the following:
   - [x] ropotamo - StumpWM-like tiling window manager for River
   - [x]  rrwm - Tiling window manager with a cosmic/bspwm layout, written in Rust
   - [x]  tarazed - Non-tiling window manager focusing on a powerful and distraction-free desktop experience
+  - [ ] Triad - Multi-paradigm window manager with embedded Janet scripting
   - [x]  zrwm - Dynamic tiling window manager configured using a CLI tool
  - [x] River module: `programs.river-next`
     - See available options [here](https://github.com/dmkhitaryan/river-next-nix-module/wiki/List-of-Module-Options)

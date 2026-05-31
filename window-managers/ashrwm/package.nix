@@ -19,13 +19,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "ashrwm";
-  version = "unstable-2026-05-23";
+  version = "unstable-2026-05-25";
 
   src = fetchFromGitHub {
     owner = "shadowash8";
     repo = "ashrwm";
-    rev = "de3c39cca0540a2ce34e822312c0d4b345ce33c5";
-    hash = "sha256-Ec9hp1SxtvXZkTn+DkM4FYYk9u7r0RS6LOBmBNrLKgU=";
+    rev = "29be6334b5395e1b063d5b0b145b4e9269c4b1ae";
+    hash = "sha256-yy0/JekBmopr/fsl4N2O5nFB4q7NNcXKjvK4YDF84ag=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

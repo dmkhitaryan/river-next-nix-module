@@ -15,13 +15,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "machi";
-  version = "unstable-2026-05-23";
+  version = "unstable-2026-05-27";
 
   src = fetchFromCodeberg {
     owner = "machi";
     repo = "machi";
-    rev = "d51761e4b0153d95598fd50621887c2b50102169";
-    hash = "sha256-0ZQ8vLAbS+UJtGzj6uo29wfX+O/BG5OxbjWCHlbJzxg=";
+    rev = "65a0fc12f2796f41f4c9cbb7e034aaa137009b01";
+    hash = "sha256-StpGIGnIjtdEQ9fWdsei6n93IJOG6BG7gRKaOS9sI24=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
@@ -37,6 +37,11 @@ stdenv.mkDerivation (finalAttrs: {
     wayland-protocols
   ]
   ++ lib.optional withManpages scdoc;
+
+  postPatch = ''
+    substituteInPlace build.zig \
+      --replace-fail 'const sha = b.run(&.{ "git", "rev-parse", "HEAD" });' 'const sha = null;'
+  '';
 
   postInstall = ''
     install -Dm755 example/machi.ini -t $out/example/
