@@ -35,6 +35,7 @@ This repo has/will contain the following:
   - [x]  rrwm - Tiling window manager with a cosmic/bspwm layout, written in Rust
   - [x]  tarazed - Non-tiling window manager focusing on a powerful and distraction-free desktop experience
   - [x] Triad - Multi-paradigm window manager with embedded Janet scripting
+  - [x] Weir - Tiling window manager inspired by XMonad and Rivercarro, dynamic CLI configuration
   - [x]  zrwm - Dynamic tiling window manager configured using a CLI tool
  - [x] River module: `programs.river-next`
     - See available options [here](https://github.com/dmkhitaryan/river-next-nix-module/wiki/List-of-Module-Options)
@@ -53,4 +54,6 @@ Might just be a "GDM moment", but I do not plan to investigate further. That sai
   1. If you are going to launch it through TTY, run `exec /nix/store/...river-reka-launcher` and enjoy.
   2. If running through `ly` or similar, look for the *River (Reka)* entry in the session list. Select it, log in, and enjoy.
 
-(31-05-2026): `Triad` is now available in this repository. It should support shells (Waybar, DMS...) just fine, provided those are enabled in NixOS by the user and then enabled in the WM's config. Troubleshooting/logging support is also included.
+(06-06-2026): certain commands in `Triad` will not function on NixOS. Particularly, trying to execute `triad doctor-live` or `triad live-reload` will hit OSErrors due to the immutability of /nix/store.
+
+(06-06-2026): `Weir` does not make use of typical configuration file setup. Instead, like classic River, it puts its config in an init script. Given the structure of this repo, a config option has been added to account for this nuance, `weirConfig`.

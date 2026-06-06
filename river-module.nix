@@ -37,6 +37,7 @@ let
     rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix { };
     tarazed = pkgs.callPackage ./window-managers/tarazed/package.nix { };
     triad = pkgs.callPackage ./window-managers/triad/package.nix { };
+    weir = pkgs.callPackage ./window-managers/weir/package.nix { };
     zrwm = pkgs.callPackage ./window-managers/zrwm/package.nix { };
     reka = pkgs.callPackage ./window-managers/reka/package.nix { };
 
@@ -116,6 +117,7 @@ in
             "rrwm"
             "tarazed"
             "triad"
+            "weir"
             "zrwm"
           ]
         )
@@ -163,7 +165,28 @@ in
         '';
       };
     };
+    # Weir is configured via init script, not specific configuration file.
+    # This option lets user provide their own init script.
+    weirConfig = mkOption {
+      type = types.lines;
+      default = builtins.readFile ./window-managers/weir/init;
+      example = ''
+        weir &
+          weirctl wait-for-socket
+
+          weirctl set border-width 2
+          weirctl bind Super+Shift+Return spawn foot
+          # ...
+      '';
+      description = ''
+        Weir init script contents. This script is run by River on startup and is
+        used as Weir's runtime configuration.
+      '';
+    };
   };
+
+
+
   config = mkIf cfg.enable (mkMerge [
     {
       environment.systemPackages =
@@ -280,6 +303,16 @@ in
                   ''
                     exec "$TRIAD_MANAGER_LOOP"
                   ''
+                else if windowManager == "weir" then
+                let
+                  weirInit = pkgs.writeShellScript "river-weir-init" ''
+                    export PATH=${lib.makeBinPath [ localPkgs.weir ]}:$PATH
+                    ${cfg.weirConfig}
+                  '';
+                  in
+                    ''
+                      exec ${weirInit}
+                    ''
                 else
                   ''
                     exec /run/current-system/sw/bin/${windowManager}

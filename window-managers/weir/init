@@ -1,0 +1,192 @@
+#!/bin/sh
+# Example river init script for weir. Install as ~/.config/river/init
+# (and make it executable). River runs this once its Wayland socket is up.
+#
+# There is no config file: this script *is* the configuration, exactly like
+# river-classic. Every line is a runtime command — re-run any of them from a
+# terminal at any time to change things, and use the introspection commands
+# at the bottom to see the current state.
+#
+# This file aims to mention every command and setting weir has. A test
+# (core/exampleinit_test.go) fails if a command exists that this file does
+# not at least mention, so it should always be the complete reference.
+
+# Start the window manager and wait for its control socket to come up
+# before configuring it.
+weir &
+weirctl wait-for-socket
+
+# ---------------------------------------------------------------------------
+# Appearance
+# ---------------------------------------------------------------------------
+# Borders are drawn by the compositor; weir picks widths and colors.
+# Colors are 0xRRGGBB or 0xRRGGBBAA.
+weirctl set border-width 2
+weirctl set border-color-focused   0x93a1a1
+weirctl set border-color-unfocused 0x586e75
+weirctl set border-color-urgent    0xdc322f
+weirctl set smart-borders off      # on: no borders when only one window is tiled
+
+# Gaps between windows (inner) and at the output edges (outer), in pixels.
+weirctl set gaps 4 8
+weirctl set smart-gaps on          # no gaps when only one window is tiled
+
+# Cursor theme and size for the pointer.
+# weirctl set xcursor-theme Adwaita 24
+
+# ---------------------------------------------------------------------------
+# Layout
+# ---------------------------------------------------------------------------
+# The tile layout is xmonad-style master/stack. Layout settings are kept
+# per workspace: an absolute value here applies to every workspace (and to
+# ones created later), while the +/- adjustment forms used in the
+# keybindings below change only the focused workspace.
+weirctl set main-ratio 0.6                   # main area fraction (0.1-0.9)
+weirctl set main-count 1                     # windows in the main area
+weirctl set main-location left               # left|right|top|bottom
+
+# Workspaces: "independent" (xmonad/dwm: each output views any workspace)
+# or "locked" (gnome-style: switching desktops retargets every output).
+weirctl workspace-mode independent
+
+# ---------------------------------------------------------------------------
+# Input
+# ---------------------------------------------------------------------------
+# Focus follows the mouse pointer instead of requiring a click.
+# weirctl set focus-follows-cursor on
+
+# Keyboard layouts. Requires xkbcli (libxkbcommon-tools) on PATH. The
+# -device glob targets specific keyboards by name; run "weirctl list-inputs"
+# to see the names. The most specific matching entry wins per keyboard and
+# layouts are remembered for keyboards plugged in later.
+# weirctl keyboard-layout -options ctrl:nocaps us
+# weirctl keyboard-layout -device '*Apple*' -variant mac de
+
+# libinput device properties: natural-scroll, tap, drag, drag-lock,
+# left-handed, middle-emulation, dwt, dwtp (enabled|disabled), and
+# accel-profile (none|flat|adaptive). The glob matches device names from
+# "weirctl list-inputs"; run "weirctl input" alone for the full list.
+# weirctl input '*' natural-scroll disabled
+# weirctl input '*Touchpad*' tap enabled
+# weirctl input '*Touchpad*' dwt enabled
+
+# ---------------------------------------------------------------------------
+# Key bindings
+# ---------------------------------------------------------------------------
+# Chords are Modifier+...+Key. Modifiers: Super (Logo/Mod4), Ctrl, Alt
+# (Mod1), Shift, Mod3, Mod5, or None for unmodified keys. Letter keys use
+# their unshifted keysym (Super+Shift+j, not Super+Shift+J). Named keys
+# follow xkbcommon (Return, Escape, F1, comma, XF86AudioMute, ...).
+# Rebinding a chord replaces it; "weirctl unbind <chord>" removes it;
+# "weirctl list-bindings" shows everything currently bound.
+mod=Super
+
+# Programs. spawn passes its arguments to /bin/sh -c, so quote pipelines.
+weirctl bind $mod+Shift+Return  spawn foot
+weirctl bind $mod+p             spawn 'fuzzel'
+weirctl bind $mod+Shift+c       close
+weirctl bind $mod+Shift+q       exit          # ends the entire session
+
+# Focus and stack order within the workspace.
+weirctl bind $mod+j             focus next
+weirctl bind $mod+k             focus prev
+weirctl bind $mod+m             focus main
+weirctl bind $mod+Shift+j       swap next
+weirctl bind $mod+Shift+k       swap prev
+weirctl bind $mod+Return        zoom          # promote to main / cycle main
+
+# Layout adjustments.
+weirctl bind $mod+h             set main-ratio -0.05
+weirctl bind $mod+l             set main-ratio +0.05
+weirctl bind $mod+comma         set main-count +1
+weirctl bind $mod+period        set main-count -1
+weirctl bind $mod+space         cycle-layout monocle,left,top
+weirctl bind $mod+Shift+space   set-layout tile
+
+# Floating windows. move/snap/resize float a tiled window in place first.
+weirctl bind $mod+t             toggle-float
+weirctl bind $mod+f             toggle-fullscreen
+weirctl bind $mod+Alt+h         move left 100
+weirctl bind $mod+Alt+j         move down 100
+weirctl bind $mod+Alt+k         move up 100
+weirctl bind $mod+Alt+l         move right 100
+weirctl bind $mod+Ctrl+h        snap left
+weirctl bind $mod+Ctrl+j        snap down
+weirctl bind $mod+Ctrl+k        snap up
+weirctl bind $mod+Ctrl+l        snap right
+weirctl bind $mod+Alt+Shift+h   resize horizontal -100
+weirctl bind $mod+Alt+Shift+j   resize vertical 100
+weirctl bind $mod+Alt+Shift+k   resize vertical -100
+weirctl bind $mod+Alt+Shift+l   resize horizontal 100
+
+# Outputs (monitors). Directions are next|prev|left|right|up|down or an
+# output name from "weirctl get outputs".
+weirctl bind $mod+w             focus-output left
+weirctl bind $mod+e             focus-output right
+weirctl bind $mod+Shift+w       send-to-output left
+weirctl bind $mod+Shift+e       send-to-output right
+
+# Workspaces 1-9: view with $mod+N, send the focused window with
+# $mod+Shift+N. "view" on a workspace visible on another output focuses
+# that output; "pull" swaps it onto this one instead.
+for i in 1 2 3 4 5 6 7 8 9; do
+    weirctl bind $mod+$i view $i
+    weirctl bind $mod+Shift+$i send $i
+done
+weirctl bind $mod+Right         view next
+weirctl bind $mod+Left          view prev
+# weirctl bind $mod+grave       pull scratch
+
+# Media keys work without a modifier.
+weirctl bind None+XF86AudioRaiseVolume  spawn 'wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+'
+weirctl bind None+XF86AudioLowerVolume  spawn 'wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-'
+weirctl bind None+XF86AudioMute         spawn 'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle'
+weirctl bind None+XF86MonBrightnessUp   spawn 'brightnessctl set +5%'
+weirctl bind None+XF86MonBrightnessDown spawn 'brightnessctl set 5%-'
+
+# ---------------------------------------------------------------------------
+# Pointer bindings
+# ---------------------------------------------------------------------------
+# Buttons: Left, Right, Middle, Side, Extra, Forward, Back, Task.
+# "move" and "resize" drag the window under the cursor (floating it first if
+# tiled); any other action is a command run against the clicked window.
+# "weirctl unbind-pointer <chord>" removes one.
+weirctl bind-pointer $mod+Left   move
+weirctl bind-pointer $mod+Right  resize
+weirctl bind-pointer $mod+Middle toggle-float
+
+# ---------------------------------------------------------------------------
+# Window rules
+# ---------------------------------------------------------------------------
+# Rules match new windows by app-id and/or title glob (* ? [...]) and apply
+# before the window is first shown. Actions: float, no-float, ssd, csd,
+# workspace <name>. "weirctl rule list" shows them, "weirctl rule del ..."
+# removes one.
+# weirctl rule add -app-id 'float*' float
+# weirctl rule add -app-id mpv float
+# weirctl rule add -title '*pop-up*' float
+# weirctl rule add -app-id Slack workspace 9
+
+# ---------------------------------------------------------------------------
+# Introspection and scripting
+# ---------------------------------------------------------------------------
+# Everything weir knows is queryable as JSON; this is also how bars work.
+#   weirctl get state            the full picture (also: outputs, windows,
+#                                workspaces)
+#   weirctl list-bindings        every key and pointer binding
+#   weirctl list-inputs          input devices and their names
+#   weirctl rule list            window rules
+#   weirctl subscribe            stream a state snapshot on every change
+#   weirctl help [command]       command reference
+#   weirctl set                  list every option for "set"
+# (a status bar can consume "weirctl subscribe" for live workspace state)
+
+# ---------------------------------------------------------------------------
+# Session
+# ---------------------------------------------------------------------------
+# Anything else you want running. River sends SIGTERM to this script's
+# process group on exit, so background processes are cleaned up.
+# swaybg -c '#002b36' &
+# waybar &
+# mako &
+# swayidle -w &
