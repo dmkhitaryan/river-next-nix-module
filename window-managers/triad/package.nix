@@ -32,6 +32,13 @@ buildNimPackage (finalAttrs: {
 
   doCheck = false;
 
+  postPatch = ''
+    substituteInPlace src/session/live_paths.nim \
+      --replace-fail "  result = cwd" "  result = \"$out/share/triad/live-src\"" \
+      --replace-fail 'envOrDefault("TRIAD_LIVE_BIN_DIR", getHomeDir() / ".local/bin").expandTilde()' \
+        "envOrDefault(\"TRIAD_LIVE_BIN_DIR\", \"$out/share/triad/live-src\").expandTilde()"
+  '';
+
   nimFlags = [
     "--path:src"
     "-d:release"
@@ -40,6 +47,13 @@ buildNimPackage (finalAttrs: {
 
   postInstall = ''
     install -Dm644 config.default.kdl $out/share/triad/config.default.kdl
+    mkdir -p $out/share/triad/live-src/tools
+    install -Dm755 tools/triad-manager-loop.sh $out/share/triad/live-src/tools/triad-manager-loop.sh
+    install -Dm755 tools/river-triad-session.sh $out/share/triad/live-src/tools/river-triad-session.sh
+    ln -s tools/triad-manager-loop.sh $out/share/triad/live-src/triad-manager-loop
+    ln -s tools/river-triad-session.sh $out/share/triad/live-src/river-triad-session
+    ln -s $out/bin/triad $out/share/triad/live-src/triad
+    ln -s $out/bin/triad_niri $out/share/triad/live-src/triad_niri
   '';
 
   meta = {

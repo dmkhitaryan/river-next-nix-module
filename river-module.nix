@@ -43,7 +43,6 @@ let
     # Helper programs (so far, input management).
     channel = pkgs.callPackage ./channel/package.nix { };
     kwim = pkgs.callPackage ./kwim/package.nix { };
-    triad-manager-loop = pkgs.callPackage ./window-managers/triad/triad-manager-loop/package.nix { };
   };
   selectedWMs = map (name: localPkgs.${name}) cfg.windowManagers;
 in
@@ -165,7 +164,6 @@ in
       };
     };
   };
-
   config = mkIf cfg.enable (mkMerge [
     {
       environment.systemPackages =
@@ -173,7 +171,6 @@ in
         ++ lib.optional cfg.kanshi.enable pkgs.kanshi
         ++ lib.optional (builtins.elem "rhine" cfg.windowManagers) localPkgs.channel
         ++ lib.optional (builtins.elem "kwm" cfg.windowManagers) localPkgs.kwim
-        ++ lib.optional (builtins.elem "triad" cfg.windowManagers) localPkgs.triad-manager-loop
         ++ cfg.extraPackages
         ++ selectedWMs;
 
@@ -307,7 +304,8 @@ in
                       mkdir -p "$state_dir"
 
                       stamp="$(${pkgs.coreutils}/bin/date +%Y%m%d-%H%M%S)"
-                      session_log="$state_dir/triad-session-$stamp.log"
+                      session_id="$stamp-$$"
+                      session_log="$state_dir/triad-session-$session_id.log"
                       latest_session_log="$state_dir/triad-session-latest.log"
 
                       ln -sfn "$session_log" "$latest_session_log" 2>/dev/null || true
@@ -316,9 +314,13 @@ in
                       export XDG_CURRENT_DESKTOP=river
                       export XDG_SESSION_DESKTOP=river-triad
                       export XDG_SESSION_TYPE=wayland
+                      export TRIAD_SESSION_ID="$session_id"
+                      export TRIAD_SESSION_LOG="$session_log"
+                      export TRIAD_SESSION_PID="$$"
 
                       export TRIAD_BIN="${localPkgs.triad}/bin/triad"
-                      export TRIAD_MANAGER_LOOP="${localPkgs."triad-manager-loop"}/bin/triad-manager-loop"
+                      export TRIAD_MANAGER_LOOP="${localPkgs.triad}/share/triad/live-src/triad-manager-loop"
+                      export TRIAD_DOCTOR_EXPECT_DAEMON_EXE="${localPkgs.triad}/bin/triad"
                       export TRIAD_RIVER_BIN="${localPkgs.river-next}/bin/river"
 
                       exec ${pkgs.dbus}/bin/dbus-run-session -- "$TRIAD_RIVER_BIN" -c ${initScript}

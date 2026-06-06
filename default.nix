@@ -30,6 +30,5 @@
 
     channel = ./channel/package.nix;
     kwim = ./kwim/package.nix;
-    triad-manager-loop = /window-managers/triad/triad-manager-loop/package.nix;
   };
 }
