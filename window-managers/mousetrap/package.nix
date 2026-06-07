@@ -18,13 +18,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "mousetrap";
-  version = "unstable-2026-04-30";
+  version = "unstable-2026-06-05";
 
   src = fetchFromCodeberg {
     owner = "g4b";
     repo = "mousetrap";
-    rev = "e370b6b152dc9477affc9b1ee167f5ae6bed6579";
-    hash = "sha256-WUkdNlJI+XxjyxrD515wNFpnyJ+qF06XVHUNBr6a92A=";
+    rev = "02fe85d46abcae21ddf601b0374264bbd785a574";
+    hash = "sha256-rudg1GzGURirRHX13gJAEJUpIKq2NhtIozh3eBKEOuI=";
   };
 
   nativeBuildInputs = [
