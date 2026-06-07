@@ -12,16 +12,16 @@
 
 rustPlatform.buildRustPackage(finalAttrs: {
   pname = "canoe";
-  version = "0.4.0";
+  version = "0.5.0";
 
   src = fetchFromGitHub {
     owner = "roblillack";
     repo = "canoe";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-dbbL+u7dxQbTSkDgprrpsccSrwCp0d7MkuvH0O0t5SY=";
+    hash = "sha256-yR/iPLI/oU4xRzRiVnruKj6up+Y6Wc/r4hE75UhYmXM=";
   };
 
-  cargoHash = "sha256-U0cn8q2DsVuTEXstgNTt2e9Pz0BeXPE+OQG4yLcvJ38=";
+  cargoHash = "sha256-NG0h/nMhGpbSkGY79yUCfR+j/0kX9+vf0Y7eeemS4HY=";
 
   nativeBuildInputs = [
     pkg-config
