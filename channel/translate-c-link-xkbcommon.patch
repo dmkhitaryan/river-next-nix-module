@@ -1,0 +1,12 @@
+diff --git a/build.zig b/build.zig
+index 8b7d9f1..7a16f0c 100644
+--- a/build.zig
++++ b/build.zig
+@@ -69,6 +69,7 @@ pub fn build(b: *std.Build) !void {
+         .target = target,
+         .root_source_file = b.path("src/c_headers.h"),
+     });
++    translate_c.linkSystemLibrary("xkbcommon", .{});
+ 
+     exe.root_module.addImport("wayland", wayland);
+     exe.root_module.addImport("tributary", mod_tributary);
