@@ -14,13 +14,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "jrwm";
-  version = "unstable-2026-06-13";
+  version = "unstable-2026-06-14";
 
   src = fetchFromGitHub {
     owner = "jpco";
     repo = "jrwm";
-    rev = "119dfc80fa0e2fc9caaf2626be09ed68c890a650";
-    hash = "sha256-/fsykASlLC3U3I0B0BS46dtkJPuzzjIm0rZRXL5t5BY=";
+    rev = "c063d55d7163333f5dcd2f35238c8a21dc16eafc";
+    hash = "sha256-u7QOCrpJMSIFR3ii2HJANaUqL+tpMfcKaeE6sYI4YXs=";
   };
 
   nativeBuildInputs = [
