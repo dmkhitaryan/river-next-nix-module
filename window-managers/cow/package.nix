@@ -17,13 +17,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "cow";
-  version = "unstable-2026-06-07";
+  version = "unstable-2026-06-12";
 
   src = fetchFromCodeberg {
     owner = "thomasadam";
     repo = "cow";
-    rev = "95ab6b5b25bf608c98c8f3693709eb5693dedbfa";
-    hash = "sha256-QYU7iG36HekEd7YW2w8j5otdt4ckNLc7CylmC4jGT24=";
+    rev = "e5fc26cfda7544b8d212c476f49c4d67224b589e";
+    hash = "sha256-ho0SwDAAYjK0eiD7S3QdurT/kAJEksEG/pH02l0L+aI=";
   };
 
   nativeBuildInputs = [

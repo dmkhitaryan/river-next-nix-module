@@ -46,7 +46,16 @@ let
     channel = pkgs.callPackage ./channel/package.nix { };
     kwim = pkgs.callPackage ./kwim/package.nix { };
   };
-  selectedWMs = map (name: localPkgs.${name}) cfg.windowManagers;
+  selectedWMs = map (
+    name:
+      if name == "jrwm" && (
+        cfg.jrwmConfig.bindings != null
+        || cfg.jrwmConfig.layout != null
+        || cfg.jrwmConfig.configFile != null
+      )
+      then cfg.jrwmConfig.package
+      else localPkgs.${name}
+  ) cfg.windowManagers;
 in
 {
   options.programs.river-next = {
@@ -184,6 +193,31 @@ in
         Weir init script contents. This script is run by River on startup and is
         used as Weir's runtime configuration.
       '';
+    };
+
+    jrwmConfig = {
+      bindings = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        description = "Custom bindings.c for JrWM.";
+      };
+      layout = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        description = "Custom layout.c for JrWM.";
+      };
+      configFile = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        description = "Custom jrwm.c for JrWM.";
+      };
+      package = mkOption {
+        type = types.package;
+        default = localPkgs.jrwm.override {
+          inherit (cfg.jrwmConfig) bindings layout configFile;
+        };
+        description = "JrWM package to use.";
+      };
     };
   };
 

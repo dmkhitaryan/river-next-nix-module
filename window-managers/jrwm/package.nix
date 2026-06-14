@@ -9,7 +9,7 @@
   gnumake,
   bindings ? null,
   layout ? null,
-  jrwmConfig ? null,
+  configFile ? null,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -41,11 +41,11 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail 'PREFIX	= /usr/local' "PREFIX	= $out" \
       --replace-fail 'MANDIR	= $(PREFIX)/man' 'MANDIR	= $(PREFIX)/share/man'
   '' + lib.optionalString (bindings != null) ''
-      cp -r ${bindings} bindings.c
+      cp ${bindings} bindings.c
   '' + lib.optionalString (layout != null) ''
-      cp -r ${layout} layout.c
-  '' + lib.optionalString (jrwmConfig != null) ''
-      cp -r ${jrwmConfig} jrwm.c
+      cp ${layout} layout.c
+  '' + lib.optionalString (configFile != null) ''
+      cp ${configFile} jrwm.c
   '';
 
   meta = {

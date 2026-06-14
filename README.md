@@ -3,7 +3,7 @@
 While the new iteration of `river` now exists in Nixpkgs, given how the compositor works, a dozen or so of window managers would still need to be packaged to actually run something in it. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
 
 I plan to update packages roughly once a week, ideally on Mondays. Package versions (aside from River) will reflect this if they receive changes. Later I plan to adjust this to update based on their actual commit histories.  
-**Last package update: 07-06-2026.**
+**Last package update: 15-06-2026.**
 
 This is the **main** branch, thus all the packages here are pulling changes against their respective main branches. Combined with their varying development statuses, there is **always non-zero chance of a breaking change**!  
 If you are looking for something less unstable, I suggest looking at the [stable](https://github.com/dmkhitaryan/river-next-nix-module/tree/stable) branch.
@@ -20,6 +20,7 @@ This repo has/will contain the following:
   - [x] Canoe - Stacking window manager with classic look and feel, written in Rust
   - [x] CoW - Stacking window manager with a fvwm/mwm look and feel
   - [x] croffle - Static tiling window manager
+  - [x] JrWM - Simple dynamic tiling window manager that's easy to build, read, and modify
   - [x]  kuskokwim - Tiling window manager with composable keybindings and first-class support for process management, written in Python
   - [x]  kwm - DWM-like dynamic tilling window manager with scrollable-tiling support, includes a simple status bar, written in Zig
   - [x]  machi - Minimalist window manager with cascading windows, horizontal panels and vertical workspaces
@@ -57,3 +58,5 @@ Might just be a "GDM moment", but I do not plan to investigate further. That sai
 (06-06-2026): certain commands in `Triad` will not function on NixOS. Particularly, trying to execute `triad doctor-live` or `triad live-reload` will hit OSErrors due to the immutability of /nix/store.
 
 (06-06-2026): `Weir` does not make use of typical configuration file setup. Instead, like classic River, it puts its config in an init script. Given the structure of this repo, a config option has been added to account for this nuance, `weirConfig`.
+
+(14-06-2026): `JrWM` configuration is [based on files](https://github.com/jpco/jrwm#configuration) that are adjusted pre-build. To facilitate customization, users can pass custom configuration files via `jrwmConfig`.
