@@ -11,6 +11,7 @@
     canoe = ./window-managers/canoe/package.nix;
     cow = ./window-managers/cow/package.nix;
     croffle = ./window-managers/croffle/package.nix;
+    jrwm = ./window-managers/jrwm/package.nix;
     kuskokwim = ./window-managers/kuskokwim/package.nix;
     kwm = ./window-managers/kwm/package.nix;
     machi = ./window-managers/machi/package.nix;
