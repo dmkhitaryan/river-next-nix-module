@@ -13,17 +13,20 @@
   libbsd,
   libxkbcommon,
   scdoc,
+  bison,
+  flex,
+  libevent,
   ninja,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "cow";
-  version = "unstable-2026-06-12";
+  version = "unstable-2026-06-18";
 
   src = fetchFromCodeberg {
     owner = "thomasadam";
     repo = "cow";
-    rev = "e5fc26cfda7544b8d212c476f49c4d67224b589e";
-    hash = "sha256-ho0SwDAAYjK0eiD7S3QdurT/kAJEksEG/pH02l0L+aI=";
+    rev = "768f98981113b9fad64f02e7d5d9c9645483a259";
+    hash = "sha256-od903LZ+NjgMoePQbkJDJ349yifTEeF87D9c2fWVX8w=";
   };
 
   nativeBuildInputs = [
@@ -31,6 +34,8 @@ stdenv.mkDerivation (finalAttrs: {
     meson
     pkg-config
     cmake
+    bison
+    flex
     ninja
   ];
 
@@ -42,6 +47,7 @@ stdenv.mkDerivation (finalAttrs: {
     wayland-protocols
     libxkbcommon
     scdoc
+    libevent
   ];
 
   env.NIX_CFLAGS_COMPILE = "-Wno-error=format-security";
