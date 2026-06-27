@@ -100,6 +100,18 @@ in
       description = "Includes man page for River.";
     };
 
+    channel.enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable channel input manager.";
+    };
+
+    kwim.enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable kwim input manager.";
+    };
+
     windowManagers = mkOption {
       type = types.unique { message = "Duplicate window manager entries are not allowed."; } (
         types.listOf (
@@ -228,8 +240,8 @@ in
       environment.systemPackages =
         lib.optional (cfg.package != null) cfg.package
         ++ lib.optional cfg.kanshi.enable pkgs.kanshi
-        ++ lib.optional (builtins.elem "rhine" cfg.windowManagers) localPkgs.channel
-        ++ lib.optional (builtins.elem "kwm" cfg.windowManagers) localPkgs.kwim
+        ++ lib.optional (builtins.elem "rhine" cfg.windowManagers || cfg.channel.enable) localPkgs.channel
+        ++ lib.optional (builtins.elem "kwm" cfg.windowManagers || cfg.kwim.enable) localPkgs.kwim
         ++ cfg.extraPackages
         ++ selectedWMs;
 
@@ -326,11 +338,11 @@ in
                 } &
               ''}
 
-              ${lib.optionalString (windowManager == "rhine") ''
+              ${lib.optionalString (windowManager == "rhine" || cfg.channel.enable) ''
                 ${localPkgs.channel}/bin/channel &
               ''}
 
-              ${lib.optionalString (windowManager == "kwm") ''
+              ${lib.optionalString (windowManager == "kwm" || cfg.kwim.enable) ''
                 ${localPkgs.kwim}/bin/kwim &
               ''}
 
