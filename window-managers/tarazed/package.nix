@@ -11,19 +11,20 @@
   libscfg,
   libevdev,
   pixman,
+  libffi,
   lib,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tarazed";
-  version = "unstable-2026-06-11";
+  version = "unstable-2026-06-23";
 
   src = fetchFromGitLab {
     domain = "gitlab.gwdg.de";
     owner = "leonhenrik.plickat";
     repo = "tarazed";
-    rev = "141b7ec5618fceeaab3269601788bd9c32042205";
-    hash = "sha256-HeChDCD4WhHFlblHr7KbZRM++CWe/LJMQEbh4g/dTqQ=";
+    rev = "ab7b55d5c88159b6c5e888bc52bfb785a0f1ef70";
+    hash = "sha256-MMWl1V2LWNeOGhlQ6Lq4ETtb3RT9IPqL3SKATYmGMms=";
   };
 
   nativeBuildInputs = [
@@ -39,6 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
     pixman
     libxkbcommon
     wayland-protocols
+    libffi
   ];
 
   installPhase = ''
