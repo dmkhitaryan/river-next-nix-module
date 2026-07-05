@@ -10,13 +10,13 @@
 
 buildNimPackage (finalAttrs: {
   pname = "triad";
-  version = "unstable-2026-05-30";
+  version = "unstable-2026-07-02";
 
   src = fetchFromGitHub {
     owner = "greenm01";
     repo = "triad";
-    rev = "11b730fef50f33a3f9cb1ab964358257329618d9";
-    hash = "sha256-JaLLQ3tlXs+nuK/NRCC1CiawTl6hqGdEVLQt/bgWGdQ=";
+    rev = "32e19476b3ebad7a59be860d199f3b79396905a2";
+    hash = "sha256-G2IvsfFvR9cpyDdnkoaxxdTk0CzmxMKNHizkdEX8Wks=";
   };
 
   lockFile = ./triad-nim-lock.json;
