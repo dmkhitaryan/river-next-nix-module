@@ -3,10 +3,12 @@
 
   packages = {
     river-next = ./river-next.nix;
+    argen = ./window-managers/argen/package.nix;
     ashrwm = ./window-managers/ashrwm/package.nix;
     beansprout = ./window-managers/beansprout/package.nix;
     bridge = ./window-managers/bridge/package.nix;
     canoe = ./window-managers/canoe/package.nix;
+    cow = ./window-managers/cow/package.nix;
     kwm = ./window-managers/kwm/package.nix;
     machi = ./window-managers/machi/package.nix;
     notion-river = ./window-managers/notion-river/package.nix;

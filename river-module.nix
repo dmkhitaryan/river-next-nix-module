@@ -16,9 +16,11 @@ let
   localPkgs = {
     river-next = pkgs.callPackage ./river-next.nix { };
     ashrwm = pkgs.callPackage ./window-managers/ashrwm/package.nix { };
+    argen = pkgs.callPackage ./window-managers/argen/package.nix { };
     beansprout = pkgs.callPackage ./window-managers/beansprout/package.nix { };
     bridge = pkgs.callPackage ./window-managers/bridge/package.nix { };
     canoe = pkgs.callPackage ./window-managers/canoe/package.nix { };
+    cow = pkgs.callPackage ./window-managers/cow/package.nix { };
     kwm = pkgs.callPackage ./window-managers/kwm/package.nix { };
     machi = pkgs.callPackage ./window-managers/machi/package.nix { };
     notion-river = pkgs.callPackage ./window-managers/notion-river/package.nix { };
@@ -93,9 +95,11 @@ in
         types.listOf (
           types.enum [
             "ashrwm"
+            "argen"
             "beansprout"
             "bridge"
             "canoe"
+            "cow"
             "kwm"
             "machi"
             "notion-river"
