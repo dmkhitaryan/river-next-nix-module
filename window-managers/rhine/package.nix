@@ -10,19 +10,20 @@
   pkg-config,
   wayland-scanner,
   libnotify,
+  dbus
 }:
 let
   river-next = callPackage ../../river-next.nix { };
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "rhine";
-  version = "0.2.0";
+  version = "0.3.0";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "rhine";
     tag = finalAttrs.version;
-    hash = "sha256-8lyssccIwk2+niFwaDa/jJspsgdj9Kjlb2UixsDI5wg=";
+    hash = "sha256-1urSOudD12Ge/hy3mGFfGNQAKLjqvuyV+cO1T4HloYs=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
@@ -38,6 +39,7 @@ stdenv.mkDerivation (finalAttrs: {
     libxkbcommon
     wayland
     libnotify
+    dbus
   ];
 
   postInstall = ''
