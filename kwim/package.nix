@@ -22,8 +22,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "kewuaa";
     repo = "kwim";
-    tag = finalAttrs.version;
-    hash = "sha256-VWsilbwJ2FWB3wrJscx+6VcVxWOHyUBEM4HLsQEqoAA=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-ewg259zRCMGq75XXMmPqoFwD5NBEFXXsIj1rvMy31uw=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
