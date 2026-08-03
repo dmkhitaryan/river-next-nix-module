@@ -14,13 +14,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "jrwm";
-  version = "unstable-2026-06-28";
+  version = "unstable-2026-08-01";
 
   src = fetchFromGitHub {
     owner = "jpco";
     repo = "jrwm";
-    rev = "15744801fe42b4fd95d5c9fa7931bf75f679f3ee";
-    hash = "sha256-wgQMc21n5d5pNEupe6APZMwEATtbdJycznOgx1Xqnds=";
+    rev = "6a923903c94d1e976d9a8940e605a056365344c8";
+    hash = "sha256-0RDndzWQI8eRscX2RvQFrwTJcWd+QwV9h3QWeIjbVsQ=";
   };
 
   nativeBuildInputs = [
@@ -36,8 +36,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   postPatch = ''
     substituteInPlace Makefile \
-      --replace-fail 'INSTALL	= /usr/bin/install -c -s' 'INSTALL	= install -c -s' \
-      --replace-fail 'MKDIR_P	= /usr/bin/mkdir -p' 'MKDIR_P	= mkdir -p' \
       --replace-fail 'PREFIX	= /usr/local' "PREFIX	= $out" \
       --replace-fail 'MANDIR	= $(PREFIX)/man' 'MANDIR	= $(PREFIX)/share/man'
   '' + lib.optionalString (bindings != null) ''
