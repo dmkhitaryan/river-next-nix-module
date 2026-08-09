@@ -3,14 +3,14 @@
 While the new iteration of `river` now exists in Nixpkgs, given how the compositor works, a dozen or so of window managers would still need to be packaged to actually run something in it. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
 
 I plan to update packages roughly once a week, ideally on Mondays.  
-**Last package update: 04-08-2026.**
+**Last package update: 10-08-2026.**
 
 This is the **stable** release branch. Window managers that have no release versions are not present in this repo and are thus unchecked in the list below.  
 If any of those missing is what you seek, I suggest looking at the [main](https://github.com/dmkhitaryan/river-next-nix-module/tree/main) branch.
 
 ## Contents
 This repo has/will contain the following:
-- [x] River 0.4.6 (from stable branch)
+- [x] River 0.4.8 (from stable branch)
 - [x] Builds for window managers as listed [upstream](https://codeberg.org/river/wiki/src/branch/main/pages/wm-list.md): 
   - [ ] anvl - Minimal river based tiling window manager inspired and influenced by dwm and tinyrwm.
   - [x] argen - Task-oriented tiling window manager designed for keyboard + IPC workflows
