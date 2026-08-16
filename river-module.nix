@@ -38,6 +38,7 @@ let
     rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix { };
     tarazed = pkgs.callPackage ./window-managers/tarazed/package.nix { };
     triad = pkgs.callPackage ./window-managers/triad/package.nix { };
+    weave = pkgs.callPackage ./window-managers/weave/package.nix { };
     weir = pkgs.callPackage ./window-managers/weir/package.nix { };
     zrwm = pkgs.callPackage ./window-managers/zrwm/package.nix { };
     reka = pkgs.callPackage ./window-managers/reka/package.nix { };
@@ -140,6 +141,7 @@ in
             "rrwm"
             "tarazed"
             "triad"
+            "weave"
             "weir"
             "zrwm"
           ]

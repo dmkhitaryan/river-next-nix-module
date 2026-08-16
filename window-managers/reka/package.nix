@@ -14,13 +14,13 @@
 let
   reka = rustPlatform.buildRustPackage {
     pname = "reka-lib";
-    version = "unstable-2026-04-19";
+    version = "unstable-2026-08-16";
 
     src = fetchFromCodeberg {
       owner = "tazjin";
       repo = "reka";
-      rev = "90e89c2f51240e3d0a10d98e0cc61732bd86334e";
-      hash = "sha256-w25BZpbKMAACFweRqNEtGDvw/sNNJUfsVJQCXh41Y6w=";
+      rev = "07de418fedd226b3a807c9ed0fb06eda9f697e0c";
+      hash = "sha256-jdggakCHHRNpRQUjpHHHWyBsU1SL61QIWZMV6A0IWfU=";
     };
 
     cargoHash = "sha256-h5FTiU6zR0+w0KVnrjjaeQkSXOuCrQOXbZinJMLrNiY=";

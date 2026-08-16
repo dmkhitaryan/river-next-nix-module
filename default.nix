@@ -27,6 +27,7 @@
     rrwm = ./window-managers/rrwm/package.nix;
     tarazed = ./window-managers/tarazed/package.nix;
     triad = ./window-managers/triad/package.nix;
+    weave = ./window-managers/weave/package.nix;
     weir = ./window-managers/weir/package.nix;
     zrwm = ./window-managers/zrwm/package.nix;
 
