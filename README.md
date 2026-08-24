@@ -32,6 +32,7 @@ This repo has/will contain the following:
   - [x]  rhine - Tiling window manager with a bsp layout, some Hyprland IPC for bars and ambitions of modularity
   - [x]  rijan - Small dynamic tiling window manager in 600 lines of Janet
   - [x]  rill - Minimalist scrolling window manager with simple animation, written in Zig
+  - [x] riztile - Tiling window manager (master-stack layout) for River, written in Zig
   - [x] ropotamo - StumpWM-like tiling window manager for River
   - [x]  rrwm - Tiling window manager with a cosmic/bspwm layout, written in Rust
   - [x]  tarazed - Non-tiling window manager focusing on a powerful and distraction-free desktop experience
