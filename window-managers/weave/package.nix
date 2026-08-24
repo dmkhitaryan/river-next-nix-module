@@ -14,13 +14,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "weave";
-  version = "unstable-2026-08-13";
+  version = "unstable-2026-08-22";
 
   src = fetchFromCodeberg {
     owner = "natthias";
     repo = "weave";
-    rev = "e21ff2a0df288c625472f62777eab791a7097327";
-    hash = "sha256-GV0UjicQaAmvJPKX0izKUm3YBnGNt+519cl2v4i2vB0=";
+    rev = "5f699087da21838b7446882fcb9c5d783ddfea69";
+    hash = "sha256-84HVUTDMt6p9pe2+av+iHfdHAwrtyFRrQ/lkGI4OgE4=";
   };
 
   nativeBuildInputs = [

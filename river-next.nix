@@ -43,8 +43,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromCodeberg {
     owner = "river";
     repo = "river";
-    rev = "bfab9ea75985e048ca31b919ccd6dfc676da6dd5";
-    hash = "sha256-YYU4bgs7taNA0sLHe4YXoIIGEpxgRqogZE6El3kGiPM=";
+    rev = "576a58da94ef25bc6a4efabeebaf8c8ffe7414d3";
+    hash = "sha256-F02TTYMycZjuxD90D7ke2llEn+TbIX20mKZe76/2nc0=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

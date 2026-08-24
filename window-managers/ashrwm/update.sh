@@ -54,7 +54,7 @@ river=$(fetch https://codeberg.org/river/river f6d961773711dc29d3eb5b60bd14744a6
 wayland_protocols=$(fetch https://gitlab.freedesktop.org/wayland/wayland-protocols 02e63e74a807afed95bc25a386173110afef24e3)
 libexpat=$(fetch https://github.com/allyourcodebase/libexpat.git 662b7d1cb5f347598d4619d125be317cc2c52b62)
 libexpat_upstream=$(fetch https://github.com/libexpat/libexpat f9a3eeb3e09fbea04b1c451ffc422ab2f1e45744)
-libffi=$(fetch https://codeberg.org/vezel/libffi 74386f41b576e6e33253f9c46ea781764b84f536)
+libffi=$(fetch https://codeberg.org/vezel/libffi v3.5.2)
 libxml2=$(fetch https://github.com/allyourcodebase/libxml2.git 2528fad1bf17a0a70999930cfd9280554f547787)
 libxml2_upstream=$(fetch_zip https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.1.tar.xz)
 zlib=$(fetch https://github.com/allyourcodebase/zlib.git c5115f4b69ef660f72a835c6638f80508ef284c7)
@@ -120,8 +120,8 @@ linkFarm "zig-packages" [
     path = fetchzip { url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.4.0.tar.gz"; hash = "$xkbcommon_legacy"; }; }
   { name = "libexpat-2.7.1-3-y_akI_s7AABtuMADtwTTJGOxx8iY5ZC9T8EON6cjvbNw";
     path = fetchgit { url = "https://github.com/allyourcodebase/libexpat.git"; rev = "662b7d1cb5f347598d4619d125be317cc2c52b62"; hash = "$libexpat"; }; }
-  { name = "libffi-3.5.2-7_tEtAQ6FwD6zfnc_i2bMJ3JgNr8YkgrBa1A8TWL39GC";
-    path = fetchgit { url = "https://codeberg.org/vezel/libffi"; rev = "74386f41b576e6e33253f9c46ea781764b84f536"; hash = "$libffi"; }; }
+  { name = "libffi-3.5.2-3_tEtAQ6FwD6zfnc_i2bMJ3JgNr8YkgrBa1A8TWL39GC";
+    path = fetchgit { url = "https://codeberg.org/vezel/libffi"; tag = "v3.5.2"; hash = "$libffi"; }; }
   { name = "libxml2-2.15.1-2-qHdjhmNMAAAiZOWqVridicq2oMf5NHv0n9W41bz9FtMM";
     path = fetchgit { url = "https://github.com/allyourcodebase/libxml2.git"; rev = "2528fad1bf17a0a70999930cfd9280554f547787"; hash = "$libxml2"; }; }
   { name = "N-V-__8AAMX2GwiF4I3vxSUHX70z0UP4G2EwLiT2Q9eNGkwN";
