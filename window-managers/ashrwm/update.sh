@@ -55,7 +55,7 @@ translate_c=$(prefetch_hash https://codeberg.org/ziglang/translate-c/ 57c559cf58
 aro=$(prefetch_hash https://github.com/Vexu/arocc 5f5a050569a95ecc40a426f0c3666ae7ef987ede)
 wayland_protocols=$(prefetch_hash https://gitlab.freedesktop.org/wayland/wayland-protocols 02e63e74a807afed95bc25a386173110afef24e3)
 wayland_src=$(prefetch_hash https://gitlab.freedesktop.org/wayland/wayland.git 3e673a438b0a9749e3bdf5cac4befac86333024c)
-libffi=$(prefetch_hash https://codeberg.org/vezel/libffi.git 74386f41b576e6e33253f9c46ea781764b84f536)
+libffi=$(prefetch_hash https://codeberg.org/vezel/libffi v3.5.2)
 libexpat=$(prefetch_hash https://github.com/allyourcodebase/libexpat.git 662b7d1cb5f347598d4619d125be317cc2c52b62)
 libexpat_src=$(prefetch_hash https://github.com/libexpat/libexpat f9a3eeb3e09fbea04b1c451ffc422ab2f1e45744)
 epoll_shim=$(prefetch_hash https://github.com/jiixyj/epoll-shim.git 18159584bb3d17e601b9315a7398ace018251bdc)
@@ -272,10 +272,10 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "libffi-3.5.2-7_tEtAQ6FwD6zfnc_i2bMJ3JgNr8YkgrBa1A8TWL39GC";
+    name = "libffi-3.5.2_tEtAQ6FwD6zfnc_i2bMJ3JgNr8YkgrBa1A8TWL39GC";
     path = fetchgit {
-      url = "https://codeberg.org/vezel/libffi.git";
-      rev = "74386f41b576e6e33253f9c46ea781764b84f536";
+      url = "https://codeberg.org/vezel/libffi";
+      tag = "v3.5.2";
       hash = "$libffi";
     };
   }

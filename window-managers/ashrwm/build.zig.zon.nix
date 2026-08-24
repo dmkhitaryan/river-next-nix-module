@@ -208,11 +208,11 @@ linkFarm "zig-packages" [
     };
   }
   {
-    name = "libffi-3.5.2-7_tEtAQ6FwD6zfnc_i2bMJ3JgNr8YkgrBa1A8TWL39GC";
+    name = "libffi-3.5.2_tEtAQ6FwD6zfnc_i2bMJ3JgNr8YkgrBa1A8TWL39GC";
     path = fetchgit {
-      url = "https://codeberg.org/vezel/libffi.git";
-      rev = "74386f41b576e6e33253f9c46ea781764b84f536";
-      hash = "sha256-jzgOuhkIIzTQtnj+SZsP1TysyMF4W4K3YEVH8TIJF2Y=";
+      url = "https://codeberg.org/vezel/libffi";
+      tag = "v3.5.2";
+      hash = "sha256-iAcbAeG3xwrd3KjSm2J+/zYzFFTpyXezHShqNmVY50M=";
     };
   }
   {
