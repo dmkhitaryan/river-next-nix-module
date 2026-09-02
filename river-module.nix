@@ -50,13 +50,17 @@ let
   };
   selectedWMs = map (
     name:
-      if name == "jrwm" && (
+    if
+      name == "jrwm"
+      && (
         cfg.jrwmConfig.bindings != null
         || cfg.jrwmConfig.layout != null
         || cfg.jrwmConfig.configFile != null
       )
-      then cfg.jrwmConfig.package
-      else localPkgs.${name}
+    then
+      cfg.jrwmConfig.package
+    else
+      localPkgs.${name}
   ) cfg.windowManagers;
 in
 {
@@ -237,8 +241,6 @@ in
     };
   };
 
-
-
   config = mkIf cfg.enable (mkMerge [
     {
       environment.systemPackages =
@@ -356,15 +358,15 @@ in
                     exec "$TRIAD_MANAGER_LOOP"
                   ''
                 else if windowManager == "weir" then
-                let
-                  weirInit = pkgs.writeShellScript "river-weir-init" ''
-                    export PATH=${lib.makeBinPath [ localPkgs.weir ]}:$PATH
-                    ${cfg.weirConfig}
-                  '';
+                  let
+                    weirInit = pkgs.writeShellScript "river-weir-init" ''
+                      export PATH=${lib.makeBinPath [ localPkgs.weir ]}:$PATH
+                      ${cfg.weirConfig}
+                    '';
                   in
-                    ''
-                      exec ${weirInit}
-                    ''
+                  ''
+                    exec ${weirInit}
+                  ''
                 else
                   ''
                     exec /run/current-system/sw/bin/${windowManager}
@@ -381,35 +383,35 @@ in
                         --directory ${localPkgs.reka}/share/emacs/site-lisp"
                   ''
 
-                  # Adapted from: https://github.com/greenm01/triad/blob/master/flake.nix
-                  # for usage in this session entry generator.
-                  else if windowManager == "triad" then
-                    ''
-                      state_dir="''${XDG_STATE_HOME:-$HOME/.local/state}/triad"
-                      mkdir -p "$state_dir"
+                # Adapted from: https://github.com/greenm01/triad/blob/master/flake.nix
+                # for usage in this session entry generator.
+                else if windowManager == "triad" then
+                  ''
+                    state_dir="''${XDG_STATE_HOME:-$HOME/.local/state}/triad"
+                    mkdir -p "$state_dir"
 
-                      stamp="$(${pkgs.coreutils}/bin/date +%Y%m%d-%H%M%S)"
-                      session_id="$stamp-$$"
-                      session_log="$state_dir/triad-session-$session_id.log"
-                      latest_session_log="$state_dir/triad-session-latest.log"
+                    stamp="$(${pkgs.coreutils}/bin/date +%Y%m%d-%H%M%S)"
+                    session_id="$stamp-$$"
+                    session_log="$state_dir/triad-session-$session_id.log"
+                    latest_session_log="$state_dir/triad-session-latest.log"
 
-                      ln -sfn "$session_log" "$latest_session_log" 2>/dev/null || true
-                      exec >> "$session_log" 2>&1
+                    ln -sfn "$session_log" "$latest_session_log" 2>/dev/null || true
+                    exec >> "$session_log" 2>&1
 
-                      export XDG_CURRENT_DESKTOP=river
-                      export XDG_SESSION_DESKTOP=river-triad
-                      export XDG_SESSION_TYPE=wayland
-                      export TRIAD_SESSION_ID="$session_id"
-                      export TRIAD_SESSION_LOG="$session_log"
-                      export TRIAD_SESSION_PID="$$"
+                    export XDG_CURRENT_DESKTOP=river
+                    export XDG_SESSION_DESKTOP=river-triad
+                    export XDG_SESSION_TYPE=wayland
+                    export TRIAD_SESSION_ID="$session_id"
+                    export TRIAD_SESSION_LOG="$session_log"
+                    export TRIAD_SESSION_PID="$$"
 
-                      export TRIAD_BIN="${localPkgs.triad}/bin/triad"
-                      export TRIAD_MANAGER_LOOP="${localPkgs.triad}/share/triad/live-src/triad-manager-loop"
-                      export TRIAD_DOCTOR_EXPECT_DAEMON_EXE="${localPkgs.triad}/bin/triad"
-                      export TRIAD_RIVER_BIN="${localPkgs.river-next}/bin/river"
+                    export TRIAD_BIN="${localPkgs.triad}/bin/triad"
+                    export TRIAD_MANAGER_LOOP="${localPkgs.triad}/share/triad/live-src/triad-manager-loop"
+                    export TRIAD_DOCTOR_EXPECT_DAEMON_EXE="${localPkgs.triad}/bin/triad"
+                    export TRIAD_RIVER_BIN="${localPkgs.river-next}/bin/river"
 
-                      exec ${pkgs.dbus}/bin/dbus-run-session -- "$TRIAD_RIVER_BIN" -c ${initScript}
-                    ''
+                    exec ${pkgs.dbus}/bin/dbus-run-session -- "$TRIAD_RIVER_BIN" -c ${initScript}
+                  ''
 
                 else
                   ''
