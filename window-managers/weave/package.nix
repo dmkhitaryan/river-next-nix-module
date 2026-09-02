@@ -14,13 +14,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "weave";
-  version = "unstable-2026-08-22";
+  version = "unstable-2026-08-31";
 
   src = fetchFromCodeberg {
     owner = "natthias";
     repo = "weave";
-    rev = "5f699087da21838b7446882fcb9c5d783ddfea69";
-    hash = "sha256-84HVUTDMt6p9pe2+av+iHfdHAwrtyFRrQ/lkGI4OgE4=";
+    rev = "1d1de6f7973bcb456f5801d40e4f19f42b19b370";
+    hash = "sha256-KbZosEt/GOtadu0rgPICJSlnGDxBAJkhrkcIMsDn3hE=";
   };
 
   nativeBuildInputs = [
@@ -47,6 +47,10 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail \
       'static const varlink_handler varlink_handler;' \
       'static const struct varlink_handler varlink_handler;'
+
+    substituteInPlace src/common/include/util.hh \
+    --replace-fail '#include <xkbcommon/xkbcommon.h>' \
+                   $'#include <optional>\n#include <xkbcommon/xkbcommon.h>'
   '';
 
   meta = {
