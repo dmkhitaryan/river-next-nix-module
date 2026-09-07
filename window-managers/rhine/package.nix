@@ -17,13 +17,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "rhine";
-  version = "unstable-2026-09-02";
+  version = "unstable-2026-09-05";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "rhine";
-    rev = "4577806d7489de1b03ee77173bea0f68b89daa0f";
-    hash = "sha256-kGqJ6Fo2TiReqTZIGgx4eKAgf88QtlWoF1qDKEIX1UU=";
+    rev = "fce3e0acc22481bd41a62432987739298cf7828d";
+    hash = "sha256-e+CaV/FyH22EgLLv2w7yFo9X7xibUjQHKUea6FnUX+4=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
