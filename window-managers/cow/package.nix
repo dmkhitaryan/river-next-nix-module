@@ -17,16 +17,17 @@
   flex,
   libevent,
   ninja,
+  ncurses,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "cow";
-  version = "0.2";
+  version = "0.3";
 
   src = fetchFromCodeberg {
     owner = "thomasadam";
     repo = "cow";
     tag = finalAttrs.version;
-    hash = "sha256-kEWe5sLj0J6QGGcigokhtFLJPYyIOfLWXbr/Z8oa8nA=";
+    hash = "sha256-TbnsCsBHJDsMkuOLPlesYzrY3pHd9qh/ZXQsszSJgxE=";
   };
 
   nativeBuildInputs = [
@@ -48,6 +49,7 @@ stdenv.mkDerivation (finalAttrs: {
     libxkbcommon
     scdoc
     libevent
+    ncurses
   ];
 
   env.NIX_CFLAGS_COMPILE = "-Wno-error=format-security";
