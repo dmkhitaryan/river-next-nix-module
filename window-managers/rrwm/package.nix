@@ -16,16 +16,16 @@ let
 in
 rustPlatform.buildRustPackage(finalAttrs: {
   pname = "rrwm";
-  version = "0.1.2";
+  version = "0.1.3";
 
   src = fetchFromGitHub {
     owner = "cap153";
     repo = "rrwm";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-CKP1BM545URA+mMwklL/Qm6/7iTwyQlvlmjnXmAqPIE=";
+    hash = "sha256-LsYnUDXJ4KfL2J0AAlzHWqnHM6iRJYvjHwAhrL4TyIk=";
   };
 
-  cargoHash = "sha256-8OiF34Aa/jH82MAcQ5HnIW+4Bi9wLK904kfJvdHVrEc=";
+  cargoHash = "sha256-Iu4dzo9i9kPkEQ/z9NOiCT2VOescb58hQ6NAAd7TlyI=";
 
   nativeBuildInputs = [
     pkg-config
