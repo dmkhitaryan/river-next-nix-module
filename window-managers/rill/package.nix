@@ -15,13 +15,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "rill";
-  version = "unstable-2026-09-06";
+  version = "unstable-2026-09-12";
 
   src = fetchFromCodeberg {
     owner = "lzj15";
     repo = "rill";
-    rev = "1aedbd48ab265a9976cfd9f43f5821bf33fa71d2";
-    hash = "sha256-sf2NZ1/uKZ34Ak16EWz/tEhgQ1CA775Sh2uueuXnxTo=";
+    rev = "a0149a385d2392560baf243a38180b8991180d3a";
+    hash = "sha256-DN9fbodzPcNXdG7s8P4TuD3BaPZTURFXbWfhxHRtjIg=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

@@ -11,13 +11,13 @@
 }:
 rustPlatform.buildRustPackage {
   pname = "notion-river";
-  version = "unstable-2026-08-05";
+  version = "unstable-2026-09-09";
 
   src = fetchFromGitHub {
     owner = "Marenz";
     repo = "notion-river";
-    rev = "e79dea34c3f32987c42e338db6a5c341bce0af23";
-    hash = "sha256-nJTxbUbzuQn9+SukHYDtsOKWt98k5hDr+T/ZMgPgH+E=";
+    rev = "64500e75fbd5b4c2421a3bd35d17f1b92d8dfaf6";
+    hash = "sha256-yehtqkI4qkS5nSsHTdtMHlo+Hx6eHrfdsjwFrDh5+v0=";
   };
 
   cargoHash = "sha256-DDZfkqfiiYYad2rB1wvcJdL1Pbvfe8fTJXpfv+lCGKw=";
