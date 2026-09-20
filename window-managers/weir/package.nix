@@ -9,7 +9,7 @@
   libxkbcommon,
 }:
 
-buildGoModule(finalAttrs: {
+buildGoModule (finalAttrs: {
   pname = "weir";
   version = "unstable-2026-06-01";
   subPackages = [

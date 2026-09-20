@@ -38,12 +38,15 @@ stdenv.mkDerivation (finalAttrs: {
     substituteInPlace Makefile \
       --replace-fail 'PREFIX	= /usr/local' "PREFIX	= $out" \
       --replace-fail 'MANDIR	= $(PREFIX)/man' 'MANDIR	= $(PREFIX)/share/man'
-  '' + lib.optionalString (bindings != null) ''
-      cp ${bindings} bindings.c
-  '' + lib.optionalString (layout != null) ''
-      cp ${layout} layout.c
-  '' + lib.optionalString (configFile != null) ''
-      cp ${configFile} jrwm.c
+  ''
+  + lib.optionalString (bindings != null) ''
+    cp ${bindings} bindings.c
+  ''
+  + lib.optionalString (layout != null) ''
+    cp ${layout} layout.c
+  ''
+  + lib.optionalString (configFile != null) ''
+    cp ${configFile} jrwm.c
   '';
 
   meta = {

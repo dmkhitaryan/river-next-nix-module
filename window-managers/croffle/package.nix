@@ -8,7 +8,7 @@
   libxkbcommon,
 }:
 
-buildGoModule(finalAttrs: {
+buildGoModule (finalAttrs: {
   pname = "croffle";
   version = "unstable-2026-07-26";
   subPackages = [
