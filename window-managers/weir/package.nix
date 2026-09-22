@@ -11,7 +11,7 @@
 
 buildGoModule (finalAttrs: {
   pname = "weir";
-  version = "unstable-2026-06-01";
+  version = "unstable-2026-09-16";
   subPackages = [
     "cmd/weir"
     "cmd/weirctl"
@@ -21,8 +21,8 @@ buildGoModule (finalAttrs: {
   src = fetchFromGitHub {
     owner = "psanford";
     repo = "weir";
-    rev = "929d9a5925e4a7f2a16faa999419e729ad3698e3";
-    hash = "sha256-9pCjyF3Le5CKfBPIU7Nv2Nd2HkEwv6+De/JxhESH85k=";
+    rev = "0d112a8b8c41f02babc35a595ed476f15fc7ebf6";
+    hash = "sha256-kox++N+plpZa9qJiAlebZ6KK8bCCwy0TdjXEU/8sE0g=";
   };
 
   vendorHash = null;

@@ -18,16 +18,17 @@
   libevent,
   ninja,
   ncurses,
+  withCowdiag ? true,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "cow";
-  version = "unstable-2026-09-13";
+  version = "unstable-2026-09-22";
 
   src = fetchFromCodeberg {
     owner = "thomasadam";
     repo = "cow";
-    rev = "5b1c4380169b921fde0ee21d13e7f19944e96f5a";
-    hash = "sha256-uBJ0GW73ZdZ+yHwjnW5lsY5qHjsTnzx7r++ddCPYPN8=";
+    rev = "23a6dc9eedd7d1cd4cc5ad16b71e710918f3fb3e";
+    hash = "sha256-6NuYvCqQ7l7SUWTrp5Dp9S6muBH6Dn9Sv6vpSE+UVtk=";
   };
 
   nativeBuildInputs = [
@@ -49,14 +50,18 @@ stdenv.mkDerivation (finalAttrs: {
     libxkbcommon
     scdoc
     libevent
-    ncurses
-  ];
+  ]
+  ++ lib.optional withCowdiag ncurses;
 
   env.NIX_CFLAGS_COMPILE = "-Wno-error=format-security";
 
   postInstall = ''
     install -Dm755 $src/config/cow/cow.conf $out/examples/cow.conf
   '';
+
+  mesonFlags = [
+    "-Dcowdiag=${if withCowdiag then "enabled" else "disabled"}"
+  ];
 
   meta = {
     homepage = "Compositor on Wayland - cow aims to behave like fvwm and mwm from X11";

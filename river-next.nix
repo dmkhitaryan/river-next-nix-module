@@ -23,20 +23,6 @@
   withManpages ? true,
   xwaylandSupport ? true,
 }:
-let
-  wlroots_0_20_1 = wlroots_0_20.overrideAttrs (
-    new: prev: {
-      version = "0.20.1";
-      src = fetchFromGitLab {
-        domain = "gitlab.freedesktop.org";
-        owner = "wlroots";
-        repo = "wlroots";
-        tag = new.version;
-        hash = "sha256-uuc1dn13FXvFSBvE3+QOi35rLJZmWIUst64oaXGdPFk=";
-      };
-    }
-  );
-in
 stdenv.mkDerivation (finalAttrs: {
   pname = "river-next";
   version = "0.5.0-dev";
@@ -68,7 +54,7 @@ stdenv.mkDerivation (finalAttrs: {
     udev
     wayland
     wayland-protocols
-    wlroots_0_20_1
+    wlroots_0_20
   ]
   ++ lib.optional xwaylandSupport libx11;
 

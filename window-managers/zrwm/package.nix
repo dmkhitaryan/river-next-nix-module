@@ -14,13 +14,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "zrwm";
-  version = "unstable-2026-08-05";
+  version = "unstable-2026-09-16";
 
   src = fetchFromSourcehut {
     owner = "~zuki";
     repo = "zrwm";
-    rev = "22be3e845f7fda3dd16d82826e6cf06d74eea1c7";
-    hash = "sha256-CK3sabo24F/OoGBEkkFAFq2h4PL7knQrLk0U2EuiIIM=";
+    rev = "4c053635937979ca369bd13baca24814e40dd564";
+    hash = "sha256-Bvq6GiJmBHYZaL/5Z1U29XYULP8vT6qkDC0Bj0ctx8k=";
   };
 
   nativeBuildInputs = [
