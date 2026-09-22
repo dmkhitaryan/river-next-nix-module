@@ -55,6 +55,7 @@ linkFarm "zig-packages" [
     path = fetchzip {
       url = "https://codeload.github.com/rockorager/zeit/tar.gz/refs/tags/v0.8.0";
       hash = "sha256-LFNg8yu82OcQ+Yyxw1bTotjW18oVhNiYrFGIE/7WWR4=";
+      extension = "tar.gz";
     };
   }
 ]

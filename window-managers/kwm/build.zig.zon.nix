@@ -20,6 +20,7 @@ linkFarm "zig-packages" [
     path = fetchzip {
       url = "https://codeload.github.com/mnemnion/mvzr/tar.gz/refs/tags/v0.3.10";
       hash = "sha256-Hi0lssg5RQ6kqPn8X8nWQRLogEohKcBI+ebZnCaKS3s=";
+      extension = "tar.gz";
     };
   }
   {
