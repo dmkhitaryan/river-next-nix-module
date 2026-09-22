@@ -10,19 +10,21 @@
   wayland-protocols,
   fd,
   callPackage,
+  fcft,
+  pixman,
 }:
 let
   river-next = callPackage ../../river-next.nix { };
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "anvl";
-  version = "unstable-2026-04-18";
+  version = "unstable-2026-09-19";
 
   src = fetchFromCodeberg {
     owner = "auoggi";
     repo = "anvl";
-    rev = "8eab9e7a6a4c0258887f1ffd5ab421582819d7d0";
-    hash = "sha256-k9+KBsKm3AgBYCLBf600WWB9ot+LZIdk/grYpjvhOa8=";
+    rev = "ab991f87a80469b0454d645f8299587f27d81207";
+    hash = "sha256-DtdH7meixHjeGhgowscc8UmL+t6cgtnFVyg3oK14dqE=";
   };
 
   nativeBuildInputs = [
@@ -37,6 +39,8 @@ stdenv.mkDerivation (finalAttrs: {
     libxkbcommon
     wayland-protocols
     fd
+    fcft
+    pixman
   ];
 
   preBuild = ''
@@ -47,12 +51,6 @@ stdenv.mkDerivation (finalAttrs: {
     runHook preInstall
     install -Dm755 .build/anvl $out/bin/anvl
     runHook postInstall
-  '';
-
-  postPatch = ''
-    substituteInPlace Makefile \
-      --replace-fail 'fd -e xml . protocol' 'fd -e xml . ${river-next}/share/river-protocols/stable' \
-      --replace-fail 'protocol/%.xml' '${river-next}/share/river-protocols/stable/%.xml'
   '';
 
   meta = {

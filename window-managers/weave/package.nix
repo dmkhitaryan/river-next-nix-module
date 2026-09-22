@@ -11,16 +11,17 @@
   ninja,
   wayland-protocols,
   tomlplusplus,
+  libevdev,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "weave";
-  version = "unstable-2026-08-22";
+  version = "unstable-2026-09-21";
 
   src = fetchFromCodeberg {
     owner = "natthias";
     repo = "weave";
-    rev = "5f699087da21838b7446882fcb9c5d783ddfea69";
-    hash = "sha256-84HVUTDMt6p9pe2+av+iHfdHAwrtyFRrQ/lkGI4OgE4=";
+    rev = "2c399d995500f11e71929897f77fe0a9e6720809";
+    hash = "sha256-7WaD3UOhMhCZvBBWSHwljyL0dsbqA37MC9DaHavVTwA=";
   };
 
   nativeBuildInputs = [
@@ -36,6 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
     wayland-protocols
     tomlplusplus
     vali
+    libevdev
   ];
 
   postPatch = ''
@@ -47,6 +49,10 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail \
       'static const varlink_handler varlink_handler;' \
       'static const struct varlink_handler varlink_handler;'
+
+    substituteInPlace src/common/include/util.hh \
+      --replace-fail '#include <xkbcommon/xkbcommon.h>' \
+                     $'#include <optional>\n#include <xkbcommon/xkbcommon.h>'
   '';
 
   meta = {

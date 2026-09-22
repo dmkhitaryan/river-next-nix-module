@@ -18,13 +18,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "argen";
-  version = "unstable-2026-08-23";
+  version = "unstable-2026-09-17";
 
   src = fetchFromCodeberg {
     owner = "pkap";
     repo = "argen";
-    rev = "0b383e1601627101ac2776aca3ae385f4289933c";
-    hash = "sha256-lfovPg9VuRW7DpODAqRAC2yiBzspCo0MPC+8ELiTJbk=";
+    rev = "39a69a104be7248d1f438a15bd6cf733c37bab72";
+    hash = "sha256-WO+pEK2xA15sbXwrMouPttHtbzObp64DsCrucFenQmc=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

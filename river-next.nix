@@ -23,20 +23,6 @@
   withManpages ? true,
   xwaylandSupport ? true,
 }:
-let
-  wlroots_0_20_1 = wlroots_0_20.overrideAttrs (
-    new: prev: {
-      version = "0.20.1";
-      src = fetchFromGitLab {
-        domain = "gitlab.freedesktop.org";
-        owner = "wlroots";
-        repo = "wlroots";
-        tag = new.version;
-        hash = "sha256-uuc1dn13FXvFSBvE3+QOi35rLJZmWIUst64oaXGdPFk=";
-      };
-    }
-  );
-in
 stdenv.mkDerivation (finalAttrs: {
   pname = "river-next";
   version = "0.5.0-dev";
@@ -45,8 +31,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromCodeberg {
     owner = "river";
     repo = "river";
-    rev = "576a58da94ef25bc6a4efabeebaf8c8ffe7414d3";
-    hash = "sha256-F02TTYMycZjuxD90D7ke2llEn+TbIX20mKZe76/2nc0=";
+    rev = "bf1eeb8a7b16276f6d6f5a6350ae1c56058ea4b1";
+    hash = "sha256-debkwxZcTp+k9PrzEXlrbSl8o7F0p8L9lg6zYTD7a/k=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
@@ -68,7 +54,7 @@ stdenv.mkDerivation (finalAttrs: {
     udev
     wayland
     wayland-protocols
-    wlroots_0_20_1
+    wlroots_0_20
   ]
   ++ lib.optional xwaylandSupport libx11;
 
