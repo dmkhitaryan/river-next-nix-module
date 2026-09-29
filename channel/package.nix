@@ -15,13 +15,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "channel";
-  version = "unstable-2026-09-07";
+  version = "unstable-2026-09-27";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "channel";
-    rev = "94a3d6c72c7493dd21a3b2ed10f8776bb887b857";
-    hash = "sha256-dxpVcvMcWLLO64xlYzyqhd1RrtIJ1OjGSnK1d9Oejio=";
+    rev = "a53938123fa48e0d0928e8f263b5a05e1a1a03ec";
+    hash = "sha256-EGYo6B2zQBQz+jK0t+ga0paZ6vBGv8QRKwab6UnLr94=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
