@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash common-updater-scripts nix zon2nix nix-prefetch-git gnused jq nixfmt
+#!nix-shell -i bash -p bash common-updater-scripts git nix nix-prefetch-git gnused zig_0_16 zon2nix jq nixfmt ed
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 cd "$SCRIPT_DIR" || exit 1
