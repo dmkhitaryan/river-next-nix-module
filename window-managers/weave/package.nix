@@ -15,13 +15,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "weave";
-  version = "unstable-2026-09-28";
+  version = "unstable-2026-10-05";
 
   src = fetchFromCodeberg {
     owner = "natthias";
     repo = "weave";
-    rev = "f8dfeabf61f23b28c3580a6f528f28c9395b0110";
-    hash = "sha256-z+D+y0oUxjNHhuS0/0F8QENfHGR0j8RQjfV7UYA+4WI=";
+    rev = "6e6d763b7611b4aac99fc6159cdb549f82da8630";
+    hash = "sha256-Kap1rQsKWaXtSK04+V5K7SEuOgLcRRRmM0DQO3u5OEE=";
   };
 
   nativeBuildInputs = [
@@ -44,6 +44,8 @@ stdenv.mkDerivation (finalAttrs: {
     sed -i '1i#include <cstdint>' src/common/include/util.hh
     sed -i '1i#include <memory>' src/weavectl/main.cc
     sed -i '1i#include <array>' src/weave/Weave.hh
+    sed -i '1i#include <cstdint>\n#include <optional>\n#include <utility>' src/weave/WindowRule.hh
+    sed -i '1i#include <optional>' src/weave/Window.hh
 
     substituteInPlace src/weave/Weave.hh \
       --replace-fail \

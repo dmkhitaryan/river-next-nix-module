@@ -17,27 +17,23 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "rhine";
-  version = "unstable-2026-09-27";
+  version = "unstable-2026-10-02";
 
   src = fetchFromCodeberg {
     owner = "Sivecano";
     repo = "rhine";
-    rev = "72871f3a736b32bc6323d73ee756dd1722960e96";
-    hash = "sha256-aS4o0wKh/UYuALcA7+7OflZp2iKAwzmxWmGKcvASLvg=";
+    rev = "3db8c524c0d03d839b7b54056859716790f3035e";
+    hash = "sha256-2ZA/ItCd6FQsKN5wz8qgCKGweM5KwoyGkNtIgeN/py4=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
-  patches = [
-    ./rhine-xkbcommon-include.patch
-  ];
-
-  postPatch = ''
-    substituteInPlace build.zig \
-      --replace-fail \
-      '@xkbcommonInclude@' \
-      '${lib.getDev libxkbcommon}/include'
-  '';
+  #  postPatch = ''
+  #    substituteInPlace build.zig \
+  #      --replace-fail \
+  #      '@xkbcommonInclude@' \
+  #      '${lib.getDev libxkbcommon}/include'
+  #  '';
 
   nativeBuildInputs = [
     zig
