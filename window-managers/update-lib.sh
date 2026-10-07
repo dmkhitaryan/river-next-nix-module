@@ -78,7 +78,7 @@ update_zig_package() {
     return 0
   fi
 
-  zon2nix "$latest_zon" > "$zon_nix_file" || return 1
+  nix run github:jcollie/zon2nix#zon2nix -- --16 --nix="$zon_nix_file" "$latest_zon" || return 1
   write_zon_digest_comment "$zon_nix_file" "$latest_zon_digest" || return 1
   sed -i 's|url = "\(https://[^"?]*\)?ref=[^"]*"|url = "\1"|g' "$zon_nix_file"
   nixfmt "$zon_nix_file"
