@@ -24,14 +24,14 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "river-next";
-  version = "0.4.8";
+  version = "0.5.0";
   outputs = [ "out" ] ++ lib.optionals withManpages [ "man" ];
 
   src = fetchFromCodeberg {
     owner = "river";
     repo = "river";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-vqOGyd0sddjYZ47xPMFmfzDIg8mHfIBzAJQ2CcsMQ3Y=";
+    hash = "sha256-Yn0+V0PMT+PIV4dVuy4d3BAEfLj5hwLh5ngGpM3RbHY=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
