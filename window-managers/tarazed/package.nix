@@ -17,14 +17,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tarazed";
-  version = "unstable-2026-08-15";
+  version = "unstable-2026-10-07";
 
   src = fetchFromGitLab {
     domain = "gitlab.gwdg.de";
     owner = "leonhenrik.plickat";
     repo = "tarazed";
-    rev = "d937720534f1909774898e4bd53098f92086c438";
-    hash = "sha256-JqKmOIO1rBiJz4YnXPt3DW6f5gtyb6+fYyhSAipssGs=";
+    rev = "a07e9b79da8955b3e1d3457d6d6f21de32b3fc1d";
+    hash = "sha256-ItwmBU4mhGzSyrgKsHT/B3/gWzUhnQfIx5BmJqHQpR4=";
   };
 
   nativeBuildInputs = [

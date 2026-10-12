@@ -2,7 +2,7 @@
   lib,
   stdenv,
   fetchFromCodeberg,
-  zig,
+  zig_0_17,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -13,19 +13,19 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "riztile";
-  version = "unstable-2026-10-03";
+  version = "unstable-2026-10-10";
 
   src = fetchFromCodeberg {
     owner = "abhinaya-aryal";
     repo = "riztile";
-    rev = "2c7f737b00f0f410ea373c71b4c79c03f45bd419";
-    hash = "sha256-5KpJn2IR1DmHFXqeD/DC4kKbjdRi60vfiOqtmF6DQzo=";
+    rev = "ab90f7ab2f015a7a682258394c290577ec838dad";
+    hash = "sha256-e2Iqx5j1XwoOWiHGIlcoPTnB26T8GdS+gpSHg5rMkcw=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
 
   nativeBuildInputs = [
-    zig
+    zig_0_17
     wayland-scanner
     pkg-config
   ];
