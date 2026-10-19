@@ -31,6 +31,7 @@ let
     notion-river = pkgs.callPackage ./window-managers/notion-river/package.nix { };
     orilla = pkgs.callPackage ./window-managers/orilla/package.nix { };
     pwm = pkgs.callPackage ./window-managers/pwm/package.nix { };
+    rau = pkgs.callPackage ./window-managers/rau/package.nix { };
     rhine = pkgs.callPackage ./window-managers/rhine/package.nix { };
     rijan = pkgs.callPackage ./window-managers/rijan/package.nix { };
     rill = pkgs.callPackage ./window-managers/rill/package.nix { };
@@ -138,6 +139,7 @@ in
             "notion-river"
             "orilla"
             "pwm"
+            "rau"
             "reka"
             "rhine"
             "rijan"

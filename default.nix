@@ -20,6 +20,7 @@
     notion-river = ./window-managers/notion-river/package.nix;
     orilla = ./window-managers/orilla/package.nix;
     pwm = ./window-managers/pwm/package.nix;
+    rau = ./window-managers/rau/package.nix;
     reka = ./window-managers/reka/package.nix;
     rhine = ./window-managers/rhine/package.nix;
     rijan = ./window-managers/rijan/package.nix;

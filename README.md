@@ -29,6 +29,7 @@ This repo has/will contain the following:
   - [x]  notion-river - Static tiling window manager inspired by Notionwm (formerly Ion3)
   - [x]  orilla - Dynamic tiling window manager inspired by XMonad, written in Rust
   - [x]  pwm - Tiling window manager with SSD titlebars and Python API
+  - [x]  rau - Emacs based, fork of reka in pure Elisp, without Rust
   - [x]  reka - Emacs-based WM for river (similar to EXWM)
   - [x]  rhine - Tiling window manager with a bsp layout, some Hyprland IPC for bars and ambitions of modularity
   - [x]  rijan - Small dynamic tiling window manager in 600 lines of Janet
@@ -60,6 +61,4 @@ Might just be a "GDM moment", but I do not plan to investigate further. That sai
 
 (06-06-2026): certain commands in `Triad` will not function on NixOS. Particularly, trying to execute `triad doctor-live` or `triad live-reload` will hit OSErrors due to the immutability of /nix/store.
 
-(06-06-2026): `Weir` does not make use of typical configuration file setup. Instead, like classic River, it puts its config in an init script. Given the structure of this repo, a config option has been added to account for this nuance, `weirConfig`.
-
-(14-06-2026): `JrWM` configuration is [based on files](https://github.com/jpco/jrwm#configuration) that are adjusted pre-build. To facilitate customization, users can pass custom configuration files via `jrwmConfig`.
+(20-10-2026): Gliver will run a compile on every first launch after changes occur. After that compile, it will run normally.
