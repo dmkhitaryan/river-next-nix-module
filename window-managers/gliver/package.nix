@@ -43,7 +43,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   preBuild = ''
-  export HOME=$TMPDIR
+    export HOME=$TMPDIR
   '';
 
   makeFlags = [
@@ -51,10 +51,10 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   postInstall = ''
-  wrapProgram "$out/bin/gliver" \
-    --prefix GUILE_LOAD_PATH : "$out/share/guile/site/3.0:${guile-cairo}/share/guile/site" \
-    --prefix GUILE_EXTENSIONS_PATH : "${guile-cairo}/lib"
-'';
+    wrapProgram "$out/bin/gliver" \
+      --prefix GUILE_LOAD_PATH : "$out/share/guile/site/3.0:${guile-cairo}/share/guile/site" \
+      --prefix GUILE_EXTENSIONS_PATH : "${guile-cairo}/lib"
+  '';
 
   meta = {
     homepage = "https://codeberg.org/ebeem/gliver";
