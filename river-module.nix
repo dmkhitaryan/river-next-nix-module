@@ -22,6 +22,7 @@ let
     canoe = pkgs.callPackage ./window-managers/canoe/package.nix { };
     cow = pkgs.callPackage ./window-managers/cow/package.nix { };
     croffle = pkgs.callPackage ./window-managers/croffle/package.nix { };
+    gliver = pkgs.callPackage ./window-managers/gliver/package.nix { };
     jrwm = pkgs.callPackage ./window-managers/jrwm/package.nix { };
     kuskokwim = pkgs.callPackage ./window-managers/kuskokwim/package.nix { };
     kwm = pkgs.callPackage ./window-managers/kwm/package.nix { };
@@ -128,6 +129,7 @@ in
             "canoe"
             "cow"
             "croffle"
+            "gliver"
             "jrwm"
             "kuskokwim"
             "kwm"

@@ -20,6 +20,7 @@ This repo has/will contain the following:
   - [x] Canoe - Stacking window manager with classic look and feel, written in Rust
   - [x] CoW - Stacking window manager with a fvwm/mwm look and feel
   - [x] croffle - Static tiling window manager
+  - [x] Gliver - Manual tiling inspired by Emacs and StumpWM, hackable with a REPL in real time
   - [x] JrWM - Simple dynamic tiling window manager that's easy to build, read, and modify
   - [x]  kuskokwim - Tiling window manager with composable keybindings and first-class support for process management, written in Python
   - [x]  kwm - DWM-like dynamic tilling window manager with scrollable-tiling support, includes a simple status bar, written in Zig
