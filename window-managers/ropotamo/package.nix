@@ -108,7 +108,7 @@ let
 
   spork = buildJanetPackage {
     pname = "spork";
-    version = "unstable-2026-07-23";
+    version = "unstable-2026-10-21";
     src = sporkSrc;
   };
 
@@ -195,8 +195,8 @@ stdenv.mkDerivation {
     domain = "code.goryachev.org";
     owner = "ropotamo";
     repo = "ropotamo";
-    rev = "aa1369f291440850ef8f5faed622141141aa183d";
-    hash = "sha256-X55K1xyLA5ByaagjIxEPJxIJzyyc+rjrJi2kA6DOgng=";
+    rev = "b9976cf2a9003720454e3db226c24e2cb1b0c08d";
+    hash = "sha256-efN1GXImN/Ge6KDOOCHB4XXd0xay6fukoH5q9nphe7E=";
     forceFetchGit = true;
   };
 

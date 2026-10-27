@@ -11,13 +11,13 @@
 let
   rau-el = emacs-pgtk.pkgs.trivialBuild {
     pname = "rau";
-    version = "unstable-2026-10-20";
+    version = "unstable-2026-10-25";
 
     src = fetchFromGitHub {
       owner = "thkoch2001";
       repo = "rau";
-      rev = "74f4326723d2c5b2723a178813366cb69a922de3";
-      hash = "sha256-WfDn19X862rJt6EK3wOHOE0dOeh2CCDdZl/CnmaTAjA=";
+      rev = "7981b7ce5a199a46d2a039e06c6f3aed0605455f";
+      hash = "sha256-r+5L4isGtZuxdaGE8zXA15U5i9avmA4g35hALY5og78=";
     };
 
     packageRequires = [ emacs-pgtk.pkgs.lgr ];

@@ -16,13 +16,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "gliver";
-  version = "unstable-2026-10-19";
+  version = "unstable-2026-10-22";
 
   src = fetchFromCodeberg {
     owner = "ebeem";
     repo = "gliver";
-    rev = "1da4a5a19908f34d2c25e1445cf955fb71df4ade";
-    hash = "sha256-J9HgvSC5HWxPA9VcTG93mMgiJkiQ8qoCO04UFk3rdmo=";
+    rev = "423bc87de8e239e09df0a4fc0dba81e427ca5d43";
+    hash = "sha256-JmcmzJzJI9al+QeOrIvBIKWXqRwNLkSOgjxFLpNp618=";
   };
 
   nativeBuildInputs = [

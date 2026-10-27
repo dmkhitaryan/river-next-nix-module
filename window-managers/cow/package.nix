@@ -18,17 +18,19 @@
   libevent,
   ninja,
   ncurses,
+  libxml2,
   withCowdiag ? true,
+  withCowappmenu ? true,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "cow";
-  version = "unstable-2026-10-13";
+  version = "unstable-2026-10-25";
 
   src = fetchFromCodeberg {
-    owner = "thomasadam";
+    owner = "cow-wm";
     repo = "cow";
-    rev = "c4c2859bebd54a8b6a2973acff6d4639b5d4e25e";
-    hash = "sha256-QmvOG8Oc6X0Sgvzswx/uhnx15hUzFC7nGybmx6nSTFM=";
+    rev = "fd999be6af4f87f82d061565bf2b2638f748e31c";
+    hash = "sha256-Q3NeHpNOaLg90ChlFBVm905+wwyX86YIVp3u1XIdZNU=";
   };
 
   nativeBuildInputs = [
@@ -51,7 +53,8 @@ stdenv.mkDerivation (finalAttrs: {
     scdoc
     libevent
   ]
-  ++ lib.optional withCowdiag ncurses;
+  ++ lib.optional withCowdiag ncurses
+  ++ lib.optional withCowappmenu libxml2;
 
   env.NIX_CFLAGS_COMPILE = "-Wno-error=format-security";
 
@@ -61,6 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   mesonFlags = [
     "-Dcowdiag=${if withCowdiag then "enabled" else "disabled"}"
+    "-Dcow_appmenu=${if withCowappmenu then "enabled" else "disabled"}"
   ];
 
   meta = {
