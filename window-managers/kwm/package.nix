@@ -4,7 +4,7 @@
   fetchFromGitHub,
   withBar ? true,
   withCustomConfig ? false,
-  zig,
+  zig_0_16,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -14,7 +14,6 @@
   pixman,
   fcft,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "kewuaa";
   version = "0.3.0";
@@ -26,10 +25,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-hX76wTHPTgg5RAHILfd3CjRKPlgAwGSK3lG82IFoUUs=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
-    zig
+    zig_0_16
     wayland-scanner
     pkg-config
   ];
@@ -43,13 +42,14 @@ stdenv.mkDerivation (finalAttrs: {
 
   doInstallCheck = true;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ [ "-Doptimize=ReleaseSafe" ]
-  ++ lib.optional withBar "-Dbar"
-  ++ lib.optional withCustomConfig "-Dconfig";
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ ["-Doptimize=ReleaseSafe"]
+    ++ lib.optional withBar "-Dbar"
+    ++ lib.optional withCustomConfig "-Dconfig";
 
   meta = {
     homepage = "https://github.com/kewuaa/kwm";

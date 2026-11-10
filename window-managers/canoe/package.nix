@@ -9,19 +9,18 @@
   freetype,
   fontconfig,
 }:
-
-rustPlatform.buildRustPackage(finalAttrs: {
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "canoe";
-  version = "0.5.1";
+  version = "0.6.2";
 
   src = fetchFromGitHub {
     owner = "roblillack";
     repo = "canoe";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-oHaoeLQhj0L+1URXIrgfuFkAScXVVWqDiGdxq14zUqI=";
+    hash = "sha256-PCGEswByqdIoAR5jidhCqixcSoDqvp86/oB5+Pw2wSA=";
   };
 
-  cargoHash = "sha256-qMzqyZ6dSyIYhsXBjvtSiX4pptKP+6G3fze8NSPeza4=";
+  cargoHash = "sha256-2J+s4lgXQQuD594Yuf+DU5fjkb8z5CecPt03R6UC7WI=";
 
   nativeBuildInputs = [
     pkg-config
