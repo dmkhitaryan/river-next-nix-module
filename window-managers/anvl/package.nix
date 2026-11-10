@@ -18,13 +18,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "anvl";
-  version = "unstable-2026-09-27";
+  version = "unstable-2026-11-08";
 
   src = fetchFromCodeberg {
     owner = "auoggi";
     repo = "anvl";
-    rev = "0982c88a869dc5b65c7105fb7986cdbc990a9568";
-    hash = "sha256-SVyxpPaLAfLGwGdFA4KJo7RVU4C/SzkSLHniHvKQfbg=";
+    rev = "05e467cf339d1c372ff4c9ab41f0d5a87272b90e";
+    hash = "sha256-djmuY76gg14PtcyujB88AKbLjmUOSzHyuY9oB5AZX8I=";
   };
 
   nativeBuildInputs = [

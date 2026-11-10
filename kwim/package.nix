@@ -17,13 +17,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "kwim";
-  version = "unstable-2026-08-10";
+  version = "unstable-2026-11-06";
 
   src = fetchFromGitHub {
     owner = "kewuaa";
     repo = "kwim";
-    rev = "becc1284ccc8c5abdfb8a117b561a97f4448e9dd";
-    hash = "sha256-Ob59H1535EYReXMCERdlTNfhwv2GGBCSCmvfIeJzzzo=";
+    rev = "a802d2d021e13709b2c130088510bfef5e902659";
+    hash = "sha256-oXuN4JCsnLwaHuJMTQadNcDOy/0RJYrBl+fmelr/qcs=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };

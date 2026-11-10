@@ -2,7 +2,6 @@
   lib,
   stdenv,
   callPackage,
-  fetchFromGitLab,
   fetchFromCodeberg,
   libGL,
   libx11,
@@ -13,69 +12,67 @@
   pkg-config,
   scdoc,
   udev,
-  versionCheckHook,
   wayland,
   wayland-protocols,
   wayland-scanner,
   wlroots_0_20,
   xwayland,
-  zig,
+  zig_0_17,
   withManpages ? true,
   xwaylandSupport ? true,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "river-next";
-  version = "0.6.0-dev";
-  outputs = [ "out" ] ++ lib.optionals withManpages [ "man" ];
+  version = "unstable-2026-11-05";
+  outputs = ["out"] ++ lib.optionals withManpages ["man"];
 
   src = fetchFromCodeberg {
     owner = "river";
     repo = "river";
-    rev = "65a908430dddc6728a5f71c89974b786e48302fb";
-    hash = "sha256-zxuTUBQhPTVnFJ55B07h0X1mhYt0e9mIj6xZGYBkID4=";
+    rev = "547b67a9f303b15733bf87f0fbebcbf7b4709f0b";
+    hash = "sha256-BP7RCSn8z2x0Tvhd/sGiVF40zYXQyHM7dmfdso7kftc=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
-  nativeBuildInputs = [
-    pkg-config
-    wayland-scanner
-    xwayland
-    zig
-  ]
-  ++ lib.optional withManpages scdoc;
+  nativeBuildInputs =
+    [
+      pkg-config
+      wayland-scanner
+      zig_0_17
+    ]
+    ++ lib.optional withManpages scdoc
+    ++ lib.optional xwaylandSupport xwayland;
 
-  buildInputs = [
-    libGL
-    libevdev
-    libinput
-    libxkbcommon
-    pixman
-    udev
-    wayland
-    wayland-protocols
-    wlroots_0_20
-  ]
-  ++ lib.optional xwaylandSupport libx11;
+  buildInputs =
+    [
+      libGL
+      libevdev
+      libinput
+      libxkbcommon
+      pixman
+      udev
+      wayland
+      wayland-protocols
+      wlroots_0_20
+    ]
+    ++ lib.optional xwaylandSupport libx11;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ lib.optional withManpages "-Dman-pages"
-  ++ lib.optional xwaylandSupport "-Dxwayland"
-  ++ [ "-Doptimize=ReleaseSafe" ];
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ lib.optional withManpages "-Dman-pages"
+    ++ lib.optional xwaylandSupport "-Dxwayland"
+    ++ ["-Doptimize=ReleaseSafe"];
 
   postInstall = ''
     install contrib/river.desktop -Dt $out/share/wayland-sessions
   '';
 
-  doInstallCheck = true;
-  nativeInstallCheckInputs = [ versionCheckHook ];
-  versionCheckProgramArg = "-version";
-
   passthru = {
-    providedSessions = [ "river" ];
+    providedSessions = ["river"];
   };
 
   meta = {

@@ -4,7 +4,7 @@
   fetchFromCodeberg,
   withManpages ? true,
   scdoc,
-  zig,
+  zig_0_16,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -12,7 +12,6 @@
   pkg-config,
   wayland-scanner,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "machi";
   version = "unstable-2026-05-27";
@@ -24,19 +23,20 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-StpGIGnIjtdEQ9fWdsei6n93IJOG6BG7gRKaOS9sI24=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
-    zig
+    zig_0_16
     wayland-scanner
     pkg-config
   ];
-  buildInputs = [
-    libxkbcommon
-    wayland
-    wayland-protocols
-  ]
-  ++ lib.optional withManpages scdoc;
+  buildInputs =
+    [
+      libxkbcommon
+      wayland
+      wayland-protocols
+    ]
+    ++ lib.optional withManpages scdoc;
 
   postPatch = ''
     substituteInPlace build.zig \
@@ -49,11 +49,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   doInstallCheck = true;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ [ "-Doptimize=ReleaseSafe" ];
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ ["-Doptimize=ReleaseSafe"];
 
   meta = {
     homepage = "https://codeberg.org/machi/machi";

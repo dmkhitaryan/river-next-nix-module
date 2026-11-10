@@ -12,31 +12,31 @@
   pkg-config,
   wayland-scanner,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "rill";
-  version = "unstable-2026-10-19";
+  version = "unstable-2026-11-03";
 
   src = fetchFromCodeberg {
     owner = "lzj15";
     repo = "rill";
-    rev = "be6fac7ed43a01663aab991666d980a912b50bf5";
-    hash = "sha256-KQVQP0xlKWpmBk0OOCbkWa7Hiz4xadokCOZYQOuY0dY=";
+    rev = "7ad79815df3ed83b9124b2c6fd2dfe4e64853db9";
+    hash = "sha256-LNa+5c10h6WQtvXAH/G8ssNWFxcVvS6gNp7nJTGSnGg=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
     zig_0_17
     wayland-scanner
     pkg-config
   ];
-  buildInputs = [
-    libxkbcommon
-    wayland
-    wayland-protocols
-  ]
-  ++ lib.optional withManpages scdoc;
+  buildInputs =
+    [
+      libxkbcommon
+      wayland
+      wayland-protocols
+    ]
+    ++ lib.optional withManpages scdoc;
 
   postInstall = ''
     install -Dm755 $src/config.zon -t $out/example/
@@ -44,11 +44,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   doInstallCheck = true;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ [ "-Doptimize=ReleaseSafe" ];
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ ["-Doptimize=ReleaseSafe"];
 
   meta = {
     homepage = "https://codeberg.org/lzj15/rill";
@@ -63,5 +64,4 @@ stdenv.mkDerivation (finalAttrs: {
     ];
     platforms = lib.platforms.linux;
   };
-
 })

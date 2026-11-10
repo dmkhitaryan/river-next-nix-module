@@ -5,7 +5,7 @@
   customConfigPath ? null,
   withBar ? true,
   withSolidBackground ? false,
-  zig,
+  zig_0_16,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -15,22 +15,21 @@
   pixman,
   fcft,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "kwm";
-  version = "unstable-2026-09-25";
+  version = "unstable-2026-11-10";
 
   src = fetchFromGitHub {
     owner = "kewuaa";
     repo = "kwm";
-    rev = "ee81d6e352250a0e97d31cc0e93870416aa6c479";
-    hash = "sha256-Des1P1muKv3T7RzwW5/56E5/JdB8kIq1uRnaCNtMtb0=";
+    rev = "16979ae6e17526373d60292da83ef03c6f25f1fb";
+    hash = "sha256-pfGevehlwEGJbyynfSQUML5KCKcyW2ytqiN1blYbhRM=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
-    zig
+    zig_0_16
     wayland-scanner
     pkg-config
   ];
@@ -44,17 +43,18 @@ stdenv.mkDerivation (finalAttrs: {
 
   doInstallCheck = true;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ [
-    "-Doptimize=ReleaseSafe"
-    "-Dkwim=false"
-  ]
-  ++ lib.optional (customConfigPath != null) "-Dconfig=${customConfigPath}"
-  ++ lib.optional withBar "-Dbar"
-  ++ lib.optional withSolidBackground "-Dbackground";
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ [
+      "-Doptimize=ReleaseSafe"
+      "-Dkwim=false"
+    ]
+    ++ lib.optional (customConfigPath != null) "-Dconfig=${customConfigPath}"
+    ++ lib.optional withBar "-Dbar"
+    ++ lib.optional withSolidBackground "-Dbackground";
 
   meta = {
     homepage = "https://github.com/kewuaa/kwm";

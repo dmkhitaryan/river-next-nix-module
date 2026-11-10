@@ -4,7 +4,7 @@
   fetchFromCodeberg,
   withManpages ? true,
   scdoc,
-  zig,
+  zig_0_17,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -15,34 +15,34 @@
   pixman,
   libevdev,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "argen";
-  version = "unstable-2026-10-18";
+  version = "unstable-2026-11-06";
 
   src = fetchFromCodeberg {
     owner = "pkap";
     repo = "argen";
-    rev = "66a960ff7c8f2c1daccc3c6cb3f1700ee7167fae";
-    hash = "sha256-AQcBrA9s41zNXjKuayDzHep8lp5kMpe8iqTELZPICoo=";
+    rev = "074a59da2396e67005dac77c29c966a8ad72e26b";
+    hash = "sha256-RXg6OLvm3VWJvPCmKNR/uQNHftmCUsnZvePzoYOhTeQ=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
-    zig
+    zig_0_17
     wayland-scanner
     pkg-config
   ];
-  buildInputs = [
-    wayland-protocols
-    libxkbcommon
-    wayland
-    pixman
-    fcft
-    libevdev
-  ]
-  ++ lib.optional withManpages scdoc;
+  buildInputs =
+    [
+      wayland-protocols
+      libxkbcommon
+      wayland
+      pixman
+      fcft
+      libevdev
+    ]
+    ++ lib.optional withManpages scdoc;
 
   postInstall = ''
     install -Dm755 example/init -t $out/example/
@@ -50,11 +50,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   doInstallCheck = true;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ [ "-Doptimize=ReleaseSafe" ];
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ ["-Doptimize=ReleaseSafe"];
 
   meta = {
     homepage = "https://codeberg.org/pkap/argen";

@@ -2,7 +2,7 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  zig,
+  zig_0_16,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -16,22 +16,21 @@
   libevdev,
   libinput,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "ashrwm";
-  version = "unstable-";
+  version = "unstable-2026-08-17";
 
   src = fetchFromGitHub {
     owner = "shadowash8";
     repo = "ashrwm";
-    rev = "0.3.0";
-    hash = "sha256-Ec9hp1SxtvXZkTn+DkM4FYYk9u7r0RS6LOBmBNrLKgU=";
+    rev = "ab6c0fef81fa516d89239b074f789ecf4923dd34";
+    hash = "sha256-nWsKNYHzLVaJtXtXZhpiwC0Y0sIVl6TEvYSSXxvkYBU=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
-    zig
+    zig_0_16
     wayland-scanner
     wayland-protocols
     pkg-config
@@ -53,11 +52,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   doInstallCheck = true;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ [ "-Doptimize=ReleaseSafe" ];
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ ["-Doptimize=ReleaseSafe"];
 
   meta = {
     homepage = "https://github.com/shadowash8/ashrwm";

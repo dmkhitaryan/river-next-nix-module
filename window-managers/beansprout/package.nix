@@ -4,7 +4,7 @@
   fetchFromCodeberg,
   withManpages ? true,
   scdoc,
-  zig,
+  zig_0_17,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -14,33 +14,33 @@
   fcft,
   pixman,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "beansprout";
-  version = "unstable-2026-10-23";
+  version = "unstable-2026-11-09";
 
   src = fetchFromCodeberg {
     owner = "beansprout";
     repo = "beansprout";
-    rev = "a025ff1caeb3a79fae9e730c3d36dba1fb3a13ed";
-    hash = "sha256-nW3fQ5OrxDjgjfhfT9UPd+rxRmLz5nohMc320NYLFX8=";
+    rev = "11fa99a1f1e71ed0d6288a4ab69fa07975093006";
+    hash = "sha256-FW98qh1OLZH6dXbegpaNTqXJeL84nP+9EP/otlZwY90=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
-    zig
+    zig_0_17
     wayland-scanner
     pkg-config
   ];
-  buildInputs = [
-    wayland-protocols
-    libxkbcommon
-    wayland
-    pixman
-    fcft
-  ]
-  ++ lib.optional withManpages scdoc;
+  buildInputs =
+    [
+      wayland-protocols
+      libxkbcommon
+      wayland
+      pixman
+      fcft
+    ]
+    ++ lib.optional withManpages scdoc;
 
   postInstall = ''
     install -Dm755 examples/config.kdl -t $out/example/
@@ -48,11 +48,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   doInstallCheck = true;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ [ "-Doptimize=ReleaseSafe" ];
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ ["-Doptimize=ReleaseSafe"];
 
   meta = {
     homepage = "https://codeberg.org/beansprout/beansprout";
