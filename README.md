@@ -3,7 +3,7 @@
 While the new iteration of `river` now exists in Nixpkgs, given how the compositor works, a dozen or so of window managers would still need to be packaged to actually run something in it. This repository does exactly that: it builds the new River package, along with all supported window managers (see below) and a NixOS module. 
 
 I plan to update packages roughly once a week, ideally on Mondays. Package versions (aside from River) will reflect this if they receive changes. Later I plan to adjust this to update based on their actual commit histories.  
-**Last package update: 10-11-2026.**
+**Last package update: 16-11-2026.**
 
 This is the **main** branch, thus all the packages here are pulling changes against their respective main branches. Combined with their varying development statuses, there is **always non-zero chance of a breaking change**!  
 If you are looking for something less unstable, I suggest looking at the [stable](https://github.com/dmkhitaryan/river-next-nix-module/tree/stable) branch.
@@ -17,7 +17,6 @@ This repo has/will contain the following:
   - [x] ashrwm - Minimal dynamic tiling window manager with tiling, and grid layouts, hot reloading and more
   - [x]  beansprout - DWM-style tiling window manager with built-in wallpaper and a clock/bar, with configuration in Kdl
   - [x] bridge - Horizontal-tiling window manager with built-in icon bar
-  - [x] Canoe - Stacking window manager with classic look and feel, written in Rust
   - [x] CoW - Stacking window manager with a fvwm/mwm look and feel
   - [x] croffle - Static tiling window manager
   - [x] Gliver - Manual tiling inspired by Emacs and StumpWM, hackable with a REPL in real time

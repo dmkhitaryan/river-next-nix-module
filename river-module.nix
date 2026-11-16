@@ -3,10 +3,10 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.programs.river-next;
-  inherit (lib)
+  inherit
+    (lib)
     types
     mkOption
     mkIf
@@ -14,65 +14,64 @@ let
     ;
 
   localWMs = {
-    anvl = pkgs.callPackage ./window-managers/anvl/package.nix { };
-    ashrwm = pkgs.callPackage ./window-managers/ashrwm/package.nix { };
-    argen = pkgs.callPackage ./window-managers/argen/package.nix { };
-    beansprout = pkgs.callPackage ./window-managers/beansprout/package.nix { };
-    bridge = pkgs.callPackage ./window-managers/bridge/package.nix { };
-    canoe = pkgs.callPackage ./window-managers/canoe/package.nix { };
-    cow = pkgs.callPackage ./window-managers/cow/package.nix { };
-    croffle = pkgs.callPackage ./window-managers/croffle/package.nix { };
-    gliver = pkgs.callPackage ./window-managers/gliver/package.nix { };
-    jrwm = pkgs.callPackage ./window-managers/jrwm/package.nix { };
-    kuskokwim = pkgs.callPackage ./window-managers/kuskokwim/package.nix { };
-    kwm = pkgs.callPackage ./window-managers/kwm/package.nix { };
-    machi = pkgs.callPackage ./window-managers/machi/package.nix { };
-    mousetrap = pkgs.callPackage ./window-managers/mousetrap/package.nix { };
-    notion-river = pkgs.callPackage ./window-managers/notion-river/package.nix { };
-    orilla = pkgs.callPackage ./window-managers/orilla/package.nix { };
-    pwm = pkgs.callPackage ./window-managers/pwm/package.nix { };
-    rau = pkgs.callPackage ./window-managers/rau/package.nix { };
-    rhine = pkgs.callPackage ./window-managers/rhine/package.nix { };
-    rijan = pkgs.callPackage ./window-managers/rijan/package.nix { };
-    rill = pkgs.callPackage ./window-managers/rill/package.nix { };
-    riztile = pkgs.callPackage ./window-managers/riztile/package.nix { };
-    ropotamo = pkgs.callPackage ./window-managers/ropotamo/package.nix { };
-    rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix { };
-    tarazed = pkgs.callPackage ./window-managers/tarazed/package.nix { };
-    triad = pkgs.callPackage ./window-managers/triad/package.nix { };
-    weave = pkgs.callPackage ./window-managers/weave/package.nix { };
-    weir = pkgs.callPackage ./window-managers/weir/package.nix { };
-    zrwm = pkgs.callPackage ./window-managers/zrwm/package.nix { };
-    reka = pkgs.callPackage ./window-managers/reka/package.nix { };
+    anvl = pkgs.callPackage ./window-managers/anvl/package.nix {};
+    ashrwm = pkgs.callPackage ./window-managers/ashrwm/package.nix {};
+    argen = pkgs.callPackage ./window-managers/argen/package.nix {};
+    beansprout = pkgs.callPackage ./window-managers/beansprout/package.nix {};
+    bridge = pkgs.callPackage ./window-managers/bridge/package.nix {};
+    cow = pkgs.callPackage ./window-managers/cow/package.nix {};
+    croffle = pkgs.callPackage ./window-managers/croffle/package.nix {};
+    gliver = pkgs.callPackage ./window-managers/gliver/package.nix {};
+    jrwm = pkgs.callPackage ./window-managers/jrwm/package.nix {};
+    kuskokwim = pkgs.callPackage ./window-managers/kuskokwim/package.nix {};
+    kwm = pkgs.callPackage ./window-managers/kwm/package.nix {};
+    machi = pkgs.callPackage ./window-managers/machi/package.nix {};
+    mousetrap = pkgs.callPackage ./window-managers/mousetrap/package.nix {};
+    notion-river = pkgs.callPackage ./window-managers/notion-river/package.nix {};
+    orilla = pkgs.callPackage ./window-managers/orilla/package.nix {};
+    pwm = pkgs.callPackage ./window-managers/pwm/package.nix {};
+    rau = pkgs.callPackage ./window-managers/rau/package.nix {};
+    rhine = pkgs.callPackage ./window-managers/rhine/package.nix {};
+    rijan = pkgs.callPackage ./window-managers/rijan/package.nix {};
+    rill = pkgs.callPackage ./window-managers/rill/package.nix {};
+    riztile = pkgs.callPackage ./window-managers/riztile/package.nix {};
+    ropotamo = pkgs.callPackage ./window-managers/ropotamo/package.nix {};
+    rrwm = pkgs.callPackage ./window-managers/rrwm/package.nix {};
+    tarazed = pkgs.callPackage ./window-managers/tarazed/package.nix {};
+    triad = pkgs.callPackage ./window-managers/triad/package.nix {};
+    weave = pkgs.callPackage ./window-managers/weave/package.nix {};
+    weir = pkgs.callPackage ./window-managers/weir/package.nix {};
+    zrwm = pkgs.callPackage ./window-managers/zrwm/package.nix {};
+    reka = pkgs.callPackage ./window-managers/reka/package.nix {};
   };
 
-  localPkgs = localWMs // {
-    # River + helper programs (so far, input management).
-    river-next = pkgs.callPackage ./river-next.nix { };
-    channel = pkgs.callPackage ./channel/package.nix { };
-    kwim = pkgs.callPackage ./kwim/package.nix { };
-  };
+  localPkgs =
+    localWMs
+    // {
+      # River + helper programs (so far, input management).
+      river-next = pkgs.callPackage ./river-next.nix {};
+      channel = pkgs.callPackage ./channel/package.nix {};
+      kwim = pkgs.callPackage ./kwim/package.nix {};
+    };
 
   wmPackages = localWMs // cfg.windowManagerOverrides;
   wmPackage = name: wmPackages.${name};
 
-  effectiveWM =
-    name:
+  effectiveWM = name:
     if
-      name == "jrwm"
+      name
+      == "jrwm"
       && (
-        cfg.jrwmConfig.bindings != null
+        cfg.jrwmConfig.bindings
+        != null
         || cfg.jrwmConfig.layout != null
         || cfg.jrwmConfig.configFile != null
       )
-    then
-      cfg.jrwmConfig.package
-    else
-      wmPackage name;
+    then cfg.jrwmConfig.package
+    else wmPackage name;
 
   selectedWMs = map effectiveWM cfg.windowManagers;
-in
-{
+in {
   options.programs.river-next = {
     enable = mkOption {
       type = types.bool;
@@ -119,7 +118,7 @@ in
     };
 
     windowManagers = mkOption {
-      type = types.unique { message = "Duplicate window manager entries are not allowed."; } (
+      type = types.unique {message = "Duplicate window manager entries are not allowed.";} (
         types.listOf (
           types.enum [
             "anvl"
@@ -127,7 +126,6 @@ in
             "ashrwm"
             "beansprout"
             "bridge"
-            "canoe"
             "cow"
             "croffle"
             "gliver"
@@ -155,13 +153,13 @@ in
           ]
         )
       );
-      default = [ ];
+      default = [];
       description = "List of window managers to enable. Multiple can be enabled at once.";
     };
 
     windowManagerOverrides = mkOption {
       type = types.attrsOf types.package;
-      default = { };
+      default = {};
       description = ''
         Package overrides for individual River window managers.
       '';
@@ -249,7 +247,6 @@ in
         description = "JrWM package to use.";
       };
     };
-
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -274,7 +271,7 @@ in
             };
           };
         };
-        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+        extraPortals = [pkgs.xdg-desktop-portal-gtk];
         config.river.default = lib.mkDefault [
           "gtk"
           "wlr"
@@ -283,7 +280,7 @@ in
 
       security = {
         polkit.enable = true;
-        pam.services.swaylock = { };
+        pam.services.swaylock = {};
       };
 
       programs = {
@@ -301,15 +298,15 @@ in
 
       systemd.user.targets.river-session = {
         description = "River compositor session";
-        requires = [ "graphical-session-pre.target" ];
-        bindsTo = [ "graphical-session-pre.target" ];
+        requires = ["graphical-session-pre.target"];
+        bindsTo = ["graphical-session-pre.target"];
       };
 
       systemd.user.services.river-portal-fixer = {
         description = "Restart portals once River session environment is ready";
-        bindsTo = [ "river-session.target" ];
-        wantedBy = [ "river-session.target" ];
-        after = [ "river-session.target" ];
+        bindsTo = ["river-session.target"];
+        wantedBy = ["river-session.target"];
+        after = ["river-session.target"];
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
@@ -327,83 +324,78 @@ in
       services.displayManager.sessionPackages =
         lib.optional (cfg.package != null) cfg.package
         ++ (map (
-          windowManager:
-          let
-            rekaInit = pkgs.writeShellScript "river-reka-init" ''
-              exec ${config.services.emacs.package}/bin/emacs \
-                --directory ${(wmPackage "reka").reka-lib}/share/emacs/site-lisp \
-                --directory ${wmPackage "reka"}/share/emacs/site-lisp 
-                # --eval "(require 'reka)" \
-                # --eval "(reka-enable)"
-            '';
+            windowManager: let
+              rekaInit = pkgs.writeShellScript "river-reka-init" ''
+                exec ${config.services.emacs.package}/bin/emacs \
+                  --directory ${(wmPackage "reka").reka-lib}/share/emacs/site-lisp \
+                  --directory ${wmPackage "reka"}/share/emacs/site-lisp 
+                  # --eval "(require 'reka)" \
+                  # --eval "(reka-enable)"
+              '';
 
-            initScript = pkgs.writeShellScript "river-${windowManager}-init" ''
-              export XDG_CURRENT_DESKTOP=river
+              initScript = pkgs.writeShellScript "river-${windowManager}-init" ''
+                export XDG_CURRENT_DESKTOP=river
 
-              ${pkgs.systemd}/bin/systemctl --user import-environment \
-                WAYLAND_DISPLAY \
-                XDG_CURRENT_DESKTOP \
-                XDG_RUNTIME_DIR \
-                DISPLAY
-              ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd \
-                WAYLAND_DISPLAY \
-                XDG_CURRENT_DESKTOP \
-                XDG_RUNTIME_DIR \
-                DISPLAY
+                ${pkgs.systemd}/bin/systemctl --user import-environment \
+                  WAYLAND_DISPLAY \
+                  XDG_CURRENT_DESKTOP \
+                  XDG_RUNTIME_DIR \
+                  DISPLAY
+                ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd \
+                  WAYLAND_DISPLAY \
+                  XDG_CURRENT_DESKTOP \
+                  XDG_RUNTIME_DIR \
+                  DISPLAY
 
-              ${pkgs.systemd}/bin/systemctl --user start river-session.target
+                ${pkgs.systemd}/bin/systemctl --user start river-session.target
 
-              ${lib.optionalString cfg.kanshi.enable ''
+                ${lib.optionalString cfg.kanshi.enable ''
+                  ${
+                    let
+                      configFlag = lib.optionalString (
+                        cfg.kanshi.config != null
+                      ) " -c ${pkgs.writeText "kanshi-config" cfg.kanshi.config}";
+                    in "${pkgs.kanshi}/bin/kanshi${configFlag}"
+                  } &
+                ''}
+
+                ${lib.optionalString (windowManager == "rhine" || cfg.channel.enable) ''
+                  ${localPkgs.channel}/bin/channel &
+                ''}
+
+                ${lib.optionalString (windowManager == "kwm" || cfg.kwim.enable) ''
+                  ${localPkgs.kwim}/bin/kwim &
+                ''}
+
                 ${
-                  let
-                    configFlag = lib.optionalString (
-                      cfg.kanshi.config != null
-                    ) " -c ${pkgs.writeText "kanshi-config" cfg.kanshi.config}";
-                  in
-                  "${pkgs.kanshi}/bin/kanshi${configFlag}"
-                } &
-              ''}
-
-              ${lib.optionalString (windowManager == "rhine" || cfg.channel.enable) ''
-                ${localPkgs.channel}/bin/channel &
-              ''}
-
-              ${lib.optionalString (windowManager == "kwm" || cfg.kwim.enable) ''
-                ${localPkgs.kwim}/bin/kwim &
-              ''}
-
-              ${
-                if windowManager == "triad" then
-                  ''
+                  if windowManager == "triad"
+                  then ''
                     exec "$TRIAD_MANAGER_LOOP"
                   ''
-                else if windowManager == "weir" then
-                  let
+                  else if windowManager == "weir"
+                  then let
                     weirInit = pkgs.writeShellScript "river-weir-init" ''
-                      export PATH=${lib.makeBinPath [ (wmPackage "weir") ]}:$PATH
+                      export PATH=${lib.makeBinPath [(wmPackage "weir")]}:$PATH
                       ${cfg.weirConfig}
                     '';
-                  in
-                  ''
+                  in ''
                     exec ${weirInit}
                   ''
-                else
-                  ''
+                  else ''
                     exec ${effectiveWM windowManager}/bin/${windowManager}
                   ''
-              }
-            '';
-            launcher = pkgs.writeShellScript "river-${windowManager}-launcher" ''
-              ${
-                if windowManager == "reka" then
-                  ''
+                }
+              '';
+              launcher = pkgs.writeShellScript "river-${windowManager}-launcher" ''
+                ${
+                  if windowManager == "reka"
+                  then ''
                     exec dbus-run-session -- ${cfg.package}/bin/river -c ${rekaInit}
                   ''
-
-                # Adapted from: https://github.com/greenm01/triad/blob/master/flake.nix
-                # for usage in this session entry generator.
-                else if windowManager == "triad" then
-                  ''
+                  # Adapted from: https://github.com/greenm01/triad/blob/master/flake.nix
+                  # for usage in this session entry generator.
+                  else if windowManager == "triad"
+                  then ''
                     state_dir="''${XDG_STATE_HOME:-$HOME/.local/state}/triad"
                     mkdir -p "$state_dir"
 
@@ -429,28 +421,26 @@ in
 
                     exec ${pkgs.dbus}/bin/dbus-run-session -- "$TRIAD_RIVER_BIN" -c ${initScript}
                   ''
-
-                else
-                  ''
+                  else ''
                     exec dbus-run-session -- ${cfg.package}/bin/river -c ${initScript}
                   ''
+                }
+              '';
+            in
+              pkgs.writeTextFile {
+                name = "river-${windowManager}-session";
+                destination = "/share/wayland-sessions/river-${windowManager}.desktop";
+                text = ''
+                  [Desktop Entry]
+                  Name=River (${windowManager})
+                  Type=Application
+                  Comment=Launch River with ${windowManager} as window manager.
+                  Exec=${launcher}
+                '';
+                passthru.providedSessions = ["river-${windowManager}"];
               }
-            '';
-          in
-          pkgs.writeTextFile {
-            name = "river-${windowManager}-session";
-            destination = "/share/wayland-sessions/river-${windowManager}.desktop";
-            text = ''
-              [Desktop Entry]
-              Name=River (${windowManager})
-              Type=Application
-              Comment=Launch River with ${windowManager} as window manager.
-              Exec=${launcher}
-            '';
-            passthru.providedSessions = [ "river-${windowManager}" ];
-          }
-        ) cfg.windowManagers);
+          )
+          cfg.windowManagers);
     }
-
   ]);
 }

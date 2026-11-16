@@ -8,7 +8,6 @@
     ashrwm = ./window-managers/ashrwm/package.nix;
     beansprout = ./window-managers/beansprout/package.nix;
     bridge = ./window-managers/bridge/package.nix;
-    canoe = ./window-managers/canoe/package.nix;
     cow = ./window-managers/cow/package.nix;
     croffle = ./window-managers/croffle/package.nix;
     gliver = ./window-managers/gliver/package.nix;
