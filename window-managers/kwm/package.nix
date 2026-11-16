@@ -5,7 +5,7 @@
   customConfigPath ? null,
   withBar ? true,
   withSolidBackground ? false,
-  zig_0_16,
+  zig,
   libxkbcommon,
   wayland,
   wayland-protocols,
@@ -17,19 +17,19 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "kwm";
-  version = "unstable-2026-11-10";
+  version = "unstable-2026-11-14";
 
   src = fetchFromGitHub {
     owner = "kewuaa";
     repo = "kwm";
-    rev = "16979ae6e17526373d60292da83ef03c6f25f1fb";
-    hash = "sha256-pfGevehlwEGJbyynfSQUML5KCKcyW2ytqiN1blYbhRM=";
+    rev = "8dafe7ec636894131521990c2effa3daa09eb205";
+    hash = "sha256-3uDLdkltKwMcUG+qGpQtz1OZGln4BrYSzRXTMZVD0qk=";
   };
 
   deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
-    zig_0_16
+    zig
     wayland-scanner
     pkg-config
   ];

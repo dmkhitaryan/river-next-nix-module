@@ -11,16 +11,16 @@
 }:
 rustPlatform.buildRustPackage {
   pname = "notion-river";
-  version = "unstable-2026-09-09";
+  version = "unstable-2026-11-11";
 
   src = fetchFromGitHub {
     owner = "Marenz";
     repo = "notion-river";
-    rev = "64500e75fbd5b4c2421a3bd35d17f1b92d8dfaf6";
-    hash = "sha256-yehtqkI4qkS5nSsHTdtMHlo+Hx6eHrfdsjwFrDh5+v0=";
+    rev = "abb05156052b655e4ac189d6866cc4c87bb38bfd";
+    hash = "sha256-Wy1XSn5n/oZJW+MsDxIaXVMX9kyNZKnNMhrXNGY/574=";
   };
 
-  cargoHash = "sha256-DDZfkqfiiYYad2rB1wvcJdL1Pbvfe8fTJXpfv+lCGKw=";
+  cargoHash = "sha256-8IzRyFcKhNrz6w561oGEHb6bDgrZCOG+JQEQwo6Vgoc=";
 
   checkFlags = [
     "--skip=focus::tests::wm_integration::test_wm_focus_follows_pointer_to_empty_frame"
