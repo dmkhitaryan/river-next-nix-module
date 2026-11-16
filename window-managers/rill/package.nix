@@ -12,7 +12,6 @@
   pkg-config,
   wayland-scanner,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "rill";
   version = "0.7.0";
@@ -24,19 +23,20 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-KRwvk1yeq1urgNpPH2ZK25orlFE0/KzCKhUsCVVjrhE=";
   };
 
-  deps = callPackage ./build.zig.zon.nix { };
+  deps = callPackage ./build.zig.zon.nix {};
 
   nativeBuildInputs = [
     zig
     wayland-scanner
     pkg-config
   ];
-  buildInputs = [
-    libxkbcommon
-    wayland
-    wayland-protocols
-  ]
-  ++ lib.optional withManpages scdoc;
+  buildInputs =
+    [
+      libxkbcommon
+      wayland
+      wayland-protocols
+    ]
+    ++ lib.optional withManpages scdoc;
 
   postInstall = ''
     install -Dm755 $src/config.zon -t $out/example/
@@ -44,11 +44,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   doInstallCheck = true;
 
-  zigBuildFlags = [
-    "--system"
-    "${finalAttrs.deps}"
-  ]
-  ++ [ "-Doptimize=ReleaseSafe" ];
+  zigBuildFlags =
+    [
+      "--system"
+      "${finalAttrs.deps}"
+    ]
+    ++ ["-Doptimize=ReleaseSafe"];
 
   meta = {
     homepage = "https://codeberg.org/lzj15/rill";
@@ -63,5 +64,4 @@ stdenv.mkDerivation (finalAttrs: {
     ];
     platforms = lib.platforms.linux;
   };
-
 })

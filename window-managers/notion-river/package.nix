@@ -9,18 +9,18 @@
   cairo,
   pango,
 }:
-rustPlatform.buildRustPackage(finalAttrs: {
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "notion-river";
-  version = "0.6.0";
+  version = "0.7.1";
 
   src = fetchFromGitHub {
     owner = "Marenz";
     repo = "notion-river";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-9KGAqZinE61godrNkCU6TosDC8drE7rXbWD25ZdzEZU=";
+    hash = "sha256-Wy1XSn5n/oZJW+MsDxIaXVMX9kyNZKnNMhrXNGY/574=";
   };
 
-  cargoHash = "sha256-ZeWM6j58Gd8YV4lIgD//W3F1qc8/dlz2ss+/Sjam1Hk=";
+  cargoHash = "sha256-8IzRyFcKhNrz6w561oGEHb6bDgrZCOG+JQEQwo6Vgoc=";
 
   nativeBuildInputs = [
     pkg-config
