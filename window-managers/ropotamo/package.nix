@@ -2,7 +2,6 @@
   lib,
   stdenv,
   fetchgit,
-  fetchurl,
   fetchFromForgejo,
   janet,
   jpm,
@@ -13,43 +12,20 @@
   wayland-protocols,
   callPackage,
   wayland-scanner,
-  mdbook,
-}:
+}: let
+  river-next = callPackage ../../river-next.nix {};
 
-let
-  river-next = callPackage ../../river-next.nix { };
-
-  wayland-scanner_1_25 = wayland-scanner.overrideAttrs (_: {
-    version = "1.25.0";
-    src = fetchurl {
-      url = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.25.0/downloads/wayland-1.25.0.tar.xz";
-      hash = "sha256-wGXwQK/f8xd2gGAPJJcn5Boa/CL8zyciLxX1MG+qHwM=";
-    };
-  });
-
-  wayland_1_25 = wayland.overrideAttrs (prev: {
-    version = "1.25.0";
-    src = fetchurl {
-      url = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.25.0/downloads/wayland-1.25.0.tar.xz";
-      hash = "sha256-wGXwQK/f8xd2gGAPJJcn5Boa/CL8zyciLxX1MG+qHwM=";
-    };
-    nativeBuildInputs =
-      map (drv: if drv == wayland-scanner then wayland-scanner_1_25 else drv) prev.nativeBuildInputs
-      ++ [ mdbook ];
-  });
-
-  buildJanetPackage =
-    {
-      pname,
-      version ? "unstable",
-      src,
-      janetDeps ? [ ],
-      buildInputs ? [ ],
-      postPatch ? null,
-      buildPhase ? null,
-      installPhase ? null,
-    }:
-    stdenv.mkDerivation ({
+  buildJanetPackage = {
+    pname,
+    version ? "unstable",
+    src,
+    janetDeps ? [],
+    buildInputs ? [],
+    postPatch ? null,
+    buildPhase ? null,
+    installPhase ? null,
+  }:
+    stdenv.mkDerivation {
       inherit
         pname
         version
@@ -70,17 +46,16 @@ let
       buildPhase = lib.optionalString (buildPhase != null) buildPhase;
 
       installPhase =
-        if installPhase != null then
-          installPhase
-        else
-          ''
-            runHook preInstall
-            export HOME="$TMPDIR/home"
-            mkdir -p "$HOME" "$out" "$out/lib" "$out/bin" "$out/include" "$out/man"
-            jpm --tree="$out" install
-            runHook postInstall
-          '';
-    });
+        if installPhase != null
+        then installPhase
+        else ''
+          runHook preInstall
+          export HOME="$TMPDIR/home"
+          mkdir -p "$HOME" "$out" "$out/lib" "$out/bin" "$out/include" "$out/man"
+          jpm --tree="$out" install
+          runHook postInstall
+        '';
+    };
 
   sporkSrc = fetchgit {
     url = "https://github.com/janet-lang/spork";
@@ -108,7 +83,7 @@ let
 
   spork = buildJanetPackage {
     pname = "spork";
-    version = "unstable-2026-10-21";
+    version = "unstable-2026-11-22";
     src = sporkSrc;
   };
 
@@ -122,8 +97,8 @@ let
     pname = "janet-xkbcommon";
     version = "unstable-2026-04-20";
     src = janetXkbcommonSrc;
-    janetDeps = [ spork ];
-    buildInputs = [ libxkbcommon ];
+    janetDeps = [spork];
+    buildInputs = [libxkbcommon];
     buildPhase = ''
       runHook preBuild
       export HOME="$TMPDIR/home"
@@ -137,7 +112,7 @@ let
       install -d "$out/lib"
       install -Dm644 src/xkbcommon.janet "$out/lib/xkbcommon.janet"
       install -Dm755 build/xkbcommon-native.so "$out/lib/xkbcommon-native.so"
-      patchelf --set-rpath "${lib.makeLibraryPath [ libxkbcommon ]}" "$out/lib/xkbcommon-native.so"
+      patchelf --set-rpath "${lib.makeLibraryPath [libxkbcommon]}" "$out/lib/xkbcommon-native.so"
       runHook postInstall
     '';
   };
@@ -150,7 +125,7 @@ let
       lemongrass
       spork
     ];
-    buildInputs = [ wayland_1_25 ];
+    buildInputs = [wayland];
     postPatch = ''
       substituteInPlace src/wayland-native.c \
         --replace-fail 'wl_display_dispatch_pending_single' 'wl_display_dispatch_pending' \
@@ -158,7 +133,7 @@ let
 
       substituteInPlace src/wayland.janet \
         --replace-fail '(string (sh/exec-slurp "pkg-config" "--variable=pkgdatadir" "wayland-scanner") "/wayland.xml")' \
-          '"${wayland-scanner_1_25}/share/wayland/wayland.xml"' \
+          '"${wayland-scanner}/share/wayland/wayland.xml"' \
         --replace-fail '(sh/exec-slurp "pkg-config" "--variable=pkgdatadir" "wayland-protocols")' \
           '"${wayland-protocols}/share/wayland-protocols"'
     '';
@@ -175,7 +150,7 @@ let
       install -d "$out/lib"
       install -Dm644 src/wayland.janet "$out/lib/wayland.janet"
       install -Dm755 build/wayland-native.so "$out/lib/wayland-native.so"
-      patchelf --set-rpath "${lib.makeLibraryPath [ wayland_1_25 ]}" "$out/lib/wayland-native.so"
+      patchelf --set-rpath "${lib.makeLibraryPath [wayland]}" "$out/lib/wayland-native.so"
       runHook postInstall
     '';
   };
@@ -187,67 +162,67 @@ let
     "${janetWaylandPkg}/lib"
   ];
 in
-stdenv.mkDerivation {
-  pname = "ropotamo";
-  version = "unstable-2026-04-20";
+  stdenv.mkDerivation {
+    pname = "ropotamo";
+    version = "unstable-2026-04-20";
 
-  src = fetchFromForgejo {
-    domain = "code.goryachev.org";
-    owner = "ropotamo";
-    repo = "ropotamo";
-    rev = "b9976cf2a9003720454e3db226c24e2cb1b0c08d";
-    hash = "sha256-efN1GXImN/Ge6KDOOCHB4XXd0xay6fukoH5q9nphe7E=";
-    forceFetchGit = true;
-  };
+    src = fetchFromForgejo {
+      domain = "code.goryachev.org";
+      owner = "ropotamo";
+      repo = "ropotamo";
+      rev = "1e40e65641197d7134fb5effcd453ed19bd9d35e";
+      hash = "sha256-jW8VqT4XTQpqEZ7/SLDj06phWMUS8qOdNeNBDT20tPA=";
+      forceFetchGit = true;
+    };
 
-  nativeBuildInputs = [ pkg-config ];
-  buildInputs = [
-    libxkbcommon
-    wayland_1_25
-    wayland-protocols
-  ];
-  patches = [ ./ropotamo-fixes.patch ];
+    nativeBuildInputs = [pkg-config];
+    buildInputs = [
+      libxkbcommon
+      wayland
+      wayland-protocols
+    ];
+    #patches = [./ropotamo-fixes.patch];
 
-  dontConfigure = true;
-  dontBuild = true;
+    dontConfigure = true;
+    dontBuild = true;
 
-  postPatch = ''
-    substituteInPlace src/config.janet \
-      --replace-fail ':spawn-on-startup @[]' ':spawn-on-startup @[]
-                   :xkb-bindings @{}'
+    postPatch = ''
+      substituteInPlace src/config.janet \
+        --replace-fail ':spawn-on-startup @[]' ':spawn-on-startup @[]
+                     :xkb-bindings @{}'
 
-    substituteInPlace src/ropotamo.janet \
-      --replace-fail '"protocol/river-window-management-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-window-management-v1.xml\"" \
-      --replace-fail '"protocol/river-xkb-bindings-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-xkb-bindings-v1.xml\"" \
-      --replace-fail '"protocol/river-layer-shell-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-layer-shell-v1.xml\"" \
-      --replace-fail '"protocol/river-input-management-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-input-management-v1.xml\"" \
-      --replace-fail '"protocol/river-libinput-config-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-libinput-config-v1.xml\"" \
-      --replace-fail '"protocol/river-xkb-config-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-xkb-config-v1.xml\""
-  '';
+      substituteInPlace src/ropotamo.janet \
+        --replace-fail '"protocol/river-window-management-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-window-management-v1.xml\"" \
+        --replace-fail '"protocol/river-xkb-bindings-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-xkb-bindings-v1.xml\"" \
+        --replace-fail '"protocol/river-layer-shell-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-layer-shell-v1.xml\"" \
+        --replace-fail '"protocol/river-input-management-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-input-management-v1.xml\"" \
+        --replace-fail '"protocol/river-libinput-config-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-libinput-config-v1.xml\"" \
+        --replace-fail '"protocol/river-xkb-config-v1.xml"' "\"${river-next}/share/river-protocols/stable/river-xkb-config-v1.xml\""
+    '';
 
-  installPhase = ''
-    runHook preInstall
-    mkdir -p "$out/share"
-    cp -r . "$out/share/ropotamo"
-    install -Dm644 example/init.janet "$out/examples/init.janet"
+    installPhase = ''
+      runHook preInstall
+      mkdir -p "$out/share"
+      cp -r . "$out/share/ropotamo"
+      install -Dm644 example/init.janet "$out/examples/init.janet"
 
-    mkdir -p "$out/bin"
-    cat > "$out/bin/ropotamo" <<EOF
+      mkdir -p "$out/bin"
+      cat > "$out/bin/ropotamo" <<EOF
 
-    #!${stdenv.shell}
-    export JANET_PATH='${janetPath}'
-    exec ${janet}/bin/janet "$out/share/ropotamo/src/ropotamo.janet" "\$@"
-    EOF
-    chmod +x "$out/bin/ropotamo"
-    runHook postInstall
-  '';
+      #!${stdenv.shell}
+      export JANET_PATH='${janetPath}'
+      exec ${janet}/bin/janet "$out/share/ropotamo/src/ropotamo.janet" "\$@"
+      EOF
+      chmod +x "$out/bin/ropotamo"
+      runHook postInstall
+    '';
 
-  meta = {
-    homepage = "https://code.goryachev.org/ropotamo/ropotamo";
-    description = "StumpWM-like tiling window manager for River written in Janet";
-    license = lib.licenses.gpl3Plus;
-    maintainers = with lib.maintainers; [ dmkhitaryan ];
-    platforms = lib.platforms.linux;
-    mainProgram = "ropotamo";
-  };
-}
+    meta = {
+      homepage = "https://code.goryachev.org/ropotamo/ropotamo";
+      description = "StumpWM-like tiling window manager for River written in Janet";
+      license = lib.licenses.gpl3Plus;
+      maintainers = with lib.maintainers; [dmkhitaryan];
+      platforms = lib.platforms.linux;
+      mainProgram = "ropotamo";
+    };
+  }

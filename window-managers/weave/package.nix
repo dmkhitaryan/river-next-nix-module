@@ -15,13 +15,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "weave";
-  version = "unstable-2026-11-15";
+  version = "unstable-2026-11-22";
 
   src = fetchFromCodeberg {
     owner = "natthias";
     repo = "weave";
-    rev = "0d7ac71e31628e5b09f7a10b32a38890842d67e2";
-    hash = "sha256-FCqK4p/C4LpbcFQ9yQS6U5EMTZGWvvfzUVtG1DrKLzA=";
+    rev = "6b0fad0c76b4f35f06268b5604dd49237f475075";
+    hash = "sha256-pVjJabjRb+63BFR92lqarBs+/Ephen6EJEe4WJC/6Oo=";
   };
 
   nativeBuildInputs = [
@@ -42,20 +42,20 @@ stdenv.mkDerivation (finalAttrs: {
 
   postPatch = ''
     find src -name '*.hh' -exec sed -i '1i#include <cstdint>' {} +
-
+      
     sed -i '1i#include <memory>' src/weavectl/main.cc
     sed -i '1i#include <array>' src/weave/Weave.hh
-    sed -i '1i#include <cstdint>\n#include <optional>\n#include <utility>' src/weave/WindowRule.hh
+    sed -i '1i#include <array>' src/weave/Output.hh
+    sed -i '1i#include <limits>' src/weave/Output.hh
+    sed -i '1i#include <optional>' src/weave/WindowRule.hh
+    sed -i '1i#include <utility>' src/weave/WindowRule.hh
     sed -i '1i#include <optional>' src/weave/Window.hh
-
+    sed -i '1i#include <optional>' src/common/include/util.hh
+      
     substituteInPlace src/weave/Weave.hh \
       --replace-fail \
       'static const varlink_handler varlink_handler;' \
       'static const struct varlink_handler varlink_handler;'
-
-    substituteInPlace src/common/include/util.hh \
-      --replace-fail '#include <xkbcommon/xkbcommon.h>' \
-                     $'#include <optional>\n#include <xkbcommon/xkbcommon.h>'
   '';
 
   meta = {

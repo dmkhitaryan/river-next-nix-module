@@ -13,13 +13,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "riztile";
-  version = "unstable-2026-10-10";
+  version = "unstable-2026-11-15";
 
   src = fetchFromCodeberg {
     owner = "abhinaya-aryal";
     repo = "riztile";
-    rev = "ab90f7ab2f015a7a682258394c290577ec838dad";
-    hash = "sha256-e2Iqx5j1XwoOWiHGIlcoPTnB26T8GdS+gpSHg5rMkcw=";
+    rev = "c0beee471ef750c7fe30350633413fb76b9d7533";
+    hash = "sha256-qUSZGuX9PSNL0iurOHjq/YUxZ95xTh2ZuM7crjGtoe0=";
   };
 
   deps = callPackage ./build.zig.zon.nix { };
