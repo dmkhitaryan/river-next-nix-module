@@ -8,19 +8,24 @@
   libxkbcommon,
   freetype,
   fontconfig,
+  udev,
+  seatd,
+  libgbm,
+  pixman,
+  libinput,
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "canoe";
-  version = "0.6.2";
+  version = "0.7.0-beta.3";
 
   src = fetchFromGitHub {
     owner = "roblillack";
     repo = "canoe";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-PCGEswByqdIoAR5jidhCqixcSoDqvp86/oB5+Pw2wSA=";
+    hash = "sha256-zUKTUbhbGgX1IJhXqHpUQhsFU8OVXqYfVA32n4GZhnA=";
   };
 
-  cargoHash = "sha256-2J+s4lgXQQuD594Yuf+DU5fjkb8z5CecPt03R6UC7WI=";
+  cargoHash = "sha256-E9z0krSG/15ziMDd4v8PUYzkVMeFrGEFci2Hg8ldUqI=";
 
   nativeBuildInputs = [
     pkg-config
@@ -32,6 +37,11 @@ rustPlatform.buildRustPackage (finalAttrs: {
     libxkbcommon
     freetype
     fontconfig
+    udev
+    seatd
+    libinput
+    pixman
+    libgbm
   ];
 
   meta = {
